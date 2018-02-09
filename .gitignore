@@ -1,0 +1,16 @@
+/nbproject
+/node_modules
+/public/hot
+/public/storage/framework
+/public/storage/logs
+/storage/*.key
+/vendor
+/.idea
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.env
+.env.production
+/database/seeds
