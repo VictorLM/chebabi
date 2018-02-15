@@ -109,16 +109,39 @@ class AtualizaEventosAgenda extends Command
                         }
                         $i++;
                     }
+
+                    $tipo = strtok($value['subject'], ' ');
+
+                    //QUANDO O EVENTO É CANCELADO ELE É EXCLUÍDO E NÃO VEM MAIS NA QUERY
+                    //FAZER OUTRA ROTINA QUE ATUALIZE OS EVENTOS EXISTENTES
+
                     if($value['isCancelled']){
                         $color = 'red';
+                    }else if($tipo == '[Ausente]'){
+                        $color = '#E6EB0A';
+                    }else if($tipo == '[Carro]'){
+                        $color = '#00e600';
+                    }else if($tipo == '[Motorista]'){
+                        $color = '#ffa31a';
+                    }else if($tipo == '[Reunião]'){
+                        $color = '#80bfff';
                     }else{
                         $color = NULL;
                     }
+
+                    $tipo = str_replace("[", "", $tipo);
+                    $tipo = str_replace("]", "", $tipo);
+
+                    if($tipo != 'Ausente' || $tipo != 'Carro' || $tipo != 'Motorista' || $tipo != 'Reunião' || $tipo != 'Outro'){
+                        $tipo = NULL;
+                    }
+
                     Eventos::updateOrCreate(
                         ['id' => $value['id']],
                         [
                             'id' => $value['id'],
                             'title' => $value['subject'],
+                            'tipo' => $tipo,
                             'start' => Carbon::parse($value['start']['dateTime'])->subHours(2)->format('Y-m-d H:i:s'),
                             'end' => Carbon::parse($value['end']['dateTime'])->subHours(2)->format('Y-m-d H:i:s'),
                             'descricao' => $value['body']['content'],

@@ -149,10 +149,6 @@ class MicrosoftController extends Controller
                                         'Response code: ' .$response_code. '. Mensagem: ' .$result));
             }
 
-            //RESULT TO DB
-            //IF ERROR MESSAGE TO USER
-
-            //REDIR TO EVENTO C/ FLASH MESSAGE
         }else{
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
