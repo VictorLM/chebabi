@@ -34,7 +34,7 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/agenda/novo-evento', 'APIs\MicrosoftController@criar_evento');
     //ROTAS LEGAL ONE
     Route::get('/andamentos-datacloud', 'APIs\LegalOneController@andamentos_datacloud');
-    //ESSA ROTA GET É PARA O PAGINATION FUNCIONAR
+    //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR
     Route::get('/andamentos-datacloud/filtrar', 'APIs\LegalOneController@andamentos_datacloud_filtrados');
     Route::post('/andamentos-datacloud/filtrar', 'APIs\LegalOneController@andamentos_datacloud_filtrados');
     Route::get('/andamentos-datacloud/andamento/{id}', 'APIs\LegalOneController@showAndamento');
@@ -89,7 +89,9 @@ Route::group(['prefix'=>'intranet/admin'],function(){
     Route::post('/del_tutorial', 'Admin\AdminController@del_tutorial');
     //ROTAS RELATÓRIO CONTROLLER
     Route::get('/relatorios', 'Relatorio\RelatorioController@relatorios');
-    Route::post('/relatorios', 'Relatorio\RelatorioController@relatorios_user');    
+    //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR
+    Route::get('/relatorios/filtrar', 'Relatorio\RelatorioController@relatorios_user');    
+    Route::post('/relatorios/filtrar', 'Relatorio\RelatorioController@relatorios_user');    
     //ROTA PRA SEEDAR O NOVO BD - APAGAR
     //Route::get('/seed', 'Admin\AdminController@seed');
 });

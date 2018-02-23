@@ -61,7 +61,7 @@
                 </div>
             @endif
 
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Área</th>

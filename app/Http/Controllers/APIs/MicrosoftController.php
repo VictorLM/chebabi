@@ -142,10 +142,16 @@ class MicrosoftController extends Controller
                 $request->session()->flash('alert-success', 'Evento cadastrado com sucesso!');
                 return redirect('/intranet/agenda/evento/'.$result['id']);
             }else{
+                if(!empty($result['error'])){
+                    $mensagem = $result['error']['message'];
+                    $mensagem .= '/ '.$result['error']['code'].'.';
+                }else{
+                    $mensagem = 'NULL';
+                }
                 return redirect()->back()
                     ->withInput()
                     ->withErrors(array('message' => 'Erro ao cadastrar! Favor informar o departamento responsável a seguinte mensagem: '. 
-                                        'Response code: ' .$response_code. '. Mensagem: ' .$result));
+                                        'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
             }
 
         }else{

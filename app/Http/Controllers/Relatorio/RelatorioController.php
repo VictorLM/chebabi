@@ -324,6 +324,7 @@ class RelatorioController extends Controller
             ->orderBy('created_at', 'DESC')
             ->limit(200)
             ->paginate(20);
+
         $title = 'Relatórios de viagem | Intranet Izique Chebabi Advogados Associados';
         return view('relatorio.relatorios', compact('title', 'users','relatorios_user'));
     }
