@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('intranet/teste', 'APIs\LegalOneController@getAndamentos');
-Route::get('intranet/teste2', 'APIs\LegalOneController@getPasta');
-
-
 //ROTAS DO SITE
 Route::get('/', 'Site\SiteController@index');
 Route::get('/advogados', 'Site\SiteController@advogados');
@@ -38,9 +34,14 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/agenda/novo-evento', 'APIs\MicrosoftController@criar_evento');
     //ROTAS LEGAL ONE
     Route::get('/andamentos-datacloud', 'APIs\LegalOneController@andamentos_datacloud');
+    //ESSA ROTA GET É PARA O PAGINATION FUNCIONAR
+    Route::get('/andamentos-datacloud/filtrar', 'APIs\LegalOneController@andamentos_datacloud_filtrados');
+    Route::post('/andamentos-datacloud/filtrar', 'APIs\LegalOneController@andamentos_datacloud_filtrados');
+    Route::get('/andamentos-datacloud/andamento/{id}', 'APIs\LegalOneController@showAndamento');
     Route::get('/inserir-andamentos', 'APIs\LegalOneController@andamentos');
     Route::post('/get-pasta-id', 'APIs\LegalOneController@id_pasta');
     Route::post('/andamento', 'APIs\LegalOneController@inserir_andamentos');
+    //DEMAIS ROTAS
     Route::get('/aniversariantes', 'Intranet\IntranetController@aniversariantes');
     Route::get('/contatos', 'Intranet\IntranetController@contatos');
     Route::get('/procedimentos', 'Intranet\IntranetController@procedimentos');

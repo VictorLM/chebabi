@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         '\Intranet\Console\Commands\AtualizaTokenMSGraph',
         '\Intranet\Console\Commands\AtualizaEventosAgenda',
         '\Intranet\Console\Commands\AtualizaTiposAndamentosLegalOne',
+        '\Intranet\Console\Commands\AndamentosDataCloudProgressCrawler',
     ];
 
     /**
@@ -40,6 +41,10 @@ class Kernel extends ConsoleKernel
                 ->appendOutputTo(storage_path('logs/schedule.log'));
 
         $schedule->command('AtualizaTiposAndamentosLegalOne:refresh')
+                ->hourly()
+                ->appendOutputTo(storage_path('logs/schedule.log'));
+
+        $schedule->command('AndamentosDataCloudProgressCrawler:refresh')
                 ->hourly()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
     }

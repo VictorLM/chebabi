@@ -110,6 +110,7 @@
                     <option value="{{$user->id}}" {{ (collect(old('envolvidos'))->contains($user->id)) ? 'selected':'' }}>{{$user->name}}</option>
                 @endforeach
               </select>
+              <small>* Máximo 4.</small><br/>
                 @if ($errors->has('envolvidos'))
                     <small style="color:red;">
                         {{ $errors->first('envolvidos') }}

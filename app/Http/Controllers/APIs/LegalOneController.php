@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
-use Intranet\Andamentos;
+use Intranet\AndamentoDataCloud;
 
 class LegalOneController extends Controller
 {
@@ -19,142 +19,74 @@ class LegalOneController extends Controller
         $this->middleware('auth');
     }
 
-    ///////////////////////////////////////////
-    private function get_cURL($parameters){
-
-        $token = DB::table('apikeys')->where('name', 'Legal One Corporate Brazil')->value('token');
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $parameters);
-        $headers = array('Authorization: Bearer ' . $token);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $result = curl_exec($ch);
-
-        $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        curl_close($ch);
-
-        $result = json_decode($result, TRUE);
-        dd($result);
-        if($response_code == 200 && !empty($result) && !isset($result['error'])){
-            return($result);
-        }else{
-            return NULL;
-        }
-
-    }
-
-    public function getAndamentos()
-    {
-        set_time_limit(600);
-        $token = DB::table('apikeys')->where('name', 'Legal One Corporate Brazil')->value('token');
-
-        $parameters = 'https://api.thomsonreuters.com/legalone/v1/api/rest/Updates';
-        $parameters .= '?$filter=originType eq ';
-        $parameters .= "'";
-        $parameters .= 'OfficialJournalsCrawler';
-        $parameters .= "'";
-        $parameters .= 'and date Ge ';
-        $parameters .= '2018-02-07T00:00:00Z';
-        $parameters .= '&$expand=relationships($filter=linkType eq ';
-        $parameters .= "'Litigation')";
-        //dd($parameters);
-        $result = $this->get_cURL($parameters);
-
-        $teste = array(
-            array(
-                'id' => '',
-                'description' => '',
-                'creationDate' => '',
-                'folder' => '',
-            )
-        );
-
-        $contador = 0;
-
-        $next = TRUE;
-
-        do {
-            if(!isset($result["error"]) && !empty($result["value"])){
-                foreach ($result['value'] as $key => $value) {
-
-                    if(!empty($value['relationships'][0]['linkId'])){
-                        $pasta = $this->getPasta($value['relationships'][0]['linkId']);
-                    }else{
-                        $pasta = NULL;
-                    }
-                    //PEGAR NOME CLIENTE E ÁREA DO PROCESSO
-                    //////////////////////////////////
-                    $pasta = $pasta['folder'];
-                    $numero = $pasta['identifierNumber'];
-                    $cliente = $pasta['participants'][0]['contactId'];
-                    //CLIENTE E AREA
-                    /////////////////////////////////
-                    //INSERIR BD
-                    $teste[$contador]['id'] = $value['id'];
-                    $teste[$contador]['description'] = $value['description'];
-                    $teste[$contador]['creationDate'] = $value['creationDate'];
-                    $teste[$contador]['folder'] = $pasta;
-
-                    $contador++;
-                    //////////////////////////////////////
-                }
-                if(isset($result["@odata.nextLink"])){
-                    $result = $this->get_cURL($result["@odata.nextLink"]);
-                    $next = TRUE;
-                }else{
-                    $next = FALSE;
-                }
-            }else{
-                $next = FALSE;
-            }
-        }while($next);
-        dd($teste);
-    }
-
-    private function getPasta($linkId)
-    {
-        $token = DB::table('apikeys')->where('name', 'Legal One Corporate Brazil')->value('token');
-
-        //$linkId = 2386;
-        //$filter = '?%24expand=participants';
-        $filter = '?%24expand=participants($filter=type eq ';
-        $filter .= "'";
-        $filter .= 'Customer';
-        $filter .= "'";
-        $filter .= ")";
-
-        //$filter .= '$select=id,folder,identifierNumber,oldNumber&$expand=participants($filter=type eq ';
-        //$filter .= "'Customer' or type eq 'OtherParty')";
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.thomsonreuters.com/legalone/v1/api/rest/Lawsuits/'.$linkId.$filter);
-        $headers = array('Authorization: Bearer ' . $token);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $result = curl_exec($ch);
-
-        $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        curl_close($ch);
-        
-        $result = json_decode($result, TRUE);
-        //dd($result);
-        if($response_code == 200 && !empty($result) && !isset($result['error'])){
-            return($result);
-        }else{
-            return NULL;
-        }
-
-    }
-    ///////////////////////////////////////////
-
     public function andamentos_datacloud()
     {
-        return ("EM DESENVOLVIMENTO");
+        $andamentos = AndamentoDataCloud::orderBy('updated_at', 'Desc')
+            ->limit(100)
+            ->paginate(20);
+
+        $title = 'Andamentos não oficiais Data Cloud Legal One | Intranet Izique Chebabi Advogados Associados';
+        return view('intranet.andamentos', compact('title', 'andamentos'));
+    }
+
+    public function andamentos_datacloud_filtrados(Request $request)
+    {
+        $validatedData = Validator::make($request->all(), [
+            'area' => [
+                'nullable',
+                Rule::in(['Cível', 'Trabalhista', 'BR']),
+            ],
+            'posicao' => [
+                'nullable',
+                Rule::in(['Autor', 'Réu']),
+            ],
+            'pasta' => 'nullable|string|max:11',
+            'cliente' => 'nullable|string|max:100',
+        ]);
+
+        if ($validatedData->fails()){
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }else{
+            $area = null;
+            $posicao = null;
+            $pasta = null;
+            $cliente = null;
+            
+            $andamentos = AndamentoDataCloud::orderBy('updated_at', 'Desc');
+
+            if(!empty($request->area)){
+                $andamentos->where('area', $request->area);
+                $area = $request->area;
+            }
+            if(!empty($request->posicao)){
+                if($request->posicao == "Autor"){
+                    $andamentos->whereIn('posicao', ['Autor', 'Reclamante']);
+                }
+                if($request->posicao == "Réu"){
+                    $andamentos->whereIn('posicao', ['Réu', 'Reclamada']);
+                }
+                $posicao = $request->posicao;
+            }
+            if(!empty($request->pasta)){
+                $andamentos->where('pasta', 'like', '%'.$request->pasta.'%');
+                $pasta = $request->pasta;
+            }
+            if(!empty($request->cliente)){
+                $andamentos->where('cliente', 'like', '%'.$request->cliente.'%');
+                $cliente = $request->cliente;
+            }
+
+            $andamentos_filtrados = $andamentos->paginate(20);
+
+            $title = 'Andamentos não oficiais Data Cloud Legal One | Intranet Izique Chebabi Advogados Associados';
+            return view('intranet.andamentos', compact('title', 'andamentos_filtrados', 'area', 'posicao', 'pasta', 'cliente'));
+        }
+    }
+
+    public function showAndamento(Request $request, $id){
+        $andamento = AndamentoDataCloud::find($id);
+        $title = 'Andamento não oficial Data Cloud Legal One | Intranet Izique Chebabi Advogados Associados';
+        return view('intranet.andamento', compact('title', 'andamento'));
     }
 
     public function andamentos()
@@ -164,7 +96,7 @@ class LegalOneController extends Controller
                 ->get();
 
         $title = 'Novo Andamento | Intranet Izique Chebabi Advogados Associados';
-        return view('intranet.andamentos', compact('title', 'tipos'));
+        return view('intranet.novo_andamento', compact('title', 'tipos'));
     }
 
     public function id_pasta(Request $request){
@@ -242,10 +174,10 @@ class LegalOneController extends Controller
                 'relationships' => 
                 array (
                 0 => 
-                array (
-                    'linkId' => $request->pastaid,
-                    'linkType' => 'Litigation',
-                ),
+                    array (
+                        'linkId' => $request->pastaid,
+                        'linkType' => 'Litigation',
+                    ),
                 ),
             );
 

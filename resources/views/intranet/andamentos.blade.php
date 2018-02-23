@@ -1,124 +1,144 @@
 @extends('intranet.templates.template')
 
-@push ('styles')
-    <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
-@endpush
-
 @section('content')
-<div class="container"> 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Novo Andamento - Legal One</h2>
-                    <small>Os andamentos podem ser visualizados/inseridos no Legal One > Processos > Visualizar Pasta > Andamentos.</small>
-                </div>
 
-                <div class="panel-body">
-                    
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @elseif(Session::has('alert-success'))
-                        <div class="alert alert-success alert-dismissable">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <li>{{ Session::get('alert-success') }}</li>
-                        </div>
-                    @endif
-                    
-                    <form class="form-horizontal" id="form" method="POST" enctype="multipart/form-data" action="{{action('APIs\LegalOneController@inserir_andamentos')}}">
+<div class="container">
+  
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="container-fluid" style="padding:0!important;">
+
+                <h2><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Andamentos não oficiais Data Cloud - Legal One</h2>
+
+                <div class="col-xs-12 form-relatorios">
+                    <form class="form-inline" method="POST" id="form_andamentos" action="{{action('APIs\LegalOneController@andamentos_datacloud_filtrados')}}">
                         {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('pasta') ? ' has-error' : '' }}">
-                            <label for="pasta" class="col-md-3 control-label">** Pasta</label>
-
-                            <div class="col-md-4">
-                                <input id="pasta" type="text" class="form-control text-uppercase" name="pasta" maxlength="11" value="{{ old('pasta') }}" required>
-                                <div id="display" class="live-search list-group"></div>
-                                <input name="pastaid" id="pastaid" type="hidden" value="{{old('pastaid')}}">
-                                @if ($errors->has('pasta'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('pasta') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="col-md-3">
-                                <button class="pesquisar btn btn-primary btn-block" id="pesquisar" type="button">
-                                    Pesquisar Pasta
-                                    <i id="loaderpasta" class="loader fa fa-refresh fa-spin fa-lg fa-fw"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group{{ $errors->has('tipo') ? ' has-error' : '' }}">
-                            <label for="tipo" class="col-md-3 control-label">* Tipo</label>
-
-                            <div class="col-md-7">
-                                <select class="form-control" name="tipo" id="tipo" required>
-                                    <option></option>
-                                    @foreach($tipos as $tipo)
-                                        <option value="{{$tipo->id}}" @if(old('tipo')==$tipo->id) selected @endif>{{$tipo->name}}</option>
-                                    @endforeach
-                                </select>
-
-                                @if ($errors->has('tipo'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('tipo') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
-                            <label for="descricao" class="col-md-3 control-label">* Descrição</label>
-
-                            <div class="col-md-7">
-                                <textarea class="form-control" name="descricao" id="descricao" maxlength="2000" 
-                                @if($errors->has('descricao')) style="border-color:red;" autofocus @endif>{{old('descricao')}}</textarea>
-                                <small>* Máximo 2000 caracteres.</small>
-                                @if ($errors->has('descricao'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('descricao') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary">
-                                    Inserir
-                                </button>
-                            </div>
+                            <select name="area" class="form-control" form="form_andamentos">
+                                <option value="">Área</option>
+                                <option value="Cível" @if(isset($area) && $area == 'Cível') selected @endif>Cível</option>
+                                <option value="Trabalhista" @if(isset($area) && $area == 'Trabalhista') selected @endif>Trabalhista</option>
+                                <option value="BR" @if(isset($area) && $area == 'BR') selected @endif>BR</option>
+                            </select>
                         </div>
-                        <span>* Campos obrigatórios.</span><br/>
-                        <span>** É obrigatório realizar a pesquisa pela pasta desejada e seleciona-la na lista de resultados.</span><br/>
-                        <span>*** O andamento será inserido com a seguinte observação: "Andamento inserido através da intranet.".</span>
+                        <div class="form-group">
+                            <select name="posicao" class="form-control" form="form_andamentos">
+                                <option value="">Posição</option>
+                                <option value="Autor" @if(isset($posicao) && $posicao == 'Autor') selected @elseif (old('posicao') == 'Autor') selected @endif>Autor</option>
+                                <option value="Réu" @if(isset($posicao) && $posicao == 'Réu') selected @elseif (old('posicao') == 'Réu') selected @endif>Réu</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="pasta" id="pasta" placeholder="Pasta" maxlength="11" 
+                            value="@if(isset($pasta) && !empty($pasta)){{$pasta}}@else{{old('pasta')}}@endif">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Cliente" maxlength="100" 
+                            value="@if(isset($cliente) && !empty($cliente)){{$cliente}}@else{{old('cliente')}}@endif">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-filter"></i> Filtrar</button>
+                            <a href="{{url('/intranet/andamentos-datacloud')}}">
+                                <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
+                            </a>
+                        </div>
                     </form>
                 </div>
+                <small>* Exibindo os 100 mais recentes. Use os filtros para visualizar todos.</small>
             </div>
+        </div>
+
+        <div class="panel-body">
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Área</th>
+                        <th>Pasta</th>
+                        <th>Processo</th>
+                        <th>Cliente</th>
+                        <th>Posição Cliente</th>
+                        <th>Parte Contrária</th>
+                        <th>Disponivel em</th>
+                        <th>Cadastrado em</th>
+                        <th>Descrição Andamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(isset($andamentos_filtrados))
+                    
+                        @foreach($andamentos_filtrados as $andamento)
+                            <tr>
+                                <td>{{$andamento->area}}</td>
+                                <td><a href="http://iziquechebabi.novajus.com.br/processos/processos/Details/{{$andamento->pasta_id}}" target="_blank">{{$andamento->pasta}}</a></td>
+                                <td>{{$andamento->processo}}</td>
+                                <td>{{$andamento->cliente}}</td>
+                                <td>{{$andamento->posicao}}</td>
+                                <td>{{$andamento->contrario}}</td>
+                                <td>{{Carbon\Carbon::parse($andamento->created_at)->format('d/m/y H:i')}}</td>
+                                <td>{{Carbon\Carbon::parse($andamento->updated_at)->format('d/m/y H:i')}}</td>
+                                <td>
+                                    @if(strlen($andamento->descricao) > 200) 
+                                        {{str_limit($andamento->descricao, 200, '...')}} 
+                                        <br/><a href="{{url("/intranet/andamentos-datacloud/andamento/$andamento->id")}}" target="_blank">Visualizar andamento completo</a>
+                                        <br/><a href="{{url("http://iziquechebabi.novajus.com.br/processos/andamentos/Details/$andamento->id?parentId=$andamento->pasta_id")}}" target="_blank">Visualizar no Legal One</a>
+                                    @else
+                                        {{$andamento->descricao}}
+                                        <br/><a href="{{url("http://iziquechebabi.novajus.com.br/processos/andamentos/Details/$andamento->id?parentId=$andamento->pasta_id")}}" target="_blank">Visualizar no Legal One</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    @else
+
+                        @foreach($andamentos as $andamento)
+                            <tr>
+                                <td>{{$andamento->area}}</td>
+                                <td><a href="http://iziquechebabi.novajus.com.br/processos/processos/Details/{{$andamento->pasta_id}}" target="_blank">{{$andamento->pasta}}</a></td>
+                                <td>{{$andamento->processo}}</td>
+                                <td>{{$andamento->cliente}}</td>
+                                <td>{{$andamento->posicao}}</td>
+                                <td>{{$andamento->contrario}}</td>
+                                <td>{{Carbon\Carbon::parse($andamento->created_at)->format('d/m/y H:i')}}</td>
+                                <td>{{Carbon\Carbon::parse($andamento->updated_at)->format('d/m/y H:i')}}</td>
+                                <td>
+                                    @if(strlen($andamento->descricao) > 200) 
+                                        {{str_limit($andamento->descricao, 200, '...')}} 
+                                        <br/><a href="{{url("/intranet/andamentos-datacloud/andamento/$andamento->id")}}" target="_blank">Visualizar andamento completo</a>
+                                        <br/><a href="{{url("http://iziquechebabi.novajus.com.br/processos/andamentos/Details/$andamento->id?parentId=$andamento->pasta_id")}}" target="_blank">Visualizar no Legal One</a>
+                                    @else
+                                        {{$andamento->descricao}}
+                                        <br/><a href="{{url("http://iziquechebabi.novajus.com.br/processos/andamentos/Details/$andamento->id?parentId=$andamento->pasta_id")}}" target="_blank">Visualizar no Legal One</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    @endif
+ 
+                </tbody>
+            </table>
+            @if(isset($andamentos_filtrados))
+                {!! $andamentos_filtrados->appends(Request::only(['area'=>'area', 'pasta'=>'pasta', 'posicao'=>'posicao', 'cliente'=>'cliente']))->links() !!}
+            @else
+                {!! $andamentos->links() !!}
+            @endif
+
         </div>
     </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="loaderModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content text-center">
-                    <div class="modal-body">
-                        <h2>Inserindo...Aguarde.</h2>
-                        <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 10em;"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 </div>
-@push ('scripts')
-    <script src="{{ asset('assets/js/andamentos.js') }}"></script>
-@endpush
+
 @endsection

@@ -21,7 +21,6 @@ class MicrosoftController extends Controller
     }
 
     public function criar_evento(Request $request){
-        //VAI INCLUIR COMO ENVOLVIDO QUEM CRIA O EVENTO?
         //MAX 4 ENVOLVIDOS
         $validatedData = Validator::make($request->all(), [
             'titulo' => 'required|string|max:200',
