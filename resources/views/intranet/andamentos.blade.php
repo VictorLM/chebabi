@@ -15,29 +15,39 @@
                     <form class="form-inline" method="POST" id="form_andamentos" action="{{action('APIs\LegalOneController@andamentos_datacloud_filtrados')}}">
                         {{ csrf_field() }}
                         <div class="form-group">
+                            <small>Área:</small><br/>
                             <select name="area" class="form-control" form="form_andamentos">
-                                <option value="">Área</option>
+                                <option></option>
                                 <option value="Cível" @if(isset($area) && $area == 'Cível') selected @endif>Cível</option>
                                 <option value="Trabalhista" @if(isset($area) && $area == 'Trabalhista') selected @endif>Trabalhista</option>
-                                <option value="BR" @if(isset($area) && $area == 'BR') selected @endif>BR</option>
+                                <option value="BR Trabalhista" @if(isset($area) && $area == 'BR Trabalhista') selected @endif>BR Trabalhista</option>
                             </select>
                         </div>
                         <div class="form-group">
+                            <small>Posição:</small><br/>
                             <select name="posicao" class="form-control" form="form_andamentos">
-                                <option value="">Posição</option>
+                                <option></option>
                                 <option value="Autor" @if(isset($posicao) && $posicao == 'Autor') selected @elseif (old('posicao') == 'Autor') selected @endif>Autor</option>
                                 <option value="Réu" @if(isset($posicao) && $posicao == 'Réu') selected @elseif (old('posicao') == 'Réu') selected @endif>Réu</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="pasta" id="pasta" placeholder="Pasta" maxlength="11" 
+                            <small>Pasta:</small><br/>
+                            <input type="text" class="form-control" name="pasta" id="pasta" maxlength="11" 
                             value="@if(isset($pasta) && !empty($pasta)){{$pasta}}@else{{old('pasta')}}@endif">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Cliente" maxlength="100" 
+                            <small>Cliente:</small><br/>
+                            <input type="text" class="form-control" name="cliente" id="cliente" maxlength="100" 
                             value="@if(isset($cliente) && !empty($cliente)){{$cliente}}@else{{old('cliente')}}@endif">
                         </div>
                         <div class="form-group">
+                            <small>Cadastrado a partir de:</small><br/>
+                            <input type="date" class="form-control" name="data" maxlength="10" 
+                            value="@if(isset($data) && !empty($data)){{$data}}@else{{old('data')}}@endif">
+                        </div>
+                        <div class="form-group">
+                            <small></small><br/>
                             <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-filter"></i> Filtrar</button>
                             <a href="{{url('/intranet/andamentos-datacloud')}}">
                                 <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
@@ -45,7 +55,10 @@
                         </div>
                     </form>
                 </div>
-                <small>* Exibindo os 100 mais recentes. Use os filtros para visualizar todos.</small>
+                <small>Ordenando pela data de cadastro do andamento no Legal One.</small><br/>
+                @if(!isset($andamentos_filtrados))
+                    <small>* Exibindo os 100 mais recentes. Use os filtros para visualizar todos.</small>
+                @endif
             </div>
         </div>
 
@@ -131,9 +144,7 @@
                 </tbody>
             </table>
             @if(isset($andamentos_filtrados))
-                {!! $andamentos_filtrados->appends(Request::only(['area'=>'area', 'pasta'=>'pasta', 'posicao'=>'posicao', 'cliente'=>'cliente']))->links() !!}
-            @else
-                {!! $andamentos->links() !!}
+                {!! $andamentos_filtrados->appends(Request::only(['area'=>'area', 'pasta'=>'pasta', 'posicao'=>'posicao', 'cliente'=>'cliente', 'data'=>'data']))->links() !!}
             @endif
 
         </div>

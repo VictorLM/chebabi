@@ -22,8 +22,8 @@ class LegalOneController extends Controller
     public function andamentos_datacloud()
     {
         $andamentos = AndamentoDataCloud::orderBy('updated_at', 'Desc')
-            ->limit(100)
-            ->paginate(20);
+            ->limit(20)
+            ->get();
 
         $title = 'Andamentos não oficiais Data Cloud Legal One | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.andamentos', compact('title', 'andamentos'));
@@ -34,7 +34,7 @@ class LegalOneController extends Controller
         $validatedData = Validator::make($request->all(), [
             'area' => [
                 'nullable',
-                Rule::in(['Cível', 'Trabalhista', 'BR']),
+                Rule::in(['Cível', 'Trabalhista', 'BR Trabalhista']),
             ],
             'posicao' => [
                 'nullable',
@@ -42,6 +42,7 @@ class LegalOneController extends Controller
             ],
             'pasta' => 'nullable|string|max:11',
             'cliente' => 'nullable|string|max:100',
+            'data' => 'nullable|date',
         ]);
 
         if ($validatedData->fails()){
@@ -51,6 +52,7 @@ class LegalOneController extends Controller
             $posicao = null;
             $pasta = null;
             $cliente = null;
+            $data = null;
             
             $andamentos = AndamentoDataCloud::orderBy('updated_at', 'Desc');
 
@@ -75,11 +77,15 @@ class LegalOneController extends Controller
                 $andamentos->where('cliente', 'like', '%'.$request->cliente.'%');
                 $cliente = $request->cliente;
             }
+            if(!empty($request->data)){
+                $andamentos->whereDate('updated_at', '>=', $request->data);
+                $data = $request->data;
+            }
 
             $andamentos_filtrados = $andamentos->paginate(20);
 
             $title = 'Andamentos não oficiais Data Cloud Legal One | Intranet Izique Chebabi Advogados Associados';
-            return view('intranet.andamentos', compact('title', 'andamentos_filtrados', 'area', 'posicao', 'pasta', 'cliente'));
+            return view('intranet.andamentos', compact('title', 'andamentos_filtrados', 'area', 'posicao', 'pasta', 'cliente', 'data'));
         }
     }
 

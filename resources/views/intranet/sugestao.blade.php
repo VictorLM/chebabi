@@ -8,7 +8,8 @@
 
         <div class="panel-heading">
             <h2><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Enviar Sugestão</h2>
-            <small>Obrigado por colaborar. Sua sugestão será analisada e se aprovada, será implementada.</small>
+            <small>Obrigado por colaborar. Sua sugestão será analisada e se aprovada, será implementada.</small><br/>
+            <small>* Não se preocupe, sua sugestão será enviada anônimamente.</small>
         </div>
 
         <div class="panel-body">

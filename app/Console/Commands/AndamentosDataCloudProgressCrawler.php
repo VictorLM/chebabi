@@ -151,14 +151,14 @@ class AndamentosDataCloudProgressCrawler extends Command
     {
         set_time_limit(3600);//UMA HORA
 
-        $data = Carbon::now()->toDateString().'T00:00:00Z';
-        //$data = '2018-02-20T00:00:00Z';
+        //$data = Carbon::now()->toDateString().'T00:00:00Z';
+        $data = '2018-02-24T00:00:00Z';
 
         $parameters = 'https://api.thomsonreuters.com/legalone/v1/api/rest/Updates';
         $parameters .= '?$filter=originType eq ';
         $parameters .= "'";
         //$parameters .= 'OfficialJournalsCrawler'; //ANDAMENTOS DE DIÁRIOS OFICIAIS
-        $parameters .= 'ProgressesCrawler';
+        $parameters .= 'ProgressesCrawler'; //ANDAMENTOS DE SITES DOS TRIBUNAIS
         $parameters .= "'";
         $parameters .= 'and creationDate Ge ';
         $parameters .= $data;
@@ -198,8 +198,7 @@ class AndamentosDataCloudProgressCrawler extends Command
                     }
 
                     $area = $this->getArea($pasta['responsibleOfficeId']);
-                    $area = substr($area['path'], strrpos($area['path'], '/') + 1);
-                    $area = str_replace(" ", "", $area);
+                    $area = substr($area['path'], strrpos($area['path'], '/') + 2);
 
                     AndamentoDataCloud::updateOrCreate(
                         ['id' => $value['id']],
