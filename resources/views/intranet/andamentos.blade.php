@@ -11,7 +11,7 @@
 
                 <h2><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Andamentos não oficiais Data Cloud - Legal One</h2>
 
-                <div class="col-xs-12 form-relatorios">
+                <div class="form-relatorios">
                     <form class="form-inline" method="POST" id="form_andamentos" action="{{action('APIs\LegalOneController@andamentos_datacloud_filtrados')}}">
                         {{ csrf_field() }}
                         <div class="form-group">
