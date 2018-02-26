@@ -151,8 +151,8 @@ class AndamentosDataCloudProgressCrawler extends Command
     {
         set_time_limit(3600);//UMA HORA
 
-        //$data = Carbon::now()->toDateString().'T00:00:00Z';
-        $data = '2018-02-24T00:00:00Z';
+        $data = Carbon::now()->toDateString().'T00:00:00Z';
+        //$data = '2018-02-24T00:00:00Z';
 
         $parameters = 'https://api.thomsonreuters.com/legalone/v1/api/rest/Updates';
         $parameters .= '?$filter=originType eq ';

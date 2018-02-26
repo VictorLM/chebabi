@@ -27,8 +27,8 @@
                             <small>Posição:</small><br/>
                             <select name="posicao" class="form-control" form="form_andamentos">
                                 <option></option>
-                                <option value="Autor" @if(isset($posicao) && $posicao == 'Autor') selected @elseif (old('posicao') == 'Autor') selected @endif>Autor</option>
-                                <option value="Réu" @if(isset($posicao) && $posicao == 'Réu') selected @elseif (old('posicao') == 'Réu') selected @endif>Réu</option>
+                                <option value="Autor" @if(isset($posicao) && $posicao == 'Autor') selected @elseif (old('posicao') == 'Autor') selected @endif>Autor/Reclamante</option>
+                                <option value="Réu" @if(isset($posicao) && $posicao == 'Réu') selected @elseif (old('posicao') == 'Réu') selected @endif>Réu/Reclamada</option>
                             </select>
                         </div>
                         <div class="form-group">
