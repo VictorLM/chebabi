@@ -65,7 +65,7 @@
                             <label for="name" class="col-md-4 control-label">* OAB</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control text-uppercase" name="oab" maxlength="10" value="{{ $adv->oab or old('oab') }}" required>
+                                <input type="text" class="form-control" name="oab" maxlength="10" value="{{ $adv->oab or old('oab') }}" required>
 
                                 @if ($errors->has('oab'))
                                     <span class="help-block">

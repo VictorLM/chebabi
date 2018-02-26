@@ -29,7 +29,7 @@
                             <label for="cliente" class="col-md-4 control-label">* Cliente</label>
 
                             <div class="col-md-6">
-                                <input id="cliente" type="text" class="form-control text-uppercase" name="cliente" maxlength="100" value="{{ old('cliente') }}" required autofocus>
+                                <input id="cliente" type="text" class="form-control" name="cliente" maxlength="100" value="{{ old('cliente') }}" required autofocus>
 
                                 @if ($errors->has('cliente'))
                                     <span class="help-block">
