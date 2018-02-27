@@ -10,6 +10,7 @@ use Intranet\Advogados;
 use Carbon\Carbon;
 use Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
@@ -49,6 +50,16 @@ class SiteController extends Controller
                 $request->session()->flash('alert-success', 'Erro ao enviar! tente novamente mais tarde.');
                 return redirect()->action('Site\SiteController@contato');
             }else{
+                DB::table('contatos')->insert([
+                    [
+                        'nome' => $request->input('remetenteNome'), 
+                        'telefone' => $request->input('telefone'), 
+                        'email' => $request->input('remetenteEmail'), 
+                        'ip' => 'IP: ' . \Request::ip() .' - USER-AGENT: ' . $request->header('User-Agent'),
+                        'mensagem' => strip_tags($request->input('mensagem')),
+                        'created_at' => Carbon::now(),
+                    ]
+                ]);                
                 $request->session()->flash('alert-success', 'Mensagem enviada com sucesso!');
                 return redirect()->action('Site\SiteController@contato');
             }
@@ -61,7 +72,7 @@ class SiteController extends Controller
         $validator = Validator::make($request->all(), [
             'remetenteNome' => 'required|string|max:50',
             'telefone' => 'nullable|string|max:17',
-            'rg' => 'required|string|max:13',
+            'remetenteEmail' => 'required|email|max:100',
             'rg' => 'required|string|max:13',
             'cpf' => 'required|string|max:14',
             'endereco' => 'required|string|max:100',
@@ -117,6 +128,21 @@ class SiteController extends Controller
                 $request->session()->flash('alert-success', 'Erro ao enviar! tente novamente mais tarde.');
                 return redirect()->action('Site\SiteController@trabalheconosco');
             }else{
+                DB::table('curriculos')->insert([
+                    [
+                        'nome' => $request->input('remetenteNome'), 
+                        'email' => $request->input('remetenteEmail'), 
+                        'telefone' => $request->input('telefone'),
+                        'rg' => $request->input('rg'),
+                        'cpf' => $request->input('cpf'),
+                        'endereco' => $request->input('endereco'),
+                        'nascimento' => $request->input('data'),
+                        'area' => $request->input('area'),
+                        'ip' => 'IP: ' . \Request::ip() .' - USER-AGENT: ' . $request->header('User-Agent'),
+                        'mensagem' => strip_tags($request->input('mensagem')),
+                        'created_at' => Carbon::now(),
+                    ]
+                ]);
                 $request->session()->flash('alert-success', 'Seu currículo foi enviado com sucesso. Boa sorte!');
                 return redirect()->action('Site\SiteController@trabalheconosco');
             }

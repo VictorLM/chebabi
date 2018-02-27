@@ -9,7 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@if(!empty($title)) {{$title}} @else Intranet @endif</title>
-
+    <link rel="icon" type="image/png" href="{{url('assets/imagens/icon.png')}}" />
+    
     <!-- Styles -->
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
