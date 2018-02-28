@@ -2,6 +2,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{url("assets/css/multi-select.dist.css")}}"/>
+    <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -28,7 +29,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{action('APIs\MicrosoftController@criar_evento')}}">
+            <form method="POST" id="form" action="{{action('APIs\MicrosoftController@criar_evento')}}">
                 {!! csrf_field() !!}
                 
                 <div class="form-group col-md-4">
@@ -146,6 +147,18 @@
 
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="loaderModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content text-center">
+                    <div class="modal-body">
+                        <h2>Cadastrando...<br/>Aguarde.</h2>
+                        <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 10em;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -153,7 +166,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/js/jquery.multi-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/pt-br.js"></script>
-    <script src="{{url("assets/js/novoevento.js")}}"></script>
+    <script src="{{url('assets/js/novoevento.js')}}"></script>
+    <script src="{{asset('assets/js/modal_loader.js')}}"></script>
 @endpush
     
 @endsection

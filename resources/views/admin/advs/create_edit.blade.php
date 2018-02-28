@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
 <div class="container"> 
     <div class="row">
@@ -28,11 +32,11 @@
                     @endif
                     
                     @if (!empty($adv))
-                        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{action('Advogados\AdvogadosController@update', $adv->id)}}">
+                        <form class="form-horizontal" method="POST" id="form" enctype="multipart/form-data" action="{{action('Advogados\AdvogadosController@update', $adv->id)}}">
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
                     @else
-                        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{action('Advogados\AdvogadosController@store')}}">
+                        <form class="form-horizontal" method="POST" id="form" enctype="multipart/form-data" action="{{action('Advogados\AdvogadosController@store')}}">
                         {{ csrf_field() }}
                     @endif
                     
@@ -120,6 +124,23 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loaderModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content text-center">
+                <div class="modal-body">
+                    <h2>Cadastrando...<br/>Aguarde.</h2>
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 10em;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@push ('scripts')
+    <script src="{{asset('assets/js/modal_loader.js')}}"></script>
+@endpush
 
 @endsection

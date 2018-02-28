@@ -271,22 +271,6 @@
         </div>
 
         <div class="advogado">
-            <a href="#modalAdv18"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/JulianaBatista.jpg')}}">
-            <h1>JULIANA BATISTA ALVES</h1><p><h3>OAB/SP 307.708</h3></p></a>
-                <div id="modalAdv18" class="modalDialog">
-                    <div class="advtxt">
-                        <a href="#close" title="Close" class="close">X</a>
-                        <div class="imagemadv"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/JulianaBatista.jpg')}}"></div>
-                        <h2>JULIANA CRISTINA BATISTA ALVES</h2>
-                        <p><h4>OAB/SP 307.708</h4></p></a>
-                        <br/>
-                        <p>Advogada graduada pela Faculdade Metropolitana de Campinas (Metrocamp) em 2008, atuando na área <b>Civil</b>, 
-                        com especialização em Direito do Trabalho e Previdenciário pela Proordem ESAMC concluída em 2013.</p>
-                    </div>
-                </div>
-        </div>
-
-        <div class="advogado">
             <a href="#modalAdv20"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/AnaDias.jpg')}}">
             <h1>ANA PAULA LOUSADA DIAS</h1><p><h3>OAB/SP 320.121</h3></p></a>
                 <div id="modalAdv20" class="modalDialog">
@@ -345,22 +329,6 @@
                         <p><h4>OAB/SP 368.779</h4></p></a>
                         <br/>
                         <p>Advogado graduado pela Pontifícia Universidade Católica de Campinas (PUC) em 2015, atuando na área <b>Cível</b>.</p>
-                    </div>
-                </div>
-        </div>
-
-        <div class="advogado">
-            <a href="#modalAdv24"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/Mirela.jpg')}}">
-            <h1>MIRELA A. LOPES FELISBINO</h1><p><h3>OAB/SP 369.549</h3></p></a>
-                <div id="modalAdv24" class="modalDialog">
-                    <div class="advtxt">
-                        <a href="#close" title="Close" class="close">X</a>
-                        <div class="imagemadv"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/Mirela.jpg')}}"></div>
-                        <h2>MIRELA ANDRESSA LOPES FELISBINO</h2>
-                        <p><h4>OAB/SP 369.549</h4></p></a>
-                        <br/>
-                        <p>Advogada graduada pela Universidade do Estado de Minas Gerais – Campus Frutal, no ano de 2014, atuando no <b>Consultivo Contratual</b>. 
-                        Cursando pós-graduação em Direito Civil e Direito Empresarial, com ênfase em Contratos pela Faculdade de Direito Damásio de Jesus, ano de conclusão 2016.</p>
                     </div>
                 </div>
         </div>
@@ -538,6 +506,22 @@
                         e Direito Contratual pela EPD – Escola Paulista de Direito, concluída em 2017.</p>
                     </div>
                 </div>
+        </div>
+
+        <div class="advogado">
+            <a href="#modalAdv37"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/avatar.png')}}">
+            <h1>ANDRÉ FARIA LIMA</h1><p><h3>OAB/SP 242.942 </h3></p></a>
+            <div id="modalAdv37" class="modalDialog">
+                <div class="advtxt">
+                    <a href="#close" title="Close" class="close">X</a>
+                    <div class="imagemadv"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/avatar.png')}}"></div>
+                    <h2>ANDRÉ LUIS FARIA DE LIMA </h2>
+                    <p><h4>OAB/SP 242.942 </h4></p></a>
+                    <br/>
+                    <p>Advogado graduado pela Universidade Paulista em 2004, atuando na área <b>Trabalhista</b>, 
+                    com pós-graduação em Direito do Trabalho pela Universidade Paulista, concluída em 2007.</p>
+                </div>
+            </div>
         </div>
 
     </div>

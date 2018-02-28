@@ -82,10 +82,13 @@ class LegalOneController extends Controller
                 $data = $request->data;
             }
 
+            $count_andamentos = $andamentos;
+            $count = $count_andamentos->count();
+            
             $andamentos_filtrados = $andamentos->paginate(20);
 
             $title = 'Andamentos não oficiais Data Cloud Legal One | Intranet Izique Chebabi Advogados Associados';
-            return view('intranet.andamentos', compact('title', 'andamentos_filtrados', 'area', 'posicao', 'pasta', 'cliente', 'data'));
+            return view('intranet.andamentos', compact('title', 'andamentos_filtrados', 'area', 'posicao', 'pasta', 'cliente', 'data', 'count'));
         }
     }
 

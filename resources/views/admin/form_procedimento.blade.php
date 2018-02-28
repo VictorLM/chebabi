@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
 <div class="container"> 
     <div class="row">
@@ -22,7 +26,7 @@
                         </div>
                     @endif
                     
-                    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{action('Admin\AdminController@novo_procedimento')}}">
+                    <form class="form-horizontal" id="form" method="POST" enctype="multipart/form-data" action="{{action('Admin\AdminController@novo_procedimento')}}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -89,5 +93,23 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loaderModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content text-center">
+                <div class="modal-body">
+                    <h2>Cadastrando...<br/>Aguarde.</h2>
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 10em;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@push ('scripts')
+    <script src="{{asset('assets/js/modal_loader.js')}}"></script>
+@endpush
+
 @endsection

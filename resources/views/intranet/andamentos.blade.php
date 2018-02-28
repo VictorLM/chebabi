@@ -55,10 +55,12 @@
                         </div>
                     </form>
                 </div>
-                <small>Ordenando pela data de cadastro do andamento no Legal One.</small><br/>
-                @if(!isset($andamentos_filtrados))
+                @if(isset($andamentos_filtrados) && isset($count))
+                    <small><b><u>{{$count}}</u> Andamentos encontrados de acordo com os filtros aplicados acima.</b></small>
+                @else
                     <small>* Exibindo os 100 mais recentes. Use os filtros para visualizar todos.</small>
                 @endif
+                <br/><small>Ordenando pela data de cadastro do andamento no Legal One.</small>
             </div>
         </div>
 
