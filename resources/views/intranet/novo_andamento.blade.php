@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-3">
                                 <button type="submit" class="btn btn-primary">
-                                    Inserir
+                                    <i class="glyphicon glyphicon-plus"></i> Inserir
                                 </button>
                             </div>
                         </div>

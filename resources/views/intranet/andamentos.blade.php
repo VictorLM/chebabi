@@ -9,8 +9,11 @@
         <div class="panel-heading">
             <div class="container-fluid" style="padding:0!important;">
 
-                <h2><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Andamentos não oficiais Data Cloud - Legal One</h2>
-
+                <h2>
+                    <a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> 
+                    Andamentos não oficiais Data Cloud - Legal One 
+                </h2>
+                
                 <div class="form-relatorios">
                     <form class="form-inline" method="POST" id="form_andamentos" action="{{action('APIs\LegalOneController@andamentos_datacloud_filtrados')}}">
                         {{ csrf_field() }}
@@ -55,12 +58,14 @@
                         </div>
                     </form>
                 </div>
+                
                 @if(isset($andamentos_filtrados) && isset($count))
                     <small><b><u>{{$count}}</u> Andamentos encontrados de acordo com os filtros aplicados acima.</b></small>
                 @else
-                    <small>* Exibindo os 100 mais recentes. Use os filtros para visualizar todos.</small>
+                    <small>Exibindo os 20 mais recentes. Use os filtros para visualizar todos.</small>
                 @endif
                 <br/><small>Ordenando pela data de cadastro do andamento no Legal One.</small>
+                <br/><small><i>* Andamentos capturados dos sites dos tribunais, não dos diários oficiais.</i></small>
             </div>
         </div>
 

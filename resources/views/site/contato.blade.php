@@ -8,9 +8,13 @@
     <div id="contatomain">
         
         @if(Session::has('alert-success'))
-            <script>
-                alert('{{ Session::get('alert-success') }}');
-            </script>
+            <div style="text-align: center;background-color: lightgreen;width: 50%;margin: auto;border-radius: 1em;line-height: 3em;margin-bottom: 1em;">
+                <li>{{ Session::get('alert-success') }}</li>
+            </div>
+        @elseif(Session::has('alert-error'))
+            <div style="text-align: center;background-color: #ff44008c;width: 50%;margin: auto;border-radius: 1em;line-height: 3em;margin-bottom: 1em;">
+                <li>{{ Session::get('alert-error') }}</li>
+            </div>
         @endif
                 
         <div class="contato">

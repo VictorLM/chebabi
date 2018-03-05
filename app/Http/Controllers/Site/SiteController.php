@@ -47,7 +47,7 @@ class SiteController extends Controller
             });
 
             if (Mail::failures()) {
-                $request->session()->flash('alert-success', 'Erro ao enviar! tente novamente mais tarde.');
+                $request->session()->flash('alert-error', 'Erro ao enviar! tente novamente mais tarde.');
                 return redirect()->action('Site\SiteController@contato');
             }else{
                 DB::table('contatos')->insert([
