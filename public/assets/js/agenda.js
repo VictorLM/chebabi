@@ -13,7 +13,6 @@ function eventos() {
             $('#spinner').css('display', 'none');
         },
         success: function(response){
-            //console.log(response);
             calendar(response);
         }
     })
@@ -24,17 +23,13 @@ function calendar(response) {
         lang: 'pt-br',
         navLinks: true,
         eventLimit: true,
+        displayEventEnd: true, //PARA MOSTRAR A DATA DE TÉRMINO NO MODO MÊS
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay,listWeek'
         },
         events: response,
-        /*
-        dayClick: function() {
-            alert('a day has been clicked!');
-        },
-        */
     });
 }
 

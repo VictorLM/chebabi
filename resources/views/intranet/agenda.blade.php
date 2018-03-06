@@ -31,11 +31,12 @@
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
-                                    <td style="background-color:#E6EB0A;color:white;text-align:center;"><b>Ausente</b></td>
-                                    <td style="background-color:#00e600;color:white;text-align:center;"><b>Carro</b></td>
-                                    <td style="background-color:#ffa31a;color:white;text-align:center"><b>Motorista</b></td>
-                                    <td style="background-color:#80bfff;color:white;text-align:center"><b>Reunião</b></td>
-                                    <td style="background-color:#3a87ad;color:white;text-align:center"><b>Outro</b></td>
+                                    <td style="background-color:#E6EB0A;color:white;text-align:center;"><small><b>Ausente</b></small></td>
+                                    <td style="background-color:#00e600;color:white;text-align:center;"><small><b>Carro</b></small></td>
+                                    <td style="background-color:#ffa31a;color:white;text-align:center"><small><b>Motorista</b></small></td>
+                                    <td style="background-color:#80bfff;color:white;text-align:center"><small><b>Reunião</b></small></td>
+                                    <td style="background-color:#3a87ad;color:white;text-align:center"><small><b>Outro</b></small></td>
+                                    <td style="background-color:red;color:white;text-align:center"><small><b>Cancelado</b></small></td>
                                 </tr>
                             </tbody>
                         </table>
