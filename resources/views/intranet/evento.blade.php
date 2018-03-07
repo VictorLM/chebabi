@@ -26,6 +26,14 @@
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <li>{{ Session::get('alert-success') }}</li>
                 </div>
+            @elseif ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
 
             <table class="table table-bordered">
@@ -49,13 +57,9 @@
                     <td><b>Envolvidos: </b></td>
                     <td>
                         @if(isset($evento)) 
-                            <a href="mailto:{{$evento->envolvido1_email}}">{{$evento->envolvido1_nome}}</a>
-                            @if (!empty($evento->envolvido2_nome)); @endif
-                            <a href="mailto:{{$evento->envolvido2_email}}">{{$evento->envolvido2_nome}}</a>
-                            @if (!empty($evento->envolvido3_nome)); @endif
-                            <a href="mailto:{{$evento->envolvido3_email}}">{{$evento->envolvido3_nome}}</a>
-                            @if (!empty($evento->envolvido4_nome)); @endif
-                            <a href="mailto:{{$evento->envolvido4_email}}">{{$evento->envolvido4_nome}}</a>
+                            @foreach(unserialize($evento->envolvidos) as $envolvido)
+                                <a href="mailto:{{$envolvido['emailAddress']['address']}}">{{$envolvido['emailAddress']['name']}}</a>; 
+                            @endforeach
                         @endif
                     </td>
                 </tr>
@@ -71,7 +75,20 @@
                 </tr>
         
             </table>
-            
+
+            @if($edit_cancel && !$evento->cancelado) 
+                <a href="{{action('Intranet\IntranetController@editEvento', $evento->id)}}">
+                    <button class="btn btn-primary" type="button">
+                        <i class="glyphicon glyphicon-pencil"></i> Editar
+                    </button>
+                </a>
+                <a href="{{action('APIs\MicrosoftController@cancela_evento', $evento->id)}}">
+                    <button class="btn btn-danger" type="button">
+                        <i class="glyphicon glyphicon-trash"></i> Cancelar
+                    </button>
+                </a>
+            @endif
+
         </div>
 
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-$evento = array (
+$evento_atualizado = array (
   'subject' => '['.$request->tipo.'] '.$request->titulo,
   'body' => 
   array (
@@ -28,8 +28,8 @@ $evento = array (
       array (
       'emailAddress' => 
       array (
-        'address' => Auth::user()->email,
-        'name' => Auth::user()->name,
+        'address' => $evento->organizador_email,
+        'name' => $evento->organizador_nome,
       ),
       'type' => 'required',
     ),
@@ -44,7 +44,7 @@ if(count($request->envolvidos)>0){
 
   do{
     
-    $evento['attendees'][] =
+    $evento_atualizado['attendees'][] =
           
     array (
         'emailAddress' => 

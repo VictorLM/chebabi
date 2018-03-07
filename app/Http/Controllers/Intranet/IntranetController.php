@@ -110,6 +110,7 @@ class IntranetController extends Controller
         $users = DB::table('users')
             ->select('id', 'name', 'email')
             ->where('ativo', TRUE)
+            ->where('id', '!=', Auth::user()->id)
             ->orderBy('name')
             ->get();
         $title = 'Novo Evento | Intranet Izique Chebabi Advogados Associados';
@@ -117,9 +118,56 @@ class IntranetController extends Controller
     }
     
     public function showEvento(Request $request, $id){
+
         $evento = Eventos::find($id);
+
+        if(Auth::user()->email == $evento->organizador_email || 
+            Auth::user()->tipo == 'admin' || 
+            Auth::user()->email == 'recepcao@chebabi.com'){
+
+            $edit_cancel = true;
+
+        }else{
+            $edit_cancel = false;
+        }
+
         $title = 'Evento da Agenda | Intranet Izique Chebabi Advogados Associados';
-        return view('intranet.evento', compact('title', 'evento'));
+
+        return view('intranet.evento', compact('title', 'evento', 'edit_cancel'));
+    }
+
+    public function editEvento($id){
+
+        $evento = Eventos::find($id);
+
+        if(!$evento->cancelado){
+            $titulo = substr($evento->title, strpos($evento->title, " ") + 1);
+
+            $users = DB::table('users')
+                ->select('id', 'name', 'email')
+                ->where('ativo', TRUE)
+                ->where('email', '!=', $evento->organizador_email)
+                ->orderBy('name')
+                ->get();
+
+            $envolvidos = array_column(unserialize($evento->envolvidos), 'emailAddress');
+            $envolvidos = array_column($envolvidos, 'address');
+
+            $title = 'Editar Evento | Intranet Izique Chebabi Advogados Associados';
+
+            if(Auth::user()->email == $evento->organizador_email || 
+                Auth::user()->tipo == 'admin' || 
+                Auth::user()->email == 'recepcao@chebabi.com'){
+
+                return view('intranet.editar_evento', compact('title', 'evento', 'users', 'envolvidos', 'titulo'));
+
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+
     }
     
     public function contatos()

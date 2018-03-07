@@ -17,7 +17,7 @@ class CreateEventosTable extends Migration
             $table->string('id')->unique();
             $table->timestamps();
             $table->string('title')->nullable();
-            $table->enum('tipo', ['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro'])->nullable();
+            $table->enum('tipo', ['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']);
             $table->dateTime('start');
             $table->dateTime('end');
             $table->text('descricao')->nullable();
@@ -27,15 +27,7 @@ class CreateEventosTable extends Migration
             $table->boolean('allDay');
             $table->boolean('cancelado');
             $table->string('local')->nullable();
-            $table->string('envolvido1_nome');
-            $table->string('envolvido1_email');
-            $table->string('envolvido2_nome')->nullable();
-            $table->string('envolvido2_email')->nullable();
-            $table->string('envolvido3_nome')->nullable();
-            $table->string('envolvido3_email')->nullable();
-            $table->string('envolvido4_nome')->nullable();
-            $table->string('envolvido4_email')->nullable();
-            $table->dateTime('last_sync')->nullable();
+            $table->text('envolvidos');
             $table->string('color')->nullable();
         });
     }
