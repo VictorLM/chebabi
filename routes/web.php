@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('intranet/inserir-custas', 'APIs\LegalOneController@teste');
+
+
+
 //ROTAS DO SITE
 Route::get('/', 'Site\SiteController@index');
 Route::get('/advogados', 'Site\SiteController@advogados');
@@ -30,8 +34,11 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/agenda', 'Intranet\IntranetController@agenda');
     Route::post('/eventos', 'Intranet\IntranetController@eventos');
     Route::get('/agenda/evento/{id}', 'Intranet\IntranetController@showEvento');
+    Route::get('/agenda/evento/{id}/editar', 'Intranet\IntranetController@editEvento');
+    Route::get('/agenda/evento/{id}/cancelar', 'APIs\MicrosoftController@cancela_evento');
     Route::get('/agenda/novo-evento', 'Intranet\IntranetController@novo_evento');
     Route::post('/agenda/novo-evento', 'APIs\MicrosoftController@criar_evento');
+    Route::post('/agenda/editar-evento', 'APIs\MicrosoftController@update_evento');
     //ROTAS LEGAL ONE
     Route::get('/andamentos-datacloud', 'APIs\LegalOneController@andamentos_datacloud');
     //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR
@@ -39,8 +46,10 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/andamentos-datacloud/filtrar', 'APIs\LegalOneController@andamentos_datacloud_filtrados');
     Route::get('/andamentos-datacloud/andamento/{id}', 'APIs\LegalOneController@showAndamento');
     Route::get('/inserir-andamentos', 'APIs\LegalOneController@andamentos');
-    Route::post('/get-pasta-id', 'APIs\LegalOneController@id_pasta');
+    Route::post('/get-pasta-id', 'APIs\LegalOneController@id_pasta');//AJAX
     Route::post('/andamento', 'APIs\LegalOneController@inserir_andamentos');
+    Route::get('/inserir-custas', 'APIs\LegalOneController@custas');
+    Route::post('/inserir-custas', 'APIs\LegalOneController@inserir_custas');
     //DEMAIS ROTAS
     Route::get('/aniversariantes', 'Intranet\IntranetController@aniversariantes');
     Route::get('/contatos', 'Intranet\IntranetController@contatos');
@@ -56,6 +65,8 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/call_legalone_api', 'APIs\LegalOneController@legalone_api');
     Route::post('/call_legalone_api_contacts', 'APIs\LegalOneController@legalone_api_contacts');
     Route::post('/call_legalone_api_contacts_individuals', 'APIs\LegalOneController@legalone_api_contacts_individuals');
+    Route::post('/get-credores', 'APIs\LegalOneController@get_credores');
+    Route::post('/get-tipo-gasto', 'APIs\LegalOneController@get_tipos_gastos');
     Route::post('/uau_lido', 'Intranet\IntranetController@uau_lido');
     //ROTAS DE RETORNO DOS PDFS (TUTORIAIS E PROCEDIMENTOS)
     Route::get('/pdf/{nomepasta}/{nomepdf}', 'Intranet\IntranetController@pdf');
