@@ -2,10 +2,10 @@
 
 if($request->input('reembolsavel')){
     $reembolsavel = "Sim";
-}else if (empty($request->input('reembolsavel'))){
-    $reembolsavel = "";
-}else{
+}else if (!$request->input('reembolsavel')){
     $reembolsavel = "Não";
+}else{
+    $reembolsavel = "";
 }
 
 if(!empty($request->input('pasta2')) && !empty($request->input('cliente2')) &&
