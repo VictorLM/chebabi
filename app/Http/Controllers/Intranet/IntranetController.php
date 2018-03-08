@@ -123,7 +123,8 @@ class IntranetController extends Controller
 
         if(Auth::user()->email == $evento->organizador_email || 
             Auth::user()->tipo == 'admin' || 
-            Auth::user()->email == 'recepcao@chebabi.com'){
+            Auth::user()->email == 'recepcao@chebabi.com' &&
+            $evento->end > Carbon::now()){
 
             $edit_cancel = true;
 
@@ -157,7 +158,8 @@ class IntranetController extends Controller
 
             if(Auth::user()->email == $evento->organizador_email || 
                 Auth::user()->tipo == 'admin' || 
-                Auth::user()->email == 'recepcao@chebabi.com'){
+                Auth::user()->email == 'recepcao@chebabi.com' &&
+                $evento->end > Carbon::now()){
 
                 return view('intranet.editar_evento', compact('title', 'evento', 'users', 'envolvidos', 'titulo'));
 

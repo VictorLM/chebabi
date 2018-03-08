@@ -56,7 +56,7 @@
                 <tr>
                     <td><b>Envolvidos: </b></td>
                     <td>
-                        @if(isset($evento)) 
+                        @if(isset($evento))
                             @foreach(unserialize($evento->envolvidos) as $envolvido)
                                 <a href="mailto:{{$envolvido['emailAddress']['address']}}">{{$envolvido['emailAddress']['name']}}</a>; 
                             @endforeach
@@ -76,7 +76,16 @@
         
             </table>
 
-            @if($edit_cancel && !$evento->cancelado) 
+            @if(!empty($evento->alterado))
+                <span>{{$evento->alterado}}</span></br>
+            @endif
+
+            @if($evento->end < Carbon\Carbon::now() || $evento->cancelado)
+                <span>* Evento finalizado.</span>
+            @endif
+
+            @if($edit_cancel && !$evento->cancelado && $evento->end > Carbon\Carbon::now()) 
+                </br>
                 <a href="{{action('Intranet\IntranetController@editEvento', $evento->id)}}">
                     <button class="btn btn-primary" type="button">
                         <i class="glyphicon glyphicon-pencil"></i> Editar

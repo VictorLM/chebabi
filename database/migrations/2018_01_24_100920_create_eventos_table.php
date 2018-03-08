@@ -29,6 +29,7 @@ class CreateEventosTable extends Migration
             $table->string('local')->nullable();
             $table->text('envolvidos');
             $table->string('color')->nullable();
+            $table->string('alterado')->nullable();
         });
     }
     

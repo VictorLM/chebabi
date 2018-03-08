@@ -135,114 +135,128 @@ class MicrosoftController extends Controller
 
     public function update_evento(Request $request){
 
-        $validatedData = Validator::make($request->all(), [
-            'id' => 'required|string',
-            'titulo' => 'required|string|max:200',
-            'tipo' => [
-                'required',
-                Rule::in(['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']),
-            ],
-            'local' => 'required|string|max:100',
-            'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today',
-            'iniciohora' => 'required|date_format:H:i',
-            'terminodata' => 'required|date_format:Y-m-d|after_or_equal:today',
-            'terminohora' => 'required|date_format:H:i',
-            'envolvidos' => 'required|array|min:1|max:20', //MAX 20 ENVOLVIDOS
-            'descricao' => 'nullable|string|max:2000',
-        ]);
+        $evento = Eventos::find($request->id);
 
-        if (!$validatedData->fails()){
-
-            $evento = Eventos::find($request->id);
-
-            if(!empty($request->envolvidos)){
-                $user = DB::table('users')
-                ->select('id', 'name', 'email')
-                ->whereIn('id', $request->envolvidos)
-                ->get();
-            }else{
-                $user = NULL;
-            }
-
-            $token = DB::table('apikeys')
-            ->select('token')
-            ->where('name', 'Microsoft Graph')
-            ->first();
-        
-            require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento_update.json.php';
-
-            $evento_atualizado = json_encode($evento_atualizado);
-
-            $parameters = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events/'.$request->id;
+        if(Auth::user()->email == $evento->organizador_email || 
+            Auth::user()->tipo == 'admin' || 
+            Auth::user()->email == 'recepcao@chebabi.com' &&
+            $evento->end > Carbon::now() && 
+            !$evento->cancelado){
             
-            $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, $parameters);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $evento_atualizado);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-
-            $headers = array();
-            $headers[] = "Authorization: Bearer ".$token->token;
-            $headers[] = "Content-Type:application/json";
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-            $result = curl_exec($ch);
-            
-            if (curl_errno($ch)) {
-                echo 'Error:' . curl_error($ch);
-            }
-            $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close ($ch);
-            
-            $result = json_decode($result,true);
-            
-            if($response_code == 200 && !empty($result)){
-
-                if($request->tipo == 'Ausente'){
-                    $color = '#E6EB0A';
-                }else if($request->tipo == 'Carro'){
-                    $color = '#00e600';
-                }else if($request->tipo == 'Motorista'){
-                    $color = '#ffa31a';
-                }else if($request->tipo == 'Reunião'){
-                    $color = '#80bfff';
+            $validatedData = Validator::make($request->all(), [
+                'id' => 'required|string',
+                'titulo' => 'required|string|max:200',
+                'tipo' => [
+                    'required',
+                    Rule::in(['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']),
+                ],
+                'local' => 'required|string|max:100',
+                'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today',
+                'iniciohora' => 'required|date_format:H:i',
+                'terminodata' => 'required|date_format:Y-m-d|after_or_equal:today',
+                'terminohora' => 'required|date_format:H:i',
+                'envolvidos' => 'nullable|array|min:1|max:20', //MAX 20 ENVOLVIDOS
+                'descricao' => 'nullable|string|max:2000',
+            ]);
+    
+            if (!$validatedData->fails()){
+    
+                if(!empty($request->envolvidos)){
+                    $user = DB::table('users')
+                    ->select('id', 'name', 'email')
+                    ->whereIn('id', $request->envolvidos)
+                    ->get();
                 }else{
-                    $color = NULL;
+                    $user = NULL;
                 }
+    
+                $token = DB::table('apikeys')
+                ->select('token')
+                ->where('name', 'Microsoft Graph')
+                ->first();
+            
+                require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento_update.json.php';
+    
+                $evento_atualizado = json_encode($evento_atualizado);
+    
+                $parameters = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events/'.$request->id;
+                
+                $ch = curl_init();
+    
+                curl_setopt($ch, CURLOPT_URL, $parameters);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $evento_atualizado);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+    
+                $headers = array();
+                $headers[] = "Authorization: Bearer ".$token->token;
+                $headers[] = "Content-Type:application/json";
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    
+                $result = curl_exec($ch);
+                
+                if (curl_errno($ch)) {
+                    echo 'Error:' . curl_error($ch);
+                }
+                $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close ($ch);
+                
+                $result = json_decode($result,true);
+                
+                if($response_code == 200 && !empty($result)){
+    
+                    if($request->tipo == 'Ausente'){
+                        $color = '#E6EB0A';
+                    }else if($request->tipo == 'Carro'){
+                        $color = '#00e600';
+                    }else if($request->tipo == 'Motorista'){
+                        $color = '#ffa31a';
+                    }else if($request->tipo == 'Reunião'){
+                        $color = '#80bfff';
+                    }else{
+                        $color = NULL;
+                    }
 
-                Eventos::where('id', $request->id)
-                    ->update([
-                        'title' => $result['subject'],
-                        'tipo' => $request->tipo,
-                        'start' => Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s'),
-                        'end' => Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s'),
-                        'descricao' => preg_replace("/\r|\n/", "", strip_tags($result['body']['content'])),
-                        'updated_at' => Carbon::now(),
-                        'allDay' => $result['isAllDay'],
-                        'cancelado' => $result['isCancelled'],
-                        'local' => $result['location']['displayName'],
-                        'envolvidos' => serialize($result['attendees']),
-                        'color' => $color,
-                    ]);
-
-                $request->session()->flash('alert-success', 'Evento atualizado com sucesso!');
-                return redirect('/intranet/agenda/evento/'.$request->id);
-            }else{
-                if(!empty($result['error'])){
-                    $mensagem = $result['error']['message'];
-                    $mensagem .= '/ '.$result['error']['code'].'.';
+                    $alterado = '* Evento alterado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';
+    
+                    Eventos::where('id', $request->id)
+                        ->update([
+                            'title' => $result['subject'],
+                            'tipo' => $request->tipo,
+                            'start' => Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s'),
+                            'end' => Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s'),
+                            'descricao' => preg_replace("/\r|\n/", "", strip_tags($result['body']['content'])),
+                            'updated_at' => Carbon::now(),
+                            'allDay' => $result['isAllDay'],
+                            'cancelado' => $result['isCancelled'],
+                            'local' => $result['location']['displayName'],
+                            'envolvidos' => serialize($result['attendees']),
+                            'color' => $color,
+                            'alterado' => $alterado,
+                        ]);
+    
+                    $request->session()->flash('alert-success', 'Evento atualizado com sucesso!');
+                    return redirect('/intranet/agenda/evento/'.$request->id);
                 }else{
-                    $mensagem = 'NULL';
+                    if(!empty($result['error'])){
+                        $mensagem = $result['error']['message'];
+                        $mensagem .= '/ '.$result['error']['code'].'.';
+                    }else{
+                        $mensagem = 'NULL';
+                    }
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(array('message' => 'Erro ao atualizar! Favor informar o departamento responsável a seguinte mensagem: '. 
+                                            'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
                 }
-                return redirect()->back()
-                    ->withInput()
-                    ->withErrors(array('message' => 'Erro ao atualizar! Favor informar o departamento responsável a seguinte mensagem: '. 
-                                        'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
+    
+            }else{
+                return redirect()->back()->withErrors($validatedData)->withInput();
             }
 
         }else{
-            return redirect()->back()->withErrors($validatedData)->withInput();
+            return null;
         }
 
     }
@@ -253,7 +267,9 @@ class MicrosoftController extends Controller
 
         if(Auth::user()->email == $evento->organizador_email || 
             Auth::user()->tipo == 'admin' || 
-            Auth::user()->email == 'recepcao@chebabi.com'){
+            Auth::user()->email == 'recepcao@chebabi.com' &&
+            $evento->end > Carbon::now() && 
+            !$evento->cancelado){
         
                 $token = DB::table('apikeys')
                 ->select('token')
@@ -289,12 +305,15 @@ class MicrosoftController extends Controller
                 $result = json_decode($result,true);
                 
                 if($response_code == 202){
+
+                    $alterado = '* Evento cancelado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';
     
                     Eventos::where('id', $id)
                         ->update([
                             'updated_at' => Carbon::now(),
                             'cancelado' => TRUE,
                             'color' => 'red',
+                            'alterado' => $alterado,
                         ]);
     
                     $request->session()->flash('alert-success', 'Evento cancelado com sucesso!');
