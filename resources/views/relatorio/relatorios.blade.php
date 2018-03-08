@@ -135,7 +135,7 @@
                             @foreach($relatorios as $relatorio)
                                 <tr>
                                     <td>{{Carbon\Carbon::parse($relatorio->created_at)->format('d/m/y H:i')}}</td>
-                                    <td>{{$relatorio->data}}</td>
+                                    <td>{{Carbon\Carbon::parse($relatorio->data)->format('d/m/Y')}}</td>
                                     <td>{{$relatorio->tipo_viagem}}</td>
                                     <td>{{$relatorio->nome_usuario->name}}</td>
                                     <td>{{$relatorio->cliente1}}; {{$relatorio->cliente2}}@if(!empty($relatorio->cliente2)); @endif{{$relatorio->cliente3}}</td>
