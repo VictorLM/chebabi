@@ -211,16 +211,16 @@
         <div class="advogado">
             <a href="#modalAdv14"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/Andressa.jpg')}}">
             <h1>ANDRESSA MUNHOZ</h1><p><h3>OAB/SP 326.762</h3></p></a>
-                <div id="modalAdv14" class="modalDialog">
-                    <div class="advtxt">
-                        <a href="#close" title="Close" class="close">X</a>
-                        <div class="imagemadv"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/Andressa.jpg')}}"></div>
-                        <h2>ANDRESSA MUNHOZ</h2>
-                        <p><h4>OAB/SP 326.762</h4></p></a>
-                        <br/>
-                        <p>Advogada graduada pela Universidade Cat&oacute;lica de Salvador em 2011, atuando na&nbsp;<b>&aacute;rea contratual</b>.</p>
-                    </div>
+            <div id="modalAdv14" class="modalDialog">
+                <div class="advtxt">
+                    <a href="#close" title="Close" class="close">X</a>
+                    <div class="imagemadv"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/Andressa.jpg')}}"></div>
+                    <h2>ANDRESSA MUNHOZ</h2>
+                    <p><h4>OAB/SP 326.762</h4></p></a>
+                    <br/>
+                    <p>Advogada graduada pela Universidade Cat&oacute;lica de Salvador em 2011, atuando na&nbsp;<b>&aacute;rea contratual</b>.</p>
                 </div>
+            </div>
         </div>
 
         <div class="advogado">
@@ -509,9 +509,9 @@
         </div>
 
         <div class="advogado">
-            <a href="#modalAdv37"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/avatar.png')}}">
+            <a href="#modalAdv38"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/avatar.png')}}">
             <h1>ANDRÉ FARIA LIMA</h1><p><h3>OAB/SP 242.942 </h3></p></a>
-            <div id="modalAdv37" class="modalDialog">
+            <div id="modalAdv38" class="modalDialog">
                 <div class="advtxt">
                     <a href="#close" title="Close" class="close">X</a>
                     <div class="imagemadv"><img title="advogados" alt="advogados" src="{{url('assets/imagens/advogados/avatar.png')}}"></div>
