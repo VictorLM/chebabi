@@ -38,6 +38,9 @@
                     
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
+                            @if($aniversariantes>0)
+                                <span class="badge float-right">{{$aniversariantes}}</span>
+                            @endif
                             <a href="{{url('intranet/aniversariantes')}}">
                                 <i class="glyphicon glyphicon-gift"></i>
                                 <i class="glyphicon glyphicon-calendar"></i><br/>ANIVERSARIANTES</a>

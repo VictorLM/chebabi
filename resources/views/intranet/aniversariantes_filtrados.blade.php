@@ -49,15 +49,15 @@
 
                   @foreach($users as $user)
                     <tr @if(Carbon\Carbon::parse($user->nascimento)->format('d/m') 
-                        == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) style="font-weight:bold" @endif>
-                        <td>{{$user->name}}</td>
-                        <td>
-                          {{Carbon\Carbon::parse($user->nascimento)->format('d/m')}} 
-                          @if(Carbon\Carbon::parse($user->nascimento)->format('d/m') 
-                          == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) 
-                          <i class="glyphicon glyphicon-gift"></i> Hoje!
-                          @endif
-                        </td>
+                      == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) style="font-weight:bold" @endif>
+                      <td>{{$user->name}}</td>
+                      <td>
+                        {{Carbon\Carbon::parse($user->nascimento)->format('d/m')}} 
+                        @if(Carbon\Carbon::parse($user->nascimento)->format('d/m') 
+                        == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) 
+                        <i class="glyphicon glyphicon-gift"></i> Hoje!
+                        @endif
+                      </td>
                     </tr>
                   @endforeach
 
@@ -69,7 +69,9 @@
               </tbody>
             </table>
           
-            {!! $users->links() !!}
+            @if(isset($users) && count($users)>0)
+              {!! $users->appends(Request::only(['mes'=>'mes']))->links() !!}
+            @endif
       </div>
 
     </div>

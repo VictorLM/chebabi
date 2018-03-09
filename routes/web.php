@@ -52,6 +52,9 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/inserir-custas', 'APIs\LegalOneController@inserir_custas');
     //DEMAIS ROTAS
     Route::get('/aniversariantes', 'Intranet\IntranetController@aniversariantes');
+    //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR
+    Route::get('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');    
+    Route::post('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');  
     Route::get('/contatos', 'Intranet\IntranetController@contatos');
     Route::get('/procedimentos', 'Intranet\IntranetController@procedimentos');
     Route::get('/tarifadores', 'Intranet\IntranetController@tarifadores');
