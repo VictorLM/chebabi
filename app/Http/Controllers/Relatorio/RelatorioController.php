@@ -304,9 +304,9 @@ class RelatorioController extends Controller
                 ->get();
         
         $relatorios = Relatorio::with('nome_usuario:id,name')
-                ->limit(200)
+                ->limit(20)
                 ->orderBy('created_at', 'DESC')
-                ->paginate(20);
+                ->get();
         
         $title = 'Relatórios de viagem | Intranet Izique Chebabi Advogados Associados';
         return view('relatorio.relatorios', compact('title', 'users', 'relatorios'));
@@ -322,10 +322,9 @@ class RelatorioController extends Controller
         $relatorios_user = Relatorio::with('nome_usuario:id,name')
             ->where('usuario', $request->user)
             ->orderBy('created_at', 'DESC')
-            ->limit(200)
             ->paginate(20);
 
         $title = 'Relatórios de viagem | Intranet Izique Chebabi Advogados Associados';
-        return view('relatorio.relatorios', compact('title', 'users','relatorios_user'));
+        return view('relatorio.relatorios_user', compact('title', 'users','relatorios_user'));
     }
 }

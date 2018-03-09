@@ -21,7 +21,12 @@
                                     <select name="user" class="form-control" form="form_relatorios" required="required">
                                         <option value="">Filtrar por usuário</option>
                                         @foreach($users as $user)
-                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                            <option value="
+                                                    {{$user->id}}" @if(!empty($relatorios_user) && 
+                                                    $relatorios_user->count()>0 &&
+                                                    $relatorios_user[0]->usuario == $user->id) 
+                                                    selected @endif>{{$user->name}}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -35,8 +40,8 @@
                             </form>
                         </div>
 
-                        @if(isset($relatorios) && count($relatorios)>0)
-                            <small>* Exibindo os 20 relatórios mais recentes. Para exibir todos utilize o filtro acima.</small>
+                        @if(isset($relatorios_user) && count($relatorios_user)>0)
+                            <small>* Exibindo apenas os relatórios do usuário selecionado acima.</small>
                         @else
                             <small>* Nenhum relatório encontrado.</small>
                         @endif
@@ -68,9 +73,10 @@
                     </thead>
                     <tbody>
 
-                        @if(isset($relatorios) && count($relatorios)>0)
+                        @if(isset($relatorios_user) && count($relatorios_user)>0)
+                            
+                            @foreach($relatorios_user as $relatorio)
 
-                            @foreach($relatorios as $relatorio)
                                 <tr>
                                     <td>{{Carbon\Carbon::parse($relatorio->created_at)->format('d/m/Y H:i')}}</td>
                                     <td>{{Carbon\Carbon::parse($relatorio->data)->format('d/m/Y')}}</td>
@@ -120,6 +126,7 @@
                                     </td>
                                     <td>{{str_limit($relatorio->observacoes, 30, '...')}}</td>
                                 </tr>
+
                             @endforeach
 
                         @else
@@ -128,6 +135,10 @@
 
                     </tbody>
                 </table>
+                
+                @if(isset($relatorios_user) && count($relatorios_user)>0)
+                    {!! $relatorios_user->appends(Request::only(['user'=>'user']))->links() !!}
+                @endif
 
             </div>
         </div>  
