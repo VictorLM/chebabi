@@ -272,7 +272,7 @@ class RelatorioController extends Controller
                 $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente3_".$identificador.".pdf");
             }
 
-            if ($request->hasFile('anexo')){
+            if ($request->hasFile('comprovantes')){
                 $message->attach("../storage/app/intranet/pdf/comprovantes/comprovante_".$identificador.".pdf");
             }
         });
