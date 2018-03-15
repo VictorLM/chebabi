@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
                 ->appendOutputTo(storage_path('logs/schedule.log'));
 
         $schedule->command('AndamentosDataCloudProgressCrawler:refresh')
-                ->hourly()
+                ->twiceDaily(0, 12)
                 ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 
