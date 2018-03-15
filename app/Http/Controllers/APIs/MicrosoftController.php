@@ -84,7 +84,7 @@ class MicrosoftController extends Controller
             if($response_code == 201 && !empty($result)){
 
                 if($request->tipo == 'Ausente'){
-                    $color = '#E6EB0A';
+                    $color = 'yellow';
                 }else if($request->tipo == 'Carro'){
                     $color = '#00e600';
                 }else if($request->tipo == 'Motorista'){
@@ -207,7 +207,7 @@ class MicrosoftController extends Controller
                 if($response_code == 200 && !empty($result)){
     
                     if($request->tipo == 'Ausente'){
-                        $color = '#E6EB0A';
+                        $color = 'yellow';
                     }else if($request->tipo == 'Carro'){
                         $color = '#00e600';
                     }else if($request->tipo == 'Motorista'){

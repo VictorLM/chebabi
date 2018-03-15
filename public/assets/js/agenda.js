@@ -24,6 +24,7 @@ function calendar(response) {
         navLinks: true,
         eventLimit: true,
         displayEventEnd: true, //PARA MOSTRAR A DATA DE TÉRMINO NO MODO MÊS
+        eventTextColor: '#000', //COR TEXTO EVENTOS
         header: {
             left: 'prev,next today',
             center: 'title',
