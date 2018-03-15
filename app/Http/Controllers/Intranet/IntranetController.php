@@ -302,11 +302,21 @@ class IntranetController extends Controller
         }
     }
 
+    public function tutoriais_pdf($nomepasta = null, $nomepdf = null){
+
+        if($nomepasta == 'tutoriais'){
+            return \Response::make(\Storage::get(
+                    'intranet/pdf/'.$nomepasta.'/'.$nomepdf), 200, 
+                    ['Content-Type' => 'application/pdf']); 
+        }else{
+            return abort(403, 'Não autorizado.');
+        }
+    }
+
     public function uau(){
         $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name,ativo')
             ->orderBy('created_at', 'Desc')
-            ->limit(200)
-            ->paginate(20);
+            ->paginate(10);
 
         $ranking = DB::table('users')
             ->select('id', 'name', 'uaus')

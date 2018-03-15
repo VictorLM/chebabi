@@ -14,10 +14,9 @@
 Route::get('intranet/inserir-custas', 'APIs\LegalOneController@teste');
 
 
-
 //ROTAS DO SITE
 Route::get('/', 'Site\SiteController@index');
-Route::get('/advogados', 'Site\SiteController@advogados');
+Route::get('/advogados', 'Site\SiteController@equipe');
 Route::get('/areas', 'Site\SiteController@areas');
 Route::get('/contato', 'Site\SiteController@contato');
 Route::get('/trabalhe-conosco', 'Site\SiteController@trabalheconosco');
@@ -72,7 +71,7 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/get-tipo-gasto', 'APIs\LegalOneController@get_tipos_gastos');
     Route::post('/uau_lido', 'Intranet\IntranetController@uau_lido');
     //ROTAS DE RETORNO DOS PDFS (TUTORIAIS E PROCEDIMENTOS)
-    Route::get('/pdf/{nomepasta}/{nomepdf}', 'Intranet\IntranetController@pdf');
+    Route::get('/pdf/{nomepasta}/{nomepdf}', 'Intranet\IntranetController@tutoriais_pdf');
     Route::get('/pdf/{nomepasta}/{nomesubpasta}/{nomepdf}', 'Intranet\IntranetController@pdf');
     //ROTAS RELATÓRIO CONTROLLER
     Route::post('/relatorio/enviar', 'Relatorio\RelatorioController@create');
