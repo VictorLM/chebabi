@@ -298,7 +298,7 @@ class BlogController extends Controller
                         Storage::disk('public')->delete('/imagens/artigos/'.$foto);
                     }
                 }else{
-                    $imagem_path = null;
+                    $imagem_path = $artigo->imagem;
                 }
     
                 DB::table('blog_artigos')->where('id', $request->id)
@@ -410,8 +410,6 @@ class BlogController extends Controller
         ]);
 
         if (!$validatedData->fails()){
-
-            dd($request);
 
             DB::table('blog_historias')->insert([
                 'titulo' => $request->titulo,
