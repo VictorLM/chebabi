@@ -63,7 +63,7 @@
                                         <p>Porque: <b>{{$uau->motivo}}</b></p>
                                         <div class="row">
                                             <img src="{{url('assets/imagens/logopr.png')}}" class="float-left" alt="Logo Ponto de Referência">
-                                            <img src="{{url('assets/imagens/logo4.png')}}" class="float-right" alt="Logo Izique Chebabi">
+                                            <img src="{{url('assets/imagens/logo_md.png')}}" class="float-right" alt="Logo Izique Chebabi">
                                         </div>
                                     </div>
                                     <div class="modal-footer">

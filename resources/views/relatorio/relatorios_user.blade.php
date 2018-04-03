@@ -77,52 +77,52 @@
                             
                             @foreach($relatorios_user as $relatorio)
 
-                                <tr>
+                            <tr>
                                     <td>{{Carbon\Carbon::parse($relatorio->created_at)->format('d/m/Y H:i')}}</td>
                                     <td>{{Carbon\Carbon::parse($relatorio->data)->format('d/m/Y')}}</td>
-                                    <td>{{$relatorio->tipo_viagem}}</td>
-                                    <td>{{$relatorio->nome_usuario->name}}</td>
-                                    <td>{{$relatorio->cliente1}}; {{$relatorio->cliente2}}@if(!empty($relatorio->cliente2)); @endif{{$relatorio->cliente3}}</td>
-                                    <td>{{$relatorio->carro}}</td>
-                                    <td>{{$relatorio->motivoviagem1}}; {{$relatorio->motivoviagem2}}@if(!empty($relatorio->motivoviagem2)); @endif{{$relatorio->motivoviagem3}}</td>
-                                    <td>{{$relatorio->totalkm}} Km - R${{round($relatorio->totalkm*0.8, 2)}}</td>
+                                    <td>@if($relatorio->kilometragem) COM KM @else SEM KM @endif</td>
+                                    <td>{{ mb_strtoupper($relatorio->nome_usuario->name, 'UTF-8')}}</td>
                                     <td>
-                                        R$ {{round(((!empty($relatorio->despesasgerais1) ? $relatorio->despesasgerais1 : 0) +
-                                        (!empty($relatorio->despesasgerais2) ? $relatorio->despesasgerais2 : 0) + 
-                                        (!empty($relatorio->despesasgerais3) ? $relatorio->despesasgerais3 : 0) +
-                                        (!empty($relatorio->despesasgerais4) ? $relatorio->despesasgerais4 : 0))
-                                        , 2)}}
+                                        @foreach(unserialize($relatorio->clientes) as $cliente)
+                                            {{$cliente['CLIENTE']}}; 
+                                        @endforeach 
+                                    </td>
+                                    <td>{{$relatorio->veiculo}}</td>
+                                    <td>
+                                        @foreach(unserialize($relatorio->clientes) as $cliente)
+                                            {{$cliente['DESCRICAO']}}; 
+                                        @endforeach 
+                                    </td>
+                                    <td>
+                                        {{$relatorio->totalkm}} Km - 
+                                        @if($relatorio->veiculo == "ESCRITÓRIO")
+                                            R$ 0,00
+                                        @elseif($relatorio->veiculo == "PARTICULAR")
+                                            R$ {{round($relatorio->totalkm*0.8, 2)}}
+                                        @else
+                                            R$ 0,00
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @php
+                                        $total_despesas = 0;
+                                        foreach(unserialize($relatorio->despesas) as $despesa){
+                                            if(!empty($despesa['VALOR'])){
+                                                $total_despesas += round($despesa['VALOR'], 2);
+                                            }
+                                        }
+                                        @endphp
+                                        {{$total_despesas}}
                                     </td>
                                     <td>R$ {{$relatorio->caucao}}</td>
                                     <td>
-                                        @if($relatorio->carro == 'Particular')
-                                            R$ {{round((!empty($relatorio->totalkm) ? $relatorio->totalkm*0.8 : 0) + 
-                                            ((!empty($relatorio->despesasgerais1) ? $relatorio->despesasgerais1 : 0) +
-                                            (!empty($relatorio->despesasgerais2) ? $relatorio->despesasgerais2 : 0) + 
-                                            (!empty($relatorio->despesasgerais3) ? $relatorio->despesasgerais3 : 0) +
-                                            (!empty($relatorio->despesasgerais4) ? $relatorio->despesasgerais4 : 0) -
-                                            (!empty($relatorio->caucao) ? $relatorio->caucao : 0))
-                                            , 2)}}
-                                        @endif
-                                        
-                                        @if($relatorio->carro == 'Escritório')
-                                            R$ {{round(((!empty($relatorio->despesasgerais1) ? $relatorio->despesasgerais1 : 0) +
-                                            (!empty($relatorio->despesasgerais2) ? $relatorio->despesasgerais2 : 0) + 
-                                            (!empty($relatorio->despesasgerais3) ? $relatorio->despesasgerais3 : 0) +
-                                            (!empty($relatorio->despesasgerais4) ? $relatorio->despesasgerais4 : 0) -
-                                            (!empty($relatorio->caucao) ? $relatorio->caucao : 0))
-                                            , 2)}}
-                                        @endif
-                                        
-                                        @if(empty($relatorio->carro))
-                                            R$ {{round((!empty($relatorio->despesasgerais1) ? $relatorio->despesasgerais1 : 0) +
-                                            (!empty($relatorio->despesasgerais2) ? $relatorio->despesasgerais2 : 0) + 
-                                            (!empty($relatorio->despesasgerais3) ? $relatorio->despesasgerais3 : 0) +
-                                            (!empty($relatorio->despesasgerais4) ? $relatorio->despesasgerais4 : 0) -
-                                            (!empty($relatorio->caucao) ? $relatorio->caucao : 0)
-                                            , 2)}}
-                                        @endif
-                                        
+                                        @if($relatorio->veiculo == "ESCRITÓRIO")
+                                            R$ {{$total_despesas-$relatorio->caucao}}
+                                        @elseif($relatorio->veiculo == "PARTICULAR")
+                                            R$ {{($total_despesas+round($relatorio->totalkm*0.8, 2))-$relatorio->caucao}}
+                                        @else
+                                            R$ {{$total_despesas-$relatorio->caucao}}
+                                        @endif                                        
                                     </td>
                                     <td>{{str_limit($relatorio->observacoes, 30, '...')}}</td>
                                 </tr>

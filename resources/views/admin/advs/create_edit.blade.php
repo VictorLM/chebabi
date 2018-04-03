@@ -69,7 +69,7 @@
                             <label for="name" class="col-md-4 control-label">* OAB</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="oab" maxlength="10" value="{{ $adv->oab or old('oab') }}" required>
+                                <input type="text" class="form-control" name="oab" maxlength="14" value="{{ $adv->oab or old('oab') }}" placeholder="123.456/SP" required>
 
                                 @if ($errors->has('oab'))
                                     <span class="help-block">
@@ -79,11 +79,29 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('tipo_adv') ? ' has-error' : '' }}">
+                            <label for="tipo_adv" class="col-md-4 control-label">* Tipo</label>
+
+                            <div class="col-md-6">
+                                <select class="form-control" name="tipo_adv" required>
+                                    <option value=""></option>
+                                    <option value="Cível" @if(old('tipo_adv')=="Cível") selected @endif>Cível</option>
+                                    <option value="Trabalhista" @if(old('tipo_adv')=="Trabalhista") selected @endif>Trabalhista</option>
+                                </select>
+
+                                @if ($errors->has('tipo_adv'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('tipo_adv') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('texto') ? ' has-error' : '' }}">
                             <label for="texto" class="col-md-4 control-label">* Texto</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" name="texto" maxlength="500" required>{{$adv->texto or old('texto')}}</textarea>
+                                <textarea class="form-control" name="texto" maxlength="700" required>{{$adv->texto or old('texto')}}</textarea>
 
                                 @if ($errors->has('texto'))
                                     <span class="help-block">

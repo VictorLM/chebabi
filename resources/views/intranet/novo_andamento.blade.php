@@ -1,7 +1,7 @@
 @extends('intranet.templates.template')
 
 @push ('styles')
-    <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
 @endpush
 
 @section('content')

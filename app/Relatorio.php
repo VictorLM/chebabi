@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Relatorio extends Model
 {
     public $rules = [
-        'tipo_viagem' => 'required|in:Com kilometragem,Sem kilometragem',
-        'veiculo' => 'nullable|in:Escritório,Particular',
+        'kilometragem' => 'required|boolean',
+        'carro' => 'nullable|in:Escritório,Particular',
         'reembolsavel' => 'required|boolean',
         'pedagio' => 'nullable|boolean',
         'cliente1' => 'required|string|max:100',
@@ -23,10 +23,10 @@ class Relatorio extends Model
         'proc1' => 'required|string|max:30',
         'proc2' => 'nullable|string|max:30',
         'proc3' => 'nullable|string|max:30',
-        'enda' => 'nullable|string|max:150',
-        'endb' => 'nullable|string|max:150',
-        'endc' => 'nullable|string|max:150',
-        'endd' => 'nullable|string|max:150',
+        'enda1' => 'nullable|string|max:150',
+        'end2' => 'nullable|string|max:150',
+        'end3' => 'nullable|string|max:150',
+        'end4' => 'nullable|string|max:150',
         'data' => 'required|date_format:Y-m-d|before_or_equal:today',
         'motivoviagem1' => 'required|string|max:100',
         'motivoviagem2' => 'nullable|string|max:100',
@@ -48,13 +48,11 @@ class Relatorio extends Model
         'despesasgerais2' => 'nullable|string|max:7',//NÃO ENCONTREI VALIDAÇÃO PARA FLOAT
         'despesasgerais3' => 'nullable|string|max:7',//NÃO ENCONTREI VALIDAÇÃO PARA FLOAT
         'despesasgerais4' => 'nullable|string|max:7',//NÃO ENCONTREI VALIDAÇÃO PARA FLOAT
-        'caucao' => 'nullable|string|max:7',
+        'caucao' => 'nullable|string|max:7',//NÃO ENCONTREI VALIDAÇÃO PARA FLOAT
         'observacoes' => 'nullable|string|max:200',
         'comprovantes' => 'nullable|mimes:pdf|max:5240',
     ];
-    
-    public $timestamps = false;
-    
+
     protected $table = 'relatorios';
     
     protected $guarded = [];
@@ -63,4 +61,5 @@ class Relatorio extends Model
     {
         return $this->hasOne('Intranet\User', 'id', 'usuario');
     }
+
 }

@@ -152,7 +152,7 @@ class AndamentosDataCloudProgressCrawler extends Command
         set_time_limit(7200);//DUAS HORAS
 
         $data = Carbon::now()->toDateString().'T00:00:00Z';
-        //$data = '2018-03-13T00:00:00Z';
+        //$data = '2018-03-16T00:00:00Z';
 
         $parameters = 'https://api.thomsonreuters.com/legalone/v1/api/rest/Updates';
         $parameters .= '?$filter=originType eq ';
@@ -200,7 +200,7 @@ class AndamentosDataCloudProgressCrawler extends Command
                     $area = $this->getArea($pasta['responsibleOfficeId']);
                     $area = substr($area['path'], strrpos($area['path'], '/') + 2);
 
-                    AndamentoDataCloud::firstOrCreate(
+                    AndamentoDataCloud::updateOrCreate(
                         ['id' => $value['id']],
                         [
                             'id' => $value['id'],

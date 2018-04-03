@@ -1,0 +1,132 @@
+/*--
+Author: Victor Meireles
+Author URL: https://twitter.com/IAmDinamite
+--*/
+*{
+    font-family: 'Roboto', sans-serif;
+}
+body{
+    background-color: #007bff0b;
+}
+.navbar{
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.nav-link:hover{
+    color: #007bff!important;
+}
+.dropdown-item:hover{
+    color: #007bff!important;
+}
+.dropdown-item:active{
+    background-color: white;
+}
+body{
+    padding-top: 6em;
+}
+.carousel-item img{
+    border-radius: 0.5em;
+}
+.home-img img{
+    border-radius: 0.8em;
+    border: solid 1px #000;
+}
+.footer{
+    padding: 1em;
+    border-top: 1px solid rgba(0,0,0,.1)
+}
+.footer a{
+    text-decoration: none;
+}
+/*-- FOOTER SOCIAL MEDIAS ICONS --*/
+.social {
+    padding: 0.2em;
+    width: 1.5em;
+    text-align: center;
+    text-decoration: none;
+    margin: 0.2em;
+    border-radius: 0.2em;
+}
+.social:hover {
+    opacity: 0.8;
+    color: white;
+    text-decoration: none;
+}
+.fa-share-alt {
+    background: grey;
+    color: white;
+}
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+.fa-youtube {
+    background: #bb0000;
+    color: white;
+}
+.fa-google {
+    background: #dd4b39;
+    color: white;
+}
+
+.fa-linkedin {
+    background: #007bb5;
+    color: white;
+}
+/*--  --*/
+.card-text-small{
+    font-size: 0.9em;
+}
+.card-text-home{
+    font-size: 0.9em;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+}
+.card-text-noticias{
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+}
+.h4-link{
+    color: black;
+}
+.h4-link:hover{
+    text-decoration: none;
+}
+.display-grid{
+    display: grid;
+    margin-bottom: 1em;
+}
+.breadcrumb-custom{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.8em;
+    padding: 0.5em;
+}
+.advs-img:hover{
+    opacity: 0.8;
+}
+.advs-link{
+    color: black;
+}
+.advs-link:hover{
+    text-decoration: none;
+}
+.advs-link:active, .advs-link:focus {
+    outline: 0;
+    border: none;
+    -moz-outline-style: none;
+}
+.texto-adv{
+    padding-left: 1em;
+}
+.advs-modal{
+    list-style:none;
+    padding:0;
+    font-size: 1em;
+}
+.span-blog:hover{
+    color: black!important;
+}
+.thumb-posts{
+    max-width: 5%!important;
+}
+.img-margin-top-bottom{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}

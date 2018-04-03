@@ -51,12 +51,12 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="col-md-4 @if($errors->has('tipo_viagem')) has-error @endif">
+                                <div class="col-md-4 @if($errors->has('kilometragem')) has-error @endif">
                                     <label><i class="glyphicon glyphicon-asterisk"></i> Tipo de viagem: </label>
-                                    <select name="tipo_viagem" id="tipo_viagem" class="form-control" form="form_relatorio" required="required">
+                                    <select name="kilometragem" id="tipo_viagem" class="form-control" form="form_relatorio" required="required">
                                         <option value="">Selecione uma opção</option>
-                                        <option value="Com kilometragem" @if(old('tipo_viagem') == "Com kilometragem") selected @endif>Com kilometragem</option>
-                                        <option value="Sem kilometragem" @if(old('tipo_viagem') == "Sem kilometragem") selected @endif>Sem kilometragem</option>
+                                        <option value="1" @if(old('tipo_viagem') == '1') selected @endif>Com kilometragem</option>
+                                        <option value="0" @if(old('tipo_viagem') == '0') selected @endif>Sem kilometragem</option>
                                     </select>
                                     @if ($errors->has('tipo_viagem'))
                                         <span class="help-block">
@@ -293,7 +293,7 @@
                             <div class="row infos_viagem">
                                 <div class="col-md-6 @if($errors->has('enda')) has-error @endif">
                                     <label><i class="glyphicon glyphicon-asterisk"></i> Endereço A - Origem: </label>
-                                    <input type="text" class="form-control" id="enda" name="enda" maxlength="150" value="{{old('enda')}}" placeholder="Endereço de origem" required="required">
+                                    <input type="text" class="form-control" id="enda" name="end1" maxlength="150" value="{{old('enda')}}" placeholder="Endereço de origem" required="required">
                                     @if ($errors->has('enda'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('enda') }}</strong>
@@ -302,7 +302,7 @@
                                 </div>
                                 <div class="col-md-6 @if($errors->has('endb')) has-error @endif">
                                     <label><i class="glyphicon glyphicon-asterisk"></i> Endereço B - Destino: </label>
-                                    <input type="text" class="form-control" id="endb" name="endb" maxlength="150" value="{{old('endb')}}" placeholder="Endereço de destino" required="required">
+                                    <input type="text" class="form-control" id="endb" name="end2" maxlength="150" value="{{old('endb')}}" placeholder="Endereço de destino" required="required">
                                     @if ($errors->has('endb'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('endb') }}</strong>
@@ -314,7 +314,7 @@
                             <div class="row infos_viagem">
                                 <div class="col-md-6 @if($errors->has('endc')) has-error @endif">
                                     <label><i class="glyphicon glyphicon-asterisk"></i> Endereço C - Segundo destino ou retorno: </label>
-                                    <input type="text" class="form-control calcend" id="endc" name="endc" maxlength="150" value="{{old('endc')}}" placeholder="Segundo destino ou retorno" required="required">
+                                    <input type="text" class="form-control calcend" id="endc" name="end3" maxlength="150" value="{{old('endc')}}" placeholder="Segundo destino ou retorno" required="required">
                                     @if ($errors->has('endc'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('endc') }}</strong>
@@ -323,7 +323,7 @@
                                 </div>
                                 <div class="col-md-6 @if($errors->has('endd')) has-error @endif">
                                     <label>Endereço D - Retorno: </label>
-                                    <input type="text" class="form-control calcend" id="endd" maxlength="150" value="{{old('endd')}}" placeholder="Endereço de retorno" name="endd">
+                                    <input type="text" class="form-control calcend" id="endd" name="end4" maxlength="150" value="{{old('endd')}}" placeholder="Endereço de retorno">
                                     @if ($errors->has('endd'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('endd') }}</strong>

@@ -8,7 +8,7 @@ $(document).ready(function(){
     ajustesInputs1 = function(){ 
         //RESETA FORM
         //$('#form_relatorio').find('input, select').not("#tipo_viagem, #usuario, #reembolsavel, [name='_token']").val('');
-        if( $('#tipo_viagem').val() == 'Com kilometragem'){
+        if( $('#tipo_viagem').val() == '1'){
             //MOSTRA O INPUT VEÍCULO E SETA O REQUIRED P/ TRUE
             $('#infos_gerais_append').css('display', 'block');
             $(".gerais_requireds").prop('required',true);
@@ -150,7 +150,7 @@ $(document).ready(function(){
         else if ($('#carro').val() == "Escritório"){
             $("#valorkm").val(0);
         }else {
-            if($('#tipo_viagem').val() == 'Com kilometragem'){
+            if($('#tipo_viagem').val() == '1'){
                 alert("Selecione se o carro usado foi particular ou do escritório.");
                 $("#carro").focus();
             }
@@ -190,7 +190,7 @@ $(document).ready(function(){
     });
     
     $(".calcend").change(function(){
-        if($('#tipo_viagem').val() == 'Com kilometragem'){
+        if($('#tipo_viagem').val() == '1'){
             calculaDistancia();
         }
     });
@@ -266,7 +266,7 @@ $(document).ready(function(){
     //CHECAGEM GERAL ANTES DE SUBMETER O FORMULÁRIO
     $(document).on('submit','form#form_relatorio',function(){
         if ($('#totalkm').val() == '' || $('#valorkm').val() == ''){
-            if($('#tipo_viagem').val() == 'Com kilometragem'){
+            if($('#tipo_viagem').val() == '1'){
                 alert("Preencha corretamente ao menos os campos Endereço A, B e C. \n\
                 Sendo A sua origem, B seu destino e C seu retorno.");
                 $('#enda, #endb, #endc, #endd').val('');

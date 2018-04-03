@@ -14,7 +14,7 @@
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    
+    @stack ('styles')
 </head>
 <body>
     <div id="app">
@@ -23,7 +23,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/intranet') }}">
-                    <img class="img-fluid" src="{{url('assets/imagens/logo3.png')}}"/>
+                    <img class="img-fluid" src="{{url('assets/imagens/logo_pq.png')}}"/>
                 </a>
 
                 <div class="nav navbar-nav navbar-right userelogout">

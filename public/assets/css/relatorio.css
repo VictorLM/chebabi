@@ -1,0 +1,57 @@
+*{
+	font-family: 'Open Sans', sans-serif;
+	color: #414141;
+	text-decoration: none;
+}
+.logo{
+	float: right;
+}
+.datetime{
+	float: left;
+}
+table {
+    width: 100%;
+}
+table, th, td{
+	border-collapse: collapse;
+	border: 1px solid black;
+	font-size: 0.9em;
+	padding: 0.2em;
+}
+h1, h2, h3, h4, h5 {
+	text-align: center;
+    margin: 0;
+}
+.total_despesas{
+	border: 1px solid black;
+	float: right;
+	font-size: 0.9em;
+	padding: 0.2em;
+}
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+.declaracao{
+	font-size: 0.9em;
+}
+.w333{
+	width: 33.33%;
+}
+.w25{
+	width: 25%;
+}
+.valores{
+	width: 35%;
+	margin: auto;
+}
+footer{
+	position: fixed;
+    left: 5;
+    bottom: 20;
+}
+.center{
+	text-align: center;
+}

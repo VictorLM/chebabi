@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         '\Intranet\Console\Commands\AtualizaTokenMSGraph',
         '\Intranet\Console\Commands\AtualizaTiposAndamentosLegalOne',
         '\Intranet\Console\Commands\AndamentosDataCloudProgressCrawler',
+        '\Intranet\Console\Commands\AtualizaNoticiasAASP',
     ];
 
     /**
@@ -41,6 +42,10 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('AndamentosDataCloudProgressCrawler:refresh')
                 ->twiceDaily(0, 12)
+                ->appendOutputTo(storage_path('logs/schedule.log'));
+
+        $schedule->command('AtualizaNoticiasAASP:refresh')
+                ->hourly()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 

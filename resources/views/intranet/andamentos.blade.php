@@ -32,6 +32,7 @@
                                 <option></option>
                                 <option value="Autor" @if(isset($posicao) && $posicao == 'Autor') selected @elseif (old('posicao') == 'Autor') selected @endif>Autor/Reclamante</option>
                                 <option value="Réu" @if(isset($posicao) && $posicao == 'Réu') selected @elseif (old('posicao') == 'Réu') selected @endif>Réu/Reclamada</option>
+                                <option value="Interessado" @if(isset($posicao) && $posicao == 'Interessado') selected @elseif (old('posicao') == 'Interessado') selected @endif>Interessado</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -65,7 +66,7 @@
                     <small>Exibindo os 20 mais recentes. Use os filtros para visualizar todos.</small>
                 @endif
                 <br/><small>Ordenando pela data de cadastro do andamento no Legal One.</small>
-                <br/><small><i>* Andamentos capturados dos sites dos tribunais, não dos diários oficiais.</i></small>
+                <br/><small><i>* Andamentos capturados dos sites dos tribunais, não dos diários oficiais. Estes andamentos são sincronizados duas vezes ao dia</i></small>
             </div>
         </div>
 
@@ -147,7 +148,7 @@
                         @endforeach
 
                     @endif
- 
+
                 </tbody>
             </table>
             @if(isset($andamentos_filtrados))

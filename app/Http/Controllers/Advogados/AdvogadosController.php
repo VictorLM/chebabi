@@ -40,6 +40,7 @@ class AdvogadosController extends Controller
           ->where('tipo', 'adv')
           ->where('ativo', TRUE)
           ->select('users.id', 'users.name')
+          ->orderBy('users.name')
           ->get();
         
         $title = 'Novo Advogado | Intranet Izique Chebabi Advogados Associados';

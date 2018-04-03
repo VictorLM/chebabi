@@ -24,7 +24,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/intranet') }}">
-                    <img class="img-fluid" src="{{url('assets/imagens/logo3.png')}}"/>
+                    <img class="img-fluid" src="{{url('assets/imagens/logo_pq.png')}}"/>
                 </a>
                 <div class="navbar-right userelogout">
                     <!-- Authentication Links -->

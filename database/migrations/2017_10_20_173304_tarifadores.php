@@ -16,8 +16,8 @@ class Tarifadores extends Migration
         Schema::create('tarifadores', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cliente')->unique();
-            $table->string('imp')->unique();
-            $table->string('tel')->unique();
+            $table->string('imp')->nullable();
+            $table->string('tel')->nullable();
             $table->timestamps();
         });
     }

@@ -326,3 +326,6 @@ textarea {
 	}
 }
 /* FIM LOADER SPIN */
+.ql-editor{
+    min-height: 200px;
+}

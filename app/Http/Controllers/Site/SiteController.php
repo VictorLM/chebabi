@@ -11,12 +11,16 @@ use Carbon\Carbon;
 use Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Intranet\Blog_Noticias;
 
 class SiteController extends Controller
 {
     public function index(){
+        $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(7)->get();
+        $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
+        $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.index', compact('title'));
+        return view('site.index', compact('title', 'noticias', 'artigos', 'historias'));
     }
     
     public function contato(){
@@ -27,9 +31,9 @@ class SiteController extends Controller
     public function enviar_contato(Request $request){
         
         $validator = Validator::make($request->all(), [
-            'remetenteNome' => 'required|string|max:50',
+            'nome' => 'required|string|max:50',
             'telefone' => 'nullable|string|max:17',
-            'remetenteEmail' => 'required|email|max:100',
+            'email' => 'required|email|max:100',
             'mensagem' => 'required|string|max:2000',
             'g-recaptcha-response' => 'required|captcha'
         ]);
@@ -41,7 +45,7 @@ class SiteController extends Controller
             Mail::send('emails.contato', ['content' => $content], 
                         function ($message) use ($request)
             {
-                $message->from($request->input('remetenteEmail'), $name = null);
+                $message->from($request->input('email'), $name = null);
                 $message->to('atendimento@chebabi.com', $name = null);
                 $message->subject('Contato enviado pelo site');
             });
@@ -52,9 +56,9 @@ class SiteController extends Controller
             }else{
                 DB::table('contatos')->insert([
                     [
-                        'nome' => $request->input('remetenteNome'), 
+                        'nome' => $request->input('nome'), 
                         'telefone' => $request->input('telefone'), 
-                        'email' => $request->input('remetenteEmail'), 
+                        'email' => $request->input('email'), 
                         'ip' => 'IP: ' . \Request::ip() .' - USER-AGENT: ' . $request->header('User-Agent'),
                         'mensagem' => strip_tags($request->input('mensagem')),
                         'created_at' => Carbon::now(),
@@ -70,20 +74,20 @@ class SiteController extends Controller
     public function enviar_curriculo(Request $request){
         
         $validator = Validator::make($request->all(), [
-            'remetenteNome' => 'required|string|max:50',
-            'telefone' => 'nullable|string|max:17',
-            'remetenteEmail' => 'required|email|max:100',
+            'nome' => 'required|string|max:50',
+            'telefone' => 'required|string|max:17',
+            'email' => 'required|email|max:100',
             'rg' => 'required|string|max:13',
             'cpf' => 'required|string|max:14',
             'endereco' => 'required|string|max:100',
-            'data' => 'required|date',
+            'nascimento' => 'required|date',
             'area' => [
                 'required',
                 Rule::in(
-                    ['Advogado Cível', 'Advogado Trabalhista', 'Apoio Jurídico', 'Estágio Cível', 
+                    ['Advogado(a) Cível', 'Advogado(a) Trabalhista', 'Apoio Jurídico', 'Estágio Cível', 
                      'Estágio Trabalhista', 'Financeiro', 'Área Administrativa']),
             ],
-            'curriculo' => 'required|mimes:pdf|max:5240',
+            'curriculo' => 'required|mimes:pdf|max:2400',
             'mensagem' => 'required|string|max:2000',
             'g-recaptcha-response' => 'required|captcha'
         ]);
@@ -91,18 +95,24 @@ class SiteController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
-            $destinatario2 = "";
+            $titulo = "";
             switch($request->input('area')){
-                case "Advogado Cível": $destinatario = "paula@chebabi.com"; break;
-                case "Advogado Trabalhista": $destinatario = "maria.carolina@chebabi.com"; 
-                                            $destinatario2 = "daniele@chebabi.com"; break;
-                case "Apoio Jurídico": $destinatario = "rafaela@chebabi.com"; break;
-                case "Estágio Cível": $destinatario = "maira@chebabi.com"; break;
-                case "Estágio Trabalhista": $destinatario = "maria.carolina@chebabi.com"; break;
-                case "Financeiro": $destinatario = "dp@chebabi.com"; break;
-                case "Área Administrativa": $destinatario = "dp@chebabi.com"; break;
-                //case "Área Administrativa": $destinatario = "victor@chebabi.com"; break;
-                default: $destinatario = "dp@chebabi.com"; break;
+                case "Advogado(a) Cível": $destinatario = "curriculos@chebabi.com"; 
+                                        $titulo = "[Cível] Currículo enviado pelo formulário do site"; break;
+                case "Advogado(a) Trabalhista": $destinatario = "curriculos@chebabi.com"; 
+                                        $titulo = "[Trabalhista] Currículo enviado pelo formulário do site"; break;
+                case "Apoio Jurídico": $destinatario = "curriculos@chebabi.com"; 
+                                        $titulo = "[Adm Jur] Currículo enviado pelo formulário do site"; break;
+                case "Estágio Cível": $destinatario = "curriculos@chebabi.com"; 
+                                        $titulo = "[Estágio Cível] Currículo enviado pelo formulário do site"; break;
+                case "Estágio Trabalhista": $destinatario = "curriculos@chebabi.com"; 
+                                        $titulo = "[Estágio Trabalhista] Currículo enviado pelo formulário do site"; break;
+                case "Financeiro": $destinatario = "dp@chebabi.com"; 
+                                        $titulo = "[Financeiro] Currículo enviado pelo formulário do site"; break;
+                case "Área Administrativa": $destinatario = "dp@chebabi.com"; 
+                                        $titulo = "[Adm] Currículo enviado pelo formulário do site"; break;
+                default: $destinatario = "dp@chebabi.com"; 
+                                        $titulo = "Currículo enviado pelo formulário do site"; break;
             }
         
             $identificador = date('dmYHis');
@@ -111,14 +121,11 @@ class SiteController extends Controller
             }
             $content = $request->all();
             Mail::send('emails.curriculo', ['content' => $content], 
-                        function ($message) use ($destinatario, $destinatario2, $identificador, $request)
+                        function ($message) use ($destinatario, $titulo, $identificador, $request)
             {
-                $message->from($request->input('remetenteEmail'), $name = null);
+                $message->from($request->input('email'), $name = null);
                 $message->to($destinatario, $name = null);
-                $message->subject('Currículo enviado pelo formulário do site');
-                if(!empty($destinatario2)){
-                    $message->cc($destinatario2, $name = null);
-                }
+                $message->subject($titulo);
                 if ($request->hasFile('curriculo')){
                     $message->attach("../storage/app/curriculos/curriculo_".$identificador.".pdf");
                 }
@@ -165,15 +172,9 @@ class SiteController extends Controller
         return view('site.areas', compact('title'));
     }
     
-    public function noticias(){
-        $feed = 'https://www.aasp.org.br/feed/?post_type=noticias';
-        $noticias = simplexml_load_file($feed);
-        $title = 'Notícias | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.noticias', compact('title', 'noticias'));
-    }
-    
-    public function advogados(){
+    public function equipe(){
+        $equipe = Advogados::with('nome_usuario:id,name,ramal,email')->orderBy('created_at', 'ASC')->get();
         $title = 'Advogados | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.advogados', compact('title'));
+        return view('site.equipe', compact('title', 'equipe'));
     }
 }

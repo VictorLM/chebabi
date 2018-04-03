@@ -235,7 +235,7 @@ img.fullwidth, img.fullwidthOnMobile {
                 
                   <div align="center" class="img-container center  autowidth  " style="padding-right: 0px;  padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
-<img class="center  autowidth " align="center" border="0" src="{{url('assets/imagens/logo3.png')}}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250">
+<img class="center  autowidth " align="center" border="0" src="{{url('assets/imagens/logo_pq.png')}}" alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250">
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
@@ -260,7 +260,7 @@ img.fullwidth, img.fullwidthOnMobile {
                   <div class="">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 <div style="color:#555555;line-height:120%;font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
-  <div style="font-size:12px;line-height:14px;font-family:Roboto, Tahoma, Verdana, Segoe, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 42px; line-height: 50px;">Parabéns {{$content}}, você recebeu um novo Uau!</span></p></div>	
+  <div style="font-size:12px;line-height:14px;font-family:Roboto, Tahoma, Verdana, Segoe, sans-serif;color:#555555;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 42px; line-height: 50px;">Parabéns, {{$content}}. Você recebeu um novo Uau!</span></p></div>	
 </div>
 <!--[if mso]></td></tr></table><![endif]-->
 </div>

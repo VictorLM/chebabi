@@ -24,275 +24,134 @@ class RelatorioController extends Controller
 
     public function create(Request $request){
 
-        $identificador = date('dmYHis');
-        
         $relatorio = new Relatorio;
 
         $validator = Validator::make($request->all(),$relatorio->rules);
-        
-        if ($request->hasFile('comprovantes')){
-            $request->file('comprovantes')->storeAs('intranet\pdf\comprovantes', 'comprovante_'.$identificador.'.pdf');
-        }
 
-        $request->request->add(['usuario' => Auth::user()->id]);
-        $request->request->add(['created_at' => Carbon::now()]);
-        $request->request->add(['identificador' => $identificador]);
-        
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
+            $identificador = date('dmYHis');
             
-            $this->relatorio_pdf($request, $identificador);
-            $this->relatorio_email($identificador, $request);
-            $this->relatorio_email_copia($identificador, $request);
+            if ($request->hasFile('comprovantes')){
+                $request->file('comprovantes')->storeAs('intranet\pdf\comprovantes', 'comprovante_'.$identificador.'.pdf');
+                $comprovantes = TRUE;
+            }else{
+                $comprovantes = FALSE;
+            }
+
+            $clientes = [];
+            $partes_contrarias = [];
+            $pastas = [];
+            $processos = [];
+            $enderecos = [];
+            $motivos_viagem = [];
+            $despesas = [];
+            $i=1;
+            $index=0;
+
+            if(!empty($request->carro)){
+                $veiculo = mb_strtoupper($request->carro, 'UTF-8');
+            }else{
+                $veiculo = null;
+            }
+
+            while($i<5){
+                $clientes[$index]['CLIENTE'] =      mb_strtoupper($request->input('cliente'.$i), 'UTF-8');
+                $clientes[$index]['CONTRARIO'] =    mb_strtoupper($request->input('contrario'.$i), 'UTF-8');
+                $clientes[$index]['PASTA'] =        mb_strtoupper($request->input('pasta'.$i), 'UTF-8');
+                $clientes[$index]['PROCESSO'] =     mb_strtoupper($request->input('proc'.$i), 'UTF-8');
+                $clientes[$index]['DESCRICAO'] =     mb_strtoupper($request->input('motivoviagem'.$i), 'UTF-8');
+                $enderecos[] =                      mb_strtoupper($request->input('end'.$i), 'UTF-8');
+                $despesas[$index]['DESCRIÇÃO'] =    mb_strtoupper($request->input('descricaodespesa'.$i), 'UTF-8');
+                $despesas[$index]['PASTA'] =        mb_strtoupper($request->input('despesapasta'.$i), 'UTF-8');
+                $despesas[$index]['CLIENTE'] =      mb_strtoupper($request->input('clientedespesa'.$i), 'UTF-8');
+                $despesas[$index]['VALOR'] =        $request->input('despesasgerais'.$i);
+                $i++;
+                $index++;
+            }
             
-            Relatorio::create($request->except(['valorkm', 'totalgastos', 'aserdevolvido', 'enviar', 'responsavel']));
+            $relatorio->usuario =       mb_strtoupper(Auth::user()->id, 'UTF-8');
+            $relatorio->created_at =    Carbon::now();
+            $relatorio->identificador = $identificador;
+            $relatorio->kilometragem =  $request->kilometragem;
+            $relatorio->veiculo =       $veiculo;
+            $relatorio->reembolsavel =  $request->reembolsavel;
+            $relatorio->pedagio =       $request->pedagio;
+            //
+            $relatorio->clientes =          serialize(array_filter(array_map('array_filter', array_filter($clientes))));
+            $relatorio->enderecos =         serialize(array_filter(array_map('strtoupper', $enderecos)));
+            $relatorio->despesas =          serialize(array_filter(array_map('array_filter', array_filter($despesas))));
+            //
+            $relatorio->data = $request->data;
+            $relatorio->totalkm = $request->totalkm;
+            $relatorio->caucao = $request->caucao;
+            $relatorio->observacoes = mb_strtoupper($request->observacoes, 'UTF-8');
+            $relatorio->comprovantes = $comprovantes;            
+
+            $relatorio->save();
+
+            $this->relatorio_pdf($relatorio);
+            $this->relatorio_email($relatorio);
+            $this->relatorio_email_copia($relatorio);
+
             $request->session()->flash('alert-success', 'Relatório enviado com sucesso!');
             return redirect()->action('Intranet\IntranetController@index');
+            
         }
     }
     
-    private function relatorio_pdf($request, $identificador){
-        //mPDF
-        require_once __DIR__ . '/../../../../vendor/autoload.php';
-        /* GERANDO PDF COM MPDF */
-        //GERANDO VIA DO FINANCEIRO
-        $mpdf = new \Mpdf\Mpdf([
-                'mode' => 'utf-8', 
-                'format' => 'A4', 
-                'orientation' => 'P',
-                'setAutoTopMargin' => 'stretch'
-        ]);
-        $mpdf->SetDisplayMode('fullpage');
-        $mpdf->list_indent_first_level = 0;
+    private function relatorio_pdf($relatorio){
 
-        $header = '
-            <div style="float:right; width:250px;">
-            <img src="../public/assets/imagens/logo3.png">
-            </div>';
-        
-        if($request->input('tipo_viagem') == "Com kilometragem"){
-            //HTML TEMPLATE
-            require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem.php';
-            
-            $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-            $mpdf->WriteHTML($stylesheet, 1);
-            $mpdf->SetHTMLHeader($header,'',TRUE);
-            $mpdf->WriteHTML($html1, 2);
-            $mpdf->Output("../storage/app/intranet/pdf/relatorios/relatorio_viagem_".$identificador.".pdf","F");
-            
-            //GERANDO VIA DO CLIENTE
+        \PDF::loadView('pdf.relatorio_viagem', compact('relatorio'))
+            //->stream();
+            ->save('../storage/app/intranet/pdf/relatorios/relatorio_'.$relatorio->identificador.'.pdf');
 
-            if(!empty($request->input('pasta2')) && !empty($request->input('cliente2')) &&
-                empty($request->input('pasta3')) && empty($request->input('cliente3'))){
-                //COM DOIS CLIENTES;
-                $i = 1;
-
-                require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem_cliente.php';
-
-                while($i<3){
-
-                    $mpdf = new \Mpdf\Mpdf([
-                        'mode' => 'utf-8', 
-                        'format' => 'A4-L', 
-                        'setAutoTopMargin' => 'stretch'
-                    ]);
-                    $mpdf->SetDisplayMode('fullpage');
-                    $mpdf->list_indent_first_level = 0;
-
-                    $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-                    $mpdf->WriteHTML($stylesheet, 1);
-                    $mpdf->SetHTMLHeader($header,'',TRUE);
-                    $mpdf->SetHTMLFooter($footer,'');
-                    $mpdf->WriteHTML(${'html'.$i}, 2);
-                    $mpdf->Output("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente".$i."_".$identificador.".pdf","F");
-
-                    $i++;
-                }
-
-            }else if (!empty($request->input('pasta2')) && !empty($request->input('cliente2')) &&
-                      !empty($request->input('pasta3')) && !empty($request->input('cliente3'))){
-                //COM TRÊS CLIENTES;
-                $i = 1;
-
-                require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem_cliente.php';
-
-                while($i<4){
-
-                    $mpdf = new \Mpdf\Mpdf([
-                        'mode' => 'utf-8', 
-                        'format' => 'A4-L', 
-                        'setAutoTopMargin' => 'stretch'
-                    ]);
-                    $mpdf->SetDisplayMode('fullpage');
-                    $mpdf->list_indent_first_level = 0;
-
-                    $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-                    $mpdf->WriteHTML($stylesheet, 1);
-                    $mpdf->SetHTMLHeader($header,'',TRUE);
-                    $mpdf->SetHTMLFooter($footer,'');
-                    $mpdf->WriteHTML(${'html'.$i}, 2);
-                    $mpdf->Output("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente".$i."_".$identificador.".pdf","F");
-
-                    $i++;
-                }
-
-            }else{
-                //COM UM CLIENTE;
-                require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem_cliente.php';
-
-                $mpdf = new \Mpdf\Mpdf([
-                    'mode' => 'utf-8', 
-                    'format' => 'A4-L', 
-                    'setAutoTopMargin' => 'stretch'
-                ]);
-                $mpdf->SetDisplayMode('fullpage');
-                $mpdf->list_indent_first_level = 0;
-
-                $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-                $mpdf->WriteHTML($stylesheet, 1);
-                $mpdf->SetHTMLHeader($header,'',TRUE);
-                $mpdf->SetHTMLFooter($footer,'');
-                $mpdf->WriteHTML($html1, 2);
-                $mpdf->Output("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente_".$identificador.".pdf","F");
+        if($relatorio->reembolsavel){
+            for($i=0; $i<count(unserialize($relatorio->clientes)); $i++){
+                \PDF::loadView('pdf.relatorio_viagem_cliente', compact('relatorio', 'i'))
+                    ->setPaper('a4', 'landscape')
+                    //->stream();
+                    ->save('../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_'.($i+1).'_'.$relatorio->identificador.'.pdf');
             }
-            
-        }else{
-            //HTML TEMPLATE
-            require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem_skm.php';
-            
-            $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-            $mpdf->WriteHTML($stylesheet, 1);
-            $mpdf->SetHTMLHeader($header,'',TRUE);
-            $mpdf->WriteHTML($html1, 2);
-            $mpdf->Output("../storage/app/intranet/pdf/relatorios/relatorio_viagem_".$identificador.".pdf","F");
-            
-            //GERANDO VIA DO CLIENTE
-
-            if(!empty($request->input('pasta2')) && !empty($request->input('cliente2')) &&
-                empty($request->input('pasta3')) && empty($request->input('cliente3'))){
-                //COM DOIS CLIENTES;
-                $i = 1;
-
-                require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem_cliente_skm.php';
-
-                while($i<3){
-
-                    $mpdf = new \Mpdf\Mpdf([
-                        'mode' => 'utf-8', 
-                        'format' => 'A4-L', 
-                        'setAutoTopMargin' => 'stretch'
-                    ]);
-                    $mpdf->SetDisplayMode('fullpage');
-                    $mpdf->list_indent_first_level = 0;
-
-                    $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-                    $mpdf->WriteHTML($stylesheet, 1);
-                    $mpdf->SetHTMLHeader($header,'',TRUE);
-                    $mpdf->SetHTMLFooter($footer,'');
-                    $mpdf->WriteHTML(${'html'.$i}, 2);
-                    $mpdf->Output("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente".$i."_".$identificador.".pdf","F");
-
-                    $i++;
-                }
-
-            }else if (!empty($request->input('pasta2')) && !empty($request->input('cliente2')) &&
-                      !empty($request->input('pasta3')) && !empty($request->input('cliente3'))){
-                //COM TRÊS CLIENTES;
-                $i = 1;
-
-                require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem_cliente_skm.php';
-
-                while($i<4){
-
-                    $mpdf = new \Mpdf\Mpdf([
-                        'mode' => 'utf-8', 
-                        'format' => 'A4-L', 
-                        'setAutoTopMargin' => 'stretch'
-                    ]);
-                    $mpdf->SetDisplayMode('fullpage');
-                    $mpdf->list_indent_first_level = 0;
-
-                    $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-                    $mpdf->WriteHTML($stylesheet, 1);
-                    $mpdf->SetHTMLHeader($header,'',TRUE);
-                    $mpdf->SetHTMLFooter($footer,'');
-                    $mpdf->WriteHTML(${'html'.$i}, 2);
-                    $mpdf->Output("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente".$i."_".$identificador.".pdf","F");
-
-                    $i++;
-                }
-
-            }else{
-                //COM UM CLIENTE;
-                require_once __DIR__ . '/../../../../app/Http/Controllers/Relatorio/template_relatorio_viagem_cliente_skm.php';
-
-                $mpdf = new \Mpdf\Mpdf([
-                    'mode' => 'utf-8', 
-                    'format' => 'A4-L', 
-                    'setAutoTopMargin' => 'stretch'
-                ]);
-                $mpdf->SetDisplayMode('fullpage');
-                $mpdf->list_indent_first_level = 0;
-
-                $stylesheet = file_get_contents('../public/assets/css/pdf.css');
-                $mpdf->WriteHTML($stylesheet, 1);
-                $mpdf->SetHTMLHeader($header,'',TRUE);
-                $mpdf->SetHTMLFooter($footer,'');
-                $mpdf->WriteHTML($html1, 2);
-                $mpdf->Output("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente_".$identificador.".pdf","F");
-            }
-        
         }
 
     }
-    
-    //WHILE PARA ANEXAR QUANDO HOUVER MAIS DE UM CLIENTE
-    private function relatorio_email($identificador, $request){
-        $request->request->add(['responsavel' => Auth::user()->name]);
-        $content = $request->all();
-        Mail::send('emails.relatorio', ['content' => $content], 
-                    function ($message) use ($identificador, $request)
+
+    private function relatorio_email($relatorio){
+
+        Mail::send('emails.relatorio', ['content' => $relatorio], 
+                    function ($message) use ($relatorio)
         {
             $message->from('relatorios@chebabi.adv.br', 'Relatórios de viagem');
             $message->to('relatorios@chebabi.com', $name = null);
-            $message->subject('Relatório de viagem - Protocolo: '.$identificador);
-            $message->attach("../storage/app/intranet/pdf/relatorios/relatorio_viagem_".$identificador.".pdf");
+            //$message->to('victor@chebabi.com', $name = null);
+            $message->subject('Relatório de viagem - '.$relatorio->identificador);
+            $message->attach("../storage/app/intranet/pdf/relatorios/relatorio_".$relatorio->identificador.".pdf");
 
-            if(file_exists("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente_".$identificador.".pdf")){
-                $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente_".$identificador.".pdf");
-            }
-            if(file_exists("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente1_".$identificador.".pdf")){
-                $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente1_".$identificador.".pdf");
-            }
-            if(file_exists("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente2_".$identificador.".pdf")){
-                $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente2_".$identificador.".pdf");
-            }
-            if(file_exists("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente3_".$identificador.".pdf")){
-                $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_viagem_cliente3_".$identificador.".pdf");
+            for($i=1; $i<5; $i++){
+                if(file_exists("../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_".$i."_".$relatorio->identificador.".pdf")){
+                    $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_".$i."_".$relatorio->identificador.".pdf");
+                }
             }
 
-            if ($request->hasFile('comprovantes')){
-                $message->attach("../storage/app/intranet/pdf/comprovantes/comprovante_".$identificador.".pdf");
+            if ($relatorio->comprovantes && 
+                file_exists("../storage/app/intranet/pdf/comprovantes/comprovante_".$relatorio->identificador.".pdf")){
+                    
+                $message->attach("../storage/app/intranet/pdf/comprovantes/comprovante_".$relatorio->identificador.".pdf");
             }
         });
-        //IMPLEMENTAR CHECAGEM DE ENVIO
-        if (Mail::failures()) {
-            return (false);
-        }else{
-            return (true);
-        }
     }
     
-    private function relatorio_email_copia($identificador, $request){
-        $request->request->add(['responsavel' => Auth::user()->name]);
-        $content = $request->all();
-        Mail::send('emails.relatorio', ['content' => $content], function ($message) use ($identificador)
+    private function relatorio_email_copia($relatorio){
+
+        Mail::send('emails.relatorio', ['content' => $relatorio], 
+                    function ($message) use ($relatorio)
         {
             $message->from('relatorios@chebabi.adv.br', 'Relatórios de viagem');
-            $message->to(Auth::user()->email, $name = null);
-            $message->subject('Relatório de viagem - Protocolo: '.$identificador);
-            $message->attach("../storage/app/intranet/pdf/relatorios/relatorio_viagem_".$identificador.".pdf");
+            $message->to(Auth::user()->email, $name = Auth::user()->name);
+            $message->subject('Relatório de viagem - '.$relatorio->identificador);
+            $message->attach("../storage/app/intranet/pdf/relatorios/relatorio_".$relatorio->identificador.".pdf");
         });
     }
 

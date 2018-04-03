@@ -2,83 +2,130 @@
 
 @section('conteudo')
 
-<div id="conteudo">
-    <!-- Contato -->
-    <h1>CONTATO</h1>
-    <div id="contatomain">
-        
-        @if(Session::has('alert-success'))
-            <div style="text-align: center;background-color: lightgreen;width: 50%;margin: auto;border-radius: 1em;line-height: 3em;margin-bottom: 1em;">
-                <li>{{ Session::get('alert-success') }}</li>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-light breadcrumb-custom">
+            <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Contato</li>
+        </ol>
+    </nav>
+
+    <div class="card bg-light mb-3">
+        <div class="card-body">
+
+            <h1 class="text-center">CONTATO</h1>
+            <hr/>
+            @if(Session::has('alert-success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ Session::get('alert-success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @elseif(Session::has('alert-error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ Session::get('alert-error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @elseif(Session::has('errors'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        @elseif(Session::has('alert-error'))
-            <div style="text-align: center;background-color: #ff44008c;width: 50%;margin: auto;border-radius: 1em;line-height: 3em;margin-bottom: 1em;">
-                <li>{{ Session::get('alert-error') }}</li>
+            @endif
+
+            <div class="text-center">
+                <h3>Nôs siga nas redes sociais</h3>
+                <a href="https://www.linkedin.com/company/izique-chebabi-advogados-associados" target="_blank" class="fa fa-linkedin fa-2x social"></a>
+                <a href="https://www.facebook.com/Izique-Chebabi-Advogados-Associados-346767155816975" target="_blank" class="fa fa-facebook fa-2x social"></a>
+                <a href="#" class="fa fa-youtube fa-2x social"></a>
+                <a href="https://plus.google.com/+IziqueChebabiAdvogadosAssociadosCampinas" target="_blank" class="fa fa-google fa-2x social"></a>
             </div>
-        @endif
-                
-        <div class="contato">
-            <div id="form">
-                <form id="form" name="form" method="POST" action="{{action('Site\SiteController@enviar_contato')}}">
-                    {!! csrf_field() !!}
-                    <fieldset>
-                        <legend>Entre em contato conosco</legend>
-                        <p><input type="text" id="nomeid" placeholder="* Nome" required="required" name="remetenteNome" maxlength="50" 
-                            value="{{old('remetenteNome')}}" @if($errors->has('remetenteNome')) style="border-color:red;" autofocus @endif/></p>
-                        @if ($errors->has('remetenteNome'))
-                            <small style="color:red;">
-                                {{ $errors->first('remetenteNome') }}
-                            </small>
+
+            <hr/>
+
+            <form method="POST" id="form" action="{{action('Site\SiteController@enviar_contato')}}">
+                {!! csrf_field() !!}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>* Nome</label>
+                        <input type="text" name="nome" value="{{old('nome')}}" class="form-control{{ $errors->has('nome') ? ' is-invalid' : '' }}" placeholder="* Nome" maxlength="50" required>
+                        @if ($errors->has('nome'))
+                            <div class="invalid-feedback">{{ $errors->first('nome') }}</div>
                         @endif
-                        <p><input type="text" class="sp_celphones" id="foneid" placeholder="Telefone" name="telefone" maxlength="17" 
-                            value="{{old('telefone')}}" @if($errors->has('telefone')) style="border-color:red;" autofocus @endif/></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>* E-mail</label>
+                        <input type="email" value="{{old('email')}}" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="* E-mail" maxlength="100" required>
+                        @if ($errors->has('email'))
+                            <div class="invalid-feedback">{{ $errors->first('email') }}</div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Telefone</label>
+                        <input type="text" value="{{old('telefone')}}" class="form-control sp_celphones{{ $errors->has('telefone') ? ' is-invalid' : '' }}" name="telefone" placeholder="Telefone" maxlength="17">
                         @if ($errors->has('telefone'))
-                            <small style="color:red;">
-                                {{ $errors->first('telefone') }}
-                            </small>
+                            <div class="invalid-feedback">{{ $errors->first('telefone') }}</div>
                         @endif
-                        <p><input type="email" id="emailid" placeholder="* seunome@email.com" name="remetenteEmail" 
-                            value="{{old('remetenteEmail')}}" @if($errors->has('remetenteEmail')) style="border-color:red;" autofocus @endif/></p>
-                        @if ($errors->has('remetenteEmail'))
-                            <small style="color:red;">
-                                {{ $errors->first('remetenteEmail') }}
-                            </small>
-                        @endif
-                        <p><textarea placeholder="* Mensagem (máximo 2000 caracteres)" name="mensagem" maxlength="2000" 
-                            @if($errors->has('mensagem')) style="border-color:red;" autofocus @endif>{{old('mensagem')}}</textarea></p>
+                    </div>
+                    <div class="form-group col-md-6 text-right">
+                        {!! NoCaptcha::display() !!}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>* Mensagem</label>
+                        <textarea class="form-control{{ $errors->has('mensagem') ? ' is-invalid' : '' }}" placeholder="* Mensagem (máximo 2000 caracteres)" name="mensagem" maxlength="2000" required>{{old('mensagem')}}</textarea>
                         @if ($errors->has('mensagem'))
-                            <small style="color:red;">
-                                {{ $errors->first('mensagem') }}
-                            </small>
-                            <br/>
+                            <div class="invalid-feedback">{{ $errors->first('mensagem') }}</div>
                         @endif
-                        <div id="captcha" @if($errors->has('g-recaptcha-response')) style="border-style: solid; border-width: 1px; border-color:red;" autofocus @endif>
-                            {!! NoCaptcha::display() !!}
-                        </div>
-                        @if ($errors->has('g-recaptcha-response'))
-                            <small style="color:red;">
-                                {{ $errors->first('g-recaptcha-response') }}
-                            </small>
-                            <br/>
-                        @endif
-                        <input type="submit" value="ENVIAR" id="enviaemail" name="enviarFormulario" />
-                        <p>Trabalhe conosco - <a style="color: blue;" href="{{url('/trabalhe-conosco#conteudo')}}">Clique aqui para enviar seu currículo.</a></p>
-                        </br>
-                        <p>Fone/Fax: (19) 3237-3747 - (19) 3203-4744</p>
-                        </br>
-                    </fieldset>
-                </form>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-paper-plane"></i> Enviar</button>
+                <br/>
+                <small>* Campos obrigatórios.</small>
+                <hr/>
+                <div>
+                    <span>Trabalhe conosco - <a href="http://www.chebabi.com/trabalhe-conosco">Clique aqui para enviar seu currículo.</a></span>
+                    <br/>
+                    <span>Fone/Fax: (19) 3237-3747 - (19) 3203-4744 - <a href="mailto:atendimento@chebabi.com">atendimento@chebabi.com</a></span>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="loaderModal">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-body">
+                    <h2>Enviando...Aguarde.</h2>
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 10em;"></i>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Fim Contato -->
-</div>
 
 @push ('scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{{ asset('assets/js/jquery.mask.js') }}"></script>
     <script src="{{ asset('assets/js/tel_mask.js') }}"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="{{asset('assets/js/modal_loader.js')}}"></script>
 @endpush
 
 @endsection

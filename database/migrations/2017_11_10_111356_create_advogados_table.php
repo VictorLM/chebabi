@@ -19,6 +19,7 @@ class CreateAdvogadosTable extends Migration
             $table->foreign('usuario')->references('id')->on('users');
             $table->mediumText('texto');
             $table->string('oab', 15);
+            $table->enum('tipo_adv', ['Trabalhista', 'Cível'])->nullable();
             $table->string('foto', 100)->nullable();
             $table->timestamps();
         });

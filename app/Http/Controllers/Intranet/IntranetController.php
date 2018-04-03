@@ -90,7 +90,8 @@ class IntranetController extends Controller
             Mail::send('emails.sugestao', ['content' => $content], function ($message) use ($content)
             {
                 $message->from('postmaster@chebabi.adv.br', 'Sugestão - Izique Chebabi Advogados');
-                $message->to('victor@chebabi.com', $name = null);
+                $message->to('coordenacao@chebabi.com', $name = null);
+                $message->cc('victor@chebabi.com', $name = null);
                 $message->subject('Sugestão enviada pela intranet');
             });
 

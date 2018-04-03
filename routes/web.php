@@ -13,7 +13,6 @@
 
 Route::get('intranet/inserir-custas', 'APIs\LegalOneController@teste');
 
-
 //ROTAS DO SITE
 Route::get('/', 'Site\SiteController@index');
 Route::get('/advogados', 'Site\SiteController@equipe');
@@ -21,9 +20,17 @@ Route::get('/areas', 'Site\SiteController@areas');
 Route::get('/contato', 'Site\SiteController@contato');
 Route::get('/trabalhe-conosco', 'Site\SiteController@trabalheconosco');
 Route::get('/escritorios', 'Site\SiteController@escritorios');
-Route::get('/noticias', 'Site\SiteController@noticias');
 Route::post('/enviar_contato', 'Site\SiteController@enviar_contato');
 Route::post('/enviar_curriculo', 'Site\SiteController@enviar_curriculo');
+//ROTAS DO BLOG
+Route::get('/blog', 'Blog\BlogController@index');
+Route::get('/blog/categorias/{categoria}', 'Blog\BlogController@categoria');
+Route::get('/blog/noticias', 'Blog\BlogController@noticias');
+Route::get('/blog/historias', 'Blog\BlogController@historias');
+Route::get('/blog/artigos/{url}', 'Blog\BlogController@artigo');
+Route::get('/blog/historias/{url}', 'Blog\BlogController@historia');
+Route::put('/blog/artigos/{url}/comentar', 'Blog\BlogController@comentar_artigo');
+Route::put('/blog/historias/{url}/comentar', 'Blog\BlogController@comentar_historia');
 //ROTAS DA INTRANET
 Route::group(['prefix'=>'intranet'],function(){
     Route::get('/', 'Intranet\IntranetController@index');
@@ -80,6 +87,25 @@ Route::group(['prefix'=>'intranet'],function(){
 Route::group(['prefix'=>'intranet/admin'],function(){
     //INDEX PAINEL ADM
     Route::get('/', 'Admin\AdminController@index');
+    //ROTAS BLOG
+        //ARTIGOS
+    Route::get('/blog-novo-artigo', 'Blog\BlogController@novo_artigo');
+    Route::post('/blog-novo-artigo/inserir', 'Blog\BlogController@inserir_artigo');
+    Route::get('/blog-editar-artigo', 'Blog\BlogController@listar_artigos');
+    Route::get('/blog-editar-artigo/{id}', 'Blog\BlogController@editar_artigo');
+    Route::post('/update-artigo', 'Blog\BlogController@update_artigo');
+    Route::post('/excluir-artigo', 'Blog\BlogController@excluir_artigo');
+    Route::get('/comentarios-artigo/{id}', 'Blog\BlogController@listar_comentarios_artigos');
+    Route::post('/excluir-comentario-artigo', 'Blog\BlogController@excluir_comentario_artigo');
+        //HISTÓRIAS
+    Route::get('/blog-nova-historia', 'Blog\BlogController@novo_historia');
+    Route::post('/blog-nova-historia/inserir', 'Blog\BlogController@inserir_historia');
+    Route::get('/blog-editar-historia', 'Blog\BlogController@listar_historias');
+    Route::get('/blog-editar-historia/{id}', 'Blog\BlogController@editar_historia');
+    Route::post('/update-historia', 'Blog\BlogController@update_historia');
+    Route::post('/excluir-historia', 'Blog\BlogController@excluir_historia');
+    Route::get('/comentarios-historia/{id}', 'Blog\BlogController@listar_comentarios_historias');
+    Route::post('/excluir-comentario-historia', 'Blog\BlogController@excluir_comentario_historia');
     //ROTAS CRUD USERS
     Route::resource('/users', 'User\UserController');
     Route::put('/users/active/{id}', 'User\UserController@active');
