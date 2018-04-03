@@ -139,10 +139,10 @@
 
             @endforeach
             @if(count(unserialize($relatorio->despesas))>0) 
-                <br/>
                 <div class="total_despesas">
                     <strong>TOTAL DESPESAS: </strong>R$ {{$total_despesas}}
                 </div>
+                <br/>
             @endif
 
         @else
