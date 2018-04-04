@@ -335,7 +335,9 @@ class BlogController extends Controller
 
             if(!empty($artigo->imagem)){
                 $foto = substr(strrchr($artigo->imagem, "/"), 1);
-                Storage::disk('public')->delete('/imagens/artigos/'.$foto);
+                if(file_exists('../public/assets/imagens/artigos/'.$foto)){
+                    Storage::disk('public')->delete('/imagens/artigos/'.$foto);
+                }  
             }
 
             DB::table('blog_artigos_comentarios')->where('artigo', $artigo->id)->delete();
