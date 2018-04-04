@@ -26,7 +26,7 @@
                                 @foreach ($noticias as $noticia)
                                     <p class="card-text card-text-noticias">
                                         <a href="{{$noticia->link}}" target="_blank">{{$noticia->titulo}}</a><br/>
-                                        {{Carbon\Carbon::parse($noticia->publicacao)->format('d/m/Y H:i')}}
+                                        {{Carbon\Carbon::parse($noticia->publicacao)->subHours(3)->format('d/m/Y H:i')}}
                                     </p>
                                 @endforeach
                             @else
