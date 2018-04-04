@@ -150,7 +150,7 @@ class AdvogadosController extends Controller
     public function destroy(Request $request, $id)
     {
         $adv = Advogados::with('nome_usuario:id,name')->find($id);
-        if(!empty($adv->foto)){
+        if(!empty($adv->foto) && $adv->foto != "assets/imagens/advogados/avatar.png"){
             $foto = substr(strrchr($adv->foto, "/"), 1);
             Storage::disk('public')->delete('/imagens/advogados/'.$foto);
         }

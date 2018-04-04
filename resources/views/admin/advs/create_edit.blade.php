@@ -85,8 +85,13 @@
                             <div class="col-md-6">
                                 <select class="form-control" name="tipo_adv" required>
                                     <option value=""></option>
-                                    <option value="Cível" @if(old('tipo_adv')=="Cível") selected @endif>Cível</option>
-                                    <option value="Trabalhista" @if(old('tipo_adv')=="Trabalhista") selected @endif>Trabalhista</option>
+                                    @if(isset($adv) && !empty($adv->tipo_adv))
+                                        <option value="Cível" @if($adv->tipo_adv =="Cível") selected @endif>Cível</option>
+                                        <option value="Trabalhista" @if($adv->tipo_adv =="Trabalhista") selected @endif>Trabalhista</option>
+                                    @else
+                                        <option value="Cível" @if(old('tipo_adv')=="Cível") selected @endif>Cível</option>
+                                        <option value="Trabalhista" @if(old('tipo_adv')=="Trabalhista") selected @endif>Trabalhista</option>
+                                    @endif
                                 </select>
 
                                 @if ($errors->has('tipo_adv'))
@@ -116,7 +121,7 @@
 
                             <div class="col-md-6">
                                 <input type="file" class="form-control" name="fotoadv">
-                                <small>*** SOMENTE FOTO QUADRADA.</small>
+                                <small>*** SOMENTE FOTO QUADRADA E MÁXIMO 300KB.</small>
                                 @if ($errors->has('fotoadv'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('fotoadv') }}</strong>
