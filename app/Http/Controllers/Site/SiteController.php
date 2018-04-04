@@ -137,13 +137,13 @@ class SiteController extends Controller
             }else{
                 DB::table('curriculos')->insert([
                     [
-                        'nome' => $request->input('remetenteNome'), 
-                        'email' => $request->input('remetenteEmail'), 
+                        'nome' => $request->input('nome'), 
+                        'email' => $request->input('email'), 
                         'telefone' => $request->input('telefone'),
                         'rg' => $request->input('rg'),
                         'cpf' => $request->input('cpf'),
                         'endereco' => $request->input('endereco'),
-                        'nascimento' => $request->input('data'),
+                        'nascimento' => $request->input('nascimento'),
                         'area' => $request->input('area'),
                         'ip' => 'IP: ' . \Request::ip() .' - USER-AGENT: ' . $request->header('User-Agent'),
                         'mensagem' => strip_tags($request->input('mensagem')),
