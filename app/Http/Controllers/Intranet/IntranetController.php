@@ -80,7 +80,7 @@ class IntranetController extends Controller
             
             DB::table('sugestoes')->insert([
                 'usuario' => Auth::user()->id,
-                'sugestao' => strip_tags($request->sugestoes),
+                'sugestao' => strip_tags($request->sugestao),
                 'infos_sessao' => 'IP: ' . \Request::ip() .' - USER-AGENT: ' . $request->header('User-Agent'),
                 'created_at' => Carbon::now(),
             ]);
