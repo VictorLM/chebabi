@@ -33,7 +33,7 @@ class MicrosoftController extends Controller
             'iniciohora' => 'required|date_format:H:i',
             'terminodata' => 'required|date_format:Y-m-d|after_or_equal:today',
             'terminohora' => 'required|date_format:H:i',
-            'envolvidos' => 'nullable|array|min:1|max:20', //MAX 20 ENVOLVIDOS
+            'envolvidos' => 'nullable|array|min:1|max:60', //MAX 60 ENVOLVIDOS
             'descricao' => 'nullable|string|max:2000',
         ]);
 
@@ -156,7 +156,7 @@ class MicrosoftController extends Controller
                 'iniciohora' => 'required|date_format:H:i',
                 'terminodata' => 'required|date_format:Y-m-d|after_or_equal:today',
                 'terminohora' => 'required|date_format:H:i',
-                'envolvidos' => 'nullable|array|min:1|max:20', //MAX 20 ENVOLVIDOS
+                'envolvidos' => 'nullable|array|min:1|max:60', //MAX 60 ENVOLVIDOS
                 'descricao' => 'nullable|string|max:2000',
             ]);
     

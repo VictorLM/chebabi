@@ -22,8 +22,6 @@
                                 </button>
                             </a>
                         </h2>  
-                        <small>Os eventos são sincronizados a cada cinco minutos. São 
-                        sincronizados os eventos datados de até três meses a partir da data atual.</small>
                     </div>
 
                     <div class="col-md-4">

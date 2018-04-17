@@ -117,7 +117,7 @@
                     @endforeach
                     </select>
                     <small>** O criador do evento é envolvido automaticamente.</small><br/>
-                    <small>* Máximo 20 envolvidos.</small><br/>
+                    <small>* Máximo 60 envolvidos.</small><br/>
                     @if ($errors->has('envolvidos'))
                         <small style="color:red;">
                             {{ $errors->first('envolvidos') }}
