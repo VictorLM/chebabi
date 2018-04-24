@@ -38,8 +38,32 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/')}}">HOME</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                SOBRE
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{{url('/#escritorio')}}">O ESCRITÓRIO</a>
+                                <a class="dropdown-item" href="{{url('/#principios')}}">PRINCÍPIOS</a>
+                            </div>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/areas')}}">ÁREAS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/advogados')}}">EQUIPE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('/escritorios')}}">ESCRITÓRIOS</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                CONTATO
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{{url('/contato')}}">CONSULTORIA JURÍDICA</a>
+                                <a class="dropdown-item" href="{{url('/trabalhe-conosco')}}">TRABALHE CONOSCO</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,33 +75,10 @@
                                 <a class="dropdown-item" href="{{url('/blog/noticias')}}">NOTÍCIAS</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                CONTATO
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{url('/contato')}}">CONSULTORIA JURÍDICA</a>
-                                <a class="dropdown-item" href="{{url('/trabalhe-conosco')}}">TRABALHE CONOSCO</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url('/advogados')}}">EQUIPE</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url('/escritorios')}}">ESCRITÓRIOS</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/intranet')}}">INTRANET</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                SOBRE
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{url('/#escritorio')}}">O ESCRITÓRIO</a>
-                                <a class="dropdown-item" href="{{url('/#principios')}}">PRINCÍPIOS</a>
-                            </div>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -92,10 +93,10 @@
         <footer class="footer bg-light text-center">
             <div class="container">
 
-                <a href="https://www.linkedin.com/company/izique-chebabi-advogados-associados" target="_blank" class="fa fa-linkedin fa-3x social"></a>
-                <a href="https://www.facebook.com/Izique-Chebabi-Advogados-Associados-346767155816975" target="_blank" class="fa fa-facebook fa-3x social"></a>
-                <a href="#" class="fa fa-youtube fa-3x social"></a>
-                <a href="https://plus.google.com/+IziqueChebabiAdvogadosAssociadosCampinas" target="_blank" class="fa fa-google fa-3x social"></a>
+                <a href="https://www.linkedin.com/company/izique-chebabi-advogados-associados" target="_blank" class="fa fa-linkedin @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
+                <a href="https://www.facebook.com/Izique-Chebabi-Advogados-Associados-346767155816975" target="_blank" class="fa fa-facebook @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
+                <!-- <a href="#" class="fa fa-youtube @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a> -->
+                <a href="https://plus.google.com/+IziqueChebabiAdvogadosAssociadosCampinas" target="_blank" class="fa fa-google @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
                 <hr/>
                 <div class="row row-eq-height">
 

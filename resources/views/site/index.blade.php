@@ -2,38 +2,55 @@
 
 @section('conteudo')
 
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+
+            <div class="carousel-item active">
+                <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-1.jpg')}}" alt="advogados">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-2.jpg')}}" alt="advogados">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-3.jpg')}}" alt="advogados">
+            </div>
+
+            <!--
+            <div class="carousel-item active">
+
+                @if($agent->isMobile())
+                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-mobile-etica.jpg')}}" alt="advogados">
+                @else
+                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-web-etica.jpg')}}" alt="advogados">
+                @endif
+            </div>
+            <div class="carousel-item">
+                @if($agent->isMobile())
+                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-mobile-transparencia.jpg')}}" alt="advogados">
+                @else
+                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-web-transparencia.jpg')}}" alt="advogados">
+                @endif
+            </div>
+            -->
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
     <div class="card bg-light mb-3">
         <div class="card-body">
 
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active">
-                        <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-1.jpg')}}" alt="advogados">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-2.jpg')}}" alt="advogados">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-3.jpg')}}" alt="advogados">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-            
-            <hr/>
-        
             <div class="row row-eq-height">
         
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 text-justify display-grid">
@@ -96,13 +113,14 @@
                     
                 </div>
 
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 text-justify display-grid">
-        
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 text-justify display-grid">
+
                     <div class="card">
                         <div class="card-header">
                             <a class="h4-link" href="{{url('/blog/historias')}}">
                                 <h4 class="text-center">
-                                    <i class="fa fa-youtube-play"></i> HISTÓRIAS
+                                    <!-- <i class="fa fa-youtube-play"></i> HISTÓRIAS -->
+                                    <i class="fa fa-youtube-play"></i> HISTÓRIA
                                 </h4>
                             </a>
                         </div>
@@ -110,29 +128,31 @@
                         <div class="card-body">
                             @if(count($historias)>0)
                                 @foreach ($historias as $historia)
+                                    <!--
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
                                     </div>
                                     <br/>
-                                    <p class="card-text card-text-home"></p>
+                                    -->
+                                    <p class="card-text card-text-home"><a href="{{$historia->url}}" target="_blank">{{$historia->titulo}}</a></p>
                                 @endforeach
                             @else
                                 <p class="card-text">Nenhuma história encontrado.</p>
                             @endif
                         </div>
 
-                        <div class="card-footer" id="escritorio">
+                        <div class="card-footer">
                             <a href="{{url('/blog/historias')}}" class="btn btn-primary btn-sm">Ver tudo</a>
                         </div>
 
                     </div>
-                    
+
                 </div>
             
             </div>
             
             <hr/>
-            <h1 class="text-center">O ESCRITÓRIO</h1>
+            <h1 class="text-center" id="escritorio">O ESCRITÓRIO</h1>
             <hr/>
         
             <div class="row">

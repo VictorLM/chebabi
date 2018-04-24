@@ -15,7 +15,7 @@ class BlogHistorias extends Migration
     {
         Schema::create('blog_historias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('titulo');
+            $table->string('titulo', 200);
             $table->string('link');
             $table->text('descricao');
             $table->string('url');

@@ -38,7 +38,7 @@
                             <label for="pasta" class="col-md-3 control-label">** Pasta</label>
 
                             <div class="col-md-4">
-                                <input id="pasta" type="text" class="form-control text-uppercase" name="pasta" maxlength="11" value="{{ old('pasta') }}" required>
+                                <input id="pasta" type="text" class="form-control text-uppercase" name="pasta" maxlength="11" value="{{ old('pasta') }}" @if(!empty(old('pasta'))) disabled @endif required>
                                 <div id="display" class="live-search list-group"></div>
                                 <input name="pastaid" id="pastaid" type="hidden" value="{{old('pastaid')}}">
                                 @if ($errors->has('pasta'))
@@ -79,7 +79,7 @@
 
                             <div class="col-md-7">
                                 <textarea class="form-control" name="descricao" id="descricao" maxlength="2000" 
-                                @if($errors->has('descricao')) style="border-color:red;" autofocus @endif>{{old('descricao')}}</textarea>
+                                @if($errors->has('descricao')) style="border-color:red;" autofocus @endif required>{{old('descricao')}}</textarea>
                                 <small>* Máximo 2000 caracteres.</small>
                                 @if ($errors->has('descricao'))
                                     <span class="help-block">

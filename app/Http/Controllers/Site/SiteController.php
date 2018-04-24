@@ -12,20 +12,23 @@ use Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Intranet\Blog_Noticias;
+use Jenssegers\Agent\Agent;
 
 class SiteController extends Controller
 {
     public function index(){
+        $agent = new Agent();
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(7)->get();
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.index', compact('title', 'noticias', 'artigos', 'historias'));
+        return view('site.index', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
     }
     
     public function contato(){
+        $agent = new Agent();
         $title = 'Contato | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.contato', compact('title'));
+        return view('site.contato', compact('title', 'agent'));
     }
     
     public function enviar_contato(Request $request){
@@ -158,23 +161,27 @@ class SiteController extends Controller
     }
     
     public function trabalheconosco(){
+        $agent = new Agent();
         $title = 'Trabalhe Conosco | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.trabalheconosco', compact('title'));
+        return view('site.trabalheconosco', compact('title', 'agent'));
     }
     
     public function escritorios(){
+        $agent = new Agent();
         $title = 'Escritórios | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.escritorios', compact('title'));
+        return view('site.escritorios', compact('title', 'agent'));
     }
     
     public function areas(){
+        $agent = new Agent();
         $title = 'Áreas | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.areas', compact('title'));
+        return view('site.areas', compact('title', 'agent'));
     }
     
     public function equipe(){
+        $agent = new Agent();
         $equipe = Advogados::with('nome_usuario:id,name,ramal,email')->orderBy('created_at', 'ASC')->get();
         $title = 'Advogados | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.equipe', compact('title', 'equipe'));
+        return view('site.equipe', compact('title', 'equipe', 'agent'));
     }
 }

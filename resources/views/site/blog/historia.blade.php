@@ -54,11 +54,13 @@
                                 <small class="text-muted">
                                     <i>{{Carbon\Carbon::parse($historia->created_at)->format('d/m/Y H:i')}}</i>
                                 </small>
+                                <!--
                                 <br/>
                                 <div class="embed-responsive embed-responsive-16by9">
                                     <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
                                 </div>
                                 <br/>
+                                -->
                                 <p>&emsp;{!!$historia->descricao!!}</p>
                                 <small class="text-muted"><i>Tags: </small><small>{{$historia->tags}}</i></small>
 

@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Intranet\Blog_Noticias;
 use Illuminate\Support\Facades\Input;
+use Jenssegers\Agent\Agent;
 
 class BlogController extends Controller
 {
@@ -23,14 +24,16 @@ class BlogController extends Controller
     }
     
     public function index(){
+        $agent = new Agent();
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->paginate(10);
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Artigos | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias'));
+        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
     }
 
     public function categoria($categoria){
+        $agent = new Agent();
         $artigos = DB::table('blog_artigos')
             ->where('categoria', $categoria)
             ->orderBy('created_at', 'DESC')
@@ -38,29 +41,32 @@ class BlogController extends Controller
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Artigos | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias'));
+        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
     }
 
     public function noticias(){
+        $agent = new Agent();
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(3)->get();
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(100)->paginate(15);
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Notícias | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.noticias', compact('title', 'noticias', 'artigos', 'historias'));
+        return view('site.blog.noticias', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
     }
 
     public function historias(){
+        $agent = new Agent();
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(3)->get();
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->paginate(5);
         $title = 'Histórias | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.historias', compact('title', 'noticias', 'artigos', 'historias'));
+        return view('site.blog.historias', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
     }
 
     public function artigo($url){
         $artigo = DB::table('blog_artigos')->where('url', '/blog/artigos/'.$url)->first();
 
         if(!empty($artigo)){
+            $agent = new Agent();
 
             $comentarios = DB::table('blog_artigos_comentarios')
                 ->where('artigo', $artigo->id)
@@ -73,7 +79,7 @@ class BlogController extends Controller
 
             $title = $artigo->titulo.' | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
 
-            return view('site.blog.artigo', compact('title', 'artigo', 'noticias', 'historias', 'comentarios'));
+            return view('site.blog.artigo', compact('title', 'artigo', 'noticias', 'historias', 'comentarios', 'agent'));
 
         }else{
             abort(404);
@@ -123,7 +129,7 @@ class BlogController extends Controller
         $historia = DB::table('blog_historias')->where('url', '/blog/historias/'.$url)->first();
 
         if(!empty($historia)){
-
+            $agent = new Agent();
             $comentarios = DB::table('blog_historias_comentarios')
                 ->where('historia', $historia->id)
                 ->orderBy('created_at', 'Desc')
@@ -135,7 +141,7 @@ class BlogController extends Controller
 
             $title = $historia->titulo.' | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
 
-            return view('site.blog.historia', compact('title', 'artigos', 'noticias', 'historia', 'comentarios'));
+            return view('site.blog.historia', compact('title', 'artigos', 'noticias', 'historia', 'comentarios', 'agent'));
 
         }else{
             abort(404);
@@ -258,12 +264,12 @@ class BlogController extends Controller
                 'categoria' => $request->categoria,
                 'tags' => $request->tags,
                 'descricao' => $request->descricao,
-                'url' => '/blog/artigos/'.str_slug($request->titulo, "-"),
+                'url' => '/blog/artigos/'.str_limit(str_slug($request->titulo, "-"), 150),
                 'imagem' => $imagem_path,
                 'created_at' => Carbon::now(),
             ]);
 
-            $request->session()->flash('alert-success', "Artigo cadastrado com sucesso! <a target='_blank' href='/blog/artigos/".str_slug($request->titulo, "-")."'>Clique aqui</a> para visualiza-lo no Blog.");
+            $request->session()->flash('alert-success', "Artigo cadastrado com sucesso! <a target='_blank' href='/blog/artigos/".str_limit(str_slug($request->titulo, "-"), 150)."'>Clique aqui</a> para visualiza-lo no Blog.");
             return redirect()->action('Admin\AdminController@index');
 
         }else{
@@ -308,12 +314,12 @@ class BlogController extends Controller
                         'categoria' => $request->categoria,
                         'tags' => $request->tags,
                         'descricao' => $request->descricao,
-                        'url' => '/blog/artigos/'.str_slug($request->titulo, "-"),
+                        'url' => '/blog/artigos/'.str_limit(str_slug($request->titulo, "-"), 150),
                         'imagem' => $imagem_path,
                         'updated_at' => Carbon::now(),
                     ]);
     
-                $request->session()->flash('alert-success', "Artigo editado com sucesso! <a target='_blank' href='/blog/artigos/".str_slug($request->titulo, "-")."'>Clique aqui</a> para visualiza-lo no Blog.");
+                $request->session()->flash('alert-success', "Artigo editado com sucesso! <a target='_blank' href='/blog/artigos/".str_limit(str_slug($request->titulo, "-"), 150)."'>Clique aqui</a> para visualiza-lo no Blog.");
                 return redirect()->action('Admin\AdminController@index');
 
             }else{
@@ -418,11 +424,11 @@ class BlogController extends Controller
                 'link' => $request->link,
                 'tags' => $request->tags,
                 'descricao' => $request->descricao,
-                'url' => '/blog/historias/'.str_slug($request->titulo, "-"),
+                'url' => '/blog/historias/'.str_limit(str_slug($request->titulo, "-"), 150),
                 'created_at' => Carbon::now(),
             ]);
 
-            $request->session()->flash('alert-success', "História cadastrada com sucesso! <a target='_blank' href='/blog/historias/".str_slug($request->titulo, "-")."'>Clique aqui</a> para visualiza-la no Blog.");
+            $request->session()->flash('alert-success', "História cadastrada com sucesso! <a target='_blank' href='/blog/historias/".str_limit(str_slug($request->titulo, "-"), 150)."'>Clique aqui</a> para visualiza-la no Blog.");
             return redirect()->action('Admin\AdminController@index');
 
         }else{
@@ -452,11 +458,11 @@ class BlogController extends Controller
                         'link' => $request->link,
                         'tags' => $request->tags,
                         'descricao' => $request->descricao,
-                        'url' => '/blog/historias/'.str_slug($request->titulo, "-"),
+                        'url' => '/blog/historias/'.str_limit(str_slug($request->titulo, "-"), 150),
                         'updated_at' => Carbon::now(),
                     ]);
     
-                $request->session()->flash('alert-success', "História editada com sucesso! <a target='_blank' href='/blog/historias/".str_slug($request->titulo, "-")."'>Clique aqui</a> para visualiza-la no Blog.");
+                $request->session()->flash('alert-success', "História editada com sucesso! <a target='_blank' href='/blog/historias/".str_limit(str_slug($request->titulo, "-"), 150)."'>Clique aqui</a> para visualiza-la no Blog.");
                 return redirect()->action('Admin\AdminController@index');
 
             }else{

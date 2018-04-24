@@ -37,7 +37,7 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <img class="img-fluid rounded" src="{{$adv->foto}}" alt="advogados">
+                                        <img class="img-fluid rounded advs-img-modal" src="{{$adv->foto}}" alt="advogados">
                                         <div class="texto-adv">
                                             <h5 class="modal-title"><b>{{mb_strtoupper($adv->nome_usuario->name, 'UTF-8')}}</b></h5>
                                             <ul class="advs-modal">

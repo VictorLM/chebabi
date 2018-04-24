@@ -165,6 +165,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 ];
