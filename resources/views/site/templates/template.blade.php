@@ -129,7 +129,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-justify display-grid">
                         <h4 class="text-center">
                             <a class="advs-link" target="_blank" href="https://www.google.com/maps/place/R.+Eur%C3%ADco+Hosterno,+38+-+Santa+Monica,+Florian%C3%B3polis+-+SC,+88035-400/@-27.588722,-48.506201,17z/data=!4m5!3m4!1s0x952738e47d5c9f45:0xacc8139ab7d359e4!8m2!3d-27.5887219!4d-48.5062012?hl=pt-BR">
-                                FLORIANÓPOLIS - SP
+                                FLORIANÓPOLIS - SC
                             </a>
                         </h4>
                         <small class="text-left">

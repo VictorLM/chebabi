@@ -334,8 +334,10 @@ class IntranetController extends Controller
             ['lido', '0'],
         ])->count();
         
+        $count_uaus = DB::table('uaus')->count();
+
         $title = 'Uau | Intranet Izique Chebabi Advogados Associados';
-        return view('intranet.uau', compact('title', 'uaus', 'ranking', 'unread_uaus'));
+        return view('intranet.uau', compact('title', 'uaus', 'ranking', 'unread_uaus', 'count_uaus'));
     }
     
     public function meus_uaus(){
@@ -404,6 +406,28 @@ class IntranetController extends Controller
         DB::table('uaus')
             ->where('id', $uau_id)
             ->update(['lido' => 1]);
+    }
+
+    public function clientes_relatorio_viagem(Request $request){
+
+        $cliente = key($request->all());
+
+        $clientes = array_filter(explode('_', $cliente));
+        
+        $response = DB::table('valores_km_clientes')->where(function ($q) use ($clientes) {
+        foreach ($clientes as $value) {
+            if(!empty($value) && strlen($value)>2){
+                $q->orWhere('cliente', 'like', '%'.$value.'%');
+            }
+        }
+        })->orWhere('cliente', null)->get();
+        
+        if(!empty($response)){
+            return Response::json($response);
+        }else{
+            return null;
+        }
+
     }
         
 }

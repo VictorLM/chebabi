@@ -29,7 +29,7 @@
                 <div class="row">
 
                     <div class="col-md-8">
-                        <h3 class="text-center"><b>Todos os Uaus</b></h3>
+                        <h3 class="text-center"><b>Todos os Uaus</b> ({{$count_uaus}})</h3>
                         <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
