@@ -50,7 +50,7 @@ class Relatorio extends Model
         'despesasgerais4' => 'nullable|string|max:7',//NÃO ENCONTREI VALIDAÇÃO PARA FLOAT
         'caucao' => 'nullable|string|max:7',//NÃO ENCONTREI VALIDAÇÃO PARA FLOAT
         'observacoes' => 'nullable|string|max:200',
-        'comprovantes' => 'nullable|mimes:pdf|max:5240',
+        'comprovantes' => 'nullable|mimes:pdf|max:2240',
     ];
 
     protected $table = 'relatorios';

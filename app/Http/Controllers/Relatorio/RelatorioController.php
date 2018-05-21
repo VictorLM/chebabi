@@ -56,12 +56,13 @@ class RelatorioController extends Controller
                 $veiculo = null;
             }
 
-            while($i<5){
+            while($i<6){
                 $clientes[$index]['CLIENTE'] =      mb_strtoupper($request->input('cliente'.$i), 'UTF-8');
+                $clientes[$index]['CLIENTE_ID'] =   $request->input('cliente-id'.$i);
                 $clientes[$index]['CONTRARIO'] =    mb_strtoupper($request->input('contrario'.$i), 'UTF-8');
                 $clientes[$index]['PASTA'] =        mb_strtoupper($request->input('pasta'.$i), 'UTF-8');
                 $clientes[$index]['PROCESSO'] =     mb_strtoupper($request->input('proc'.$i), 'UTF-8');
-                $clientes[$index]['DESCRICAO'] =     mb_strtoupper($request->input('motivoviagem'.$i), 'UTF-8');
+                $clientes[$index]['DESCRICAO'] =    mb_strtoupper($request->input('motivoviagem'.$i), 'UTF-8');
                 $enderecos[] =                      mb_strtoupper($request->input('end'.$i), 'UTF-8');
                 $despesas[$index]['DESCRIÇÃO'] =    mb_strtoupper($request->input('descricaodespesa'.$i), 'UTF-8');
                 $despesas[$index]['PASTA'] =        mb_strtoupper($request->input('despesapasta'.$i), 'UTF-8');
@@ -69,6 +70,21 @@ class RelatorioController extends Controller
                 $despesas[$index]['VALOR'] =        $request->input('despesasgerais'.$i);
                 $i++;
                 $index++;
+            }
+
+            $clientes = array_filter(array_map('array_filter', array_filter($clientes)));
+
+            for($i=0; $i<count($clientes); $i++){
+
+                if(isset($clientes[$i]['CLIENTE_ID'])){
+                    $clientes[$i]['VALOR_KM'] = DB::table('valores_km_clientes')
+                        ->where('id', $clientes[$i]['CLIENTE_ID'])
+                        ->value('valor_km') ?? 0.8;
+                }else{
+                    $clientes[$i]['VALOR_KM'] = 0.8;
+                    $clientes[$i]['CLIENTE_ID'] = null;
+                }
+
             }
             
             $relatorio->usuario =       mb_strtoupper(Auth::user()->id, 'UTF-8');
@@ -78,11 +94,9 @@ class RelatorioController extends Controller
             $relatorio->veiculo =       $veiculo;
             $relatorio->reembolsavel =  $request->reembolsavel;
             $relatorio->pedagio =       $request->pedagio;
-            //
-            $relatorio->clientes =          serialize(array_filter(array_map('array_filter', array_filter($clientes))));
-            $relatorio->enderecos =         serialize(array_filter(array_map('strtoupper', $enderecos)));
-            $relatorio->despesas =          serialize(array_filter(array_map('array_filter', array_filter($despesas))));
-            //
+            $relatorio->clientes =      serialize($clientes);
+            $relatorio->enderecos =     serialize(array_filter(array_map('strtoupper', $enderecos)));
+            $relatorio->despesas =      serialize(array_filter(array_map('array_filter', array_filter($despesas))));
             $relatorio->data = $request->data;
             $relatorio->totalkm = $request->totalkm;
             $relatorio->caucao = $request->caucao;
@@ -104,18 +118,16 @@ class RelatorioController extends Controller
     private function relatorio_pdf($relatorio){
 
         \PDF::loadView('pdf.relatorio_viagem', compact('relatorio'))
-            //->stream();
             ->save('../storage/app/intranet/pdf/relatorios/relatorio_'.$relatorio->identificador.'.pdf');
 
         if($relatorio->reembolsavel){
             for($i=0; $i<count(unserialize($relatorio->clientes)); $i++){
                 \PDF::loadView('pdf.relatorio_viagem_cliente', compact('relatorio', 'i'))
                     ->setPaper('a4', 'landscape')
-                    //->stream();
                     ->save('../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_'.($i+1).'_'.$relatorio->identificador.'.pdf');
             }
+            
         }
-
     }
 
     private function relatorio_email($relatorio){
@@ -129,9 +141,11 @@ class RelatorioController extends Controller
             $message->subject('Relatório de viagem - '.$relatorio->identificador);
             $message->attach("../storage/app/intranet/pdf/relatorios/relatorio_".$relatorio->identificador.".pdf");
 
-            for($i=1; $i<5; $i++){
-                if(file_exists("../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_".$i."_".$relatorio->identificador.".pdf")){
-                    $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_".$i."_".$relatorio->identificador.".pdf");
+            if($relatorio->reembolsavel){
+                for($i=1; $i<5; $i++){
+                    if(file_exists("../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_".$i."_".$relatorio->identificador.".pdf")){
+                        $message->attach("../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_".$i."_".$relatorio->identificador.".pdf");
+                    }
                 }
             }
 

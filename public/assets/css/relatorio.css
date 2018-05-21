@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5 {
 	float: right;
 	font-size: 0.9em;
 	padding: 0.2em;
+	margin: 0.2em;
 }
 hr {
     margin-top: 0.5rem;
@@ -54,4 +55,19 @@ footer{
 }
 .center{
 	text-align: center;
+}
+.w1666{
+	width: 16.66%;
+}
+.w20{
+	width: 20%;
+}
+.w25{
+	width: 25%;
+}
+.w333{
+	width: 33.33%;
+}
+.w50{
+	width: 50%;
 }

@@ -25,6 +25,9 @@ $(document).on('submit','form#form',function(){
     if($('#pastaid').val() == ''){
         alert("Preencha o campo pasta, pesquise e selecione a pasta desejada no resultado da pesquisa!");
         return false;
+    }else if($('#pasta').val() == '' || $('#tipo').val() == '' || $('#descricao').val() == ''){
+        alert("Preencha corretamente os campos obrigatórios!");
+        return false;
     }
 
     $('#loaderModal').modal('show');

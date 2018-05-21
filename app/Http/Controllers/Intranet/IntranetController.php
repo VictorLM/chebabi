@@ -416,11 +416,14 @@ class IntranetController extends Controller
         
         $response = DB::table('valores_km_clientes')->where(function ($q) use ($clientes) {
         foreach ($clientes as $value) {
-            if(!empty($value) && strlen($value)>2){
+            if(!empty($value) && strlen($value)>2 
+                && $value !== 'LTDA' && $value !== 'INDÚSTRIA' && $value !== 'INDUSTRIA' 
+                && $value !== 'COMERCIO' && $value !== 'COMÉRCIO' && $value !== 'S/A'
+                && $value !== 'BRASIL'){
                 $q->orWhere('cliente', 'like', '%'.$value.'%');
             }
         }
-        })->orWhere('cliente', null)->get();
+        })->orWhere('cliente', null)->orderBy('cliente', 'asc')->get();
         
         if(!empty($response)){
             return Response::json($response);

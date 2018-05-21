@@ -77,6 +77,7 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/get-credores', 'APIs\LegalOneController@get_credores');
     Route::post('/get-tipo-gasto', 'APIs\LegalOneController@get_tipos_gastos');
     Route::post('/uau_lido', 'Intranet\IntranetController@uau_lido');
+    Route::post('/clientes_ajax', 'Intranet\IntranetController@clientes_relatorio_viagem');
     //ROTAS DE RETORNO DOS PDFS (TUTORIAIS E PROCEDIMENTOS)
     Route::get('/pdf/{nomepasta}/{nomepdf}', 'Intranet\IntranetController@tutoriais_pdf');
     Route::get('/pdf/{nomepasta}/{nomesubpasta}/{nomepdf}', 'Intranet\IntranetController@pdf');
