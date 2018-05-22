@@ -163,14 +163,14 @@
                             Ao término, se tudo correr normalmente, você receberá uma mensagem de sucesso na tela e também receberá uma cópia do relatório enviado em seu e-mail.
                         </p>
                         <div class="text-center">
-                            <img src="{{url('assets/imagens/relatorio/17.png')}}" class="img-fluid border rounded">
+                            <img src="{{url('assets/imagens/relatorio/17.PNG')}}" class="img-fluid border rounded">
                         </div>
                         <br/>
                         <p class="card-text">
                             Legendas localizadas no rodapé do relatório:
                         </p>
                         <div class="text-center">
-                            <img src="{{url('assets/imagens/relatorio/18.png')}}" class="img-fluid border rounded">
+                            <img src="{{url('assets/imagens/relatorio/18.PNG')}}" class="img-fluid border rounded">
                         </div>
 
                     </div>
