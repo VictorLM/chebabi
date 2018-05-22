@@ -432,5 +432,9 @@ class IntranetController extends Controller
         }
 
     }
+
+    public function tutorial_relatorio_viagem(){
+        return view('intranet.tutorial_relatorio_viagem');
+    }
         
 }

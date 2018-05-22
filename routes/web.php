@@ -36,6 +36,7 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/', 'Intranet\IntranetController@index');
     Route::get('/sugestao', 'Intranet\IntranetController@sugestao');
     Route::post('/enviar-sugestao', 'Intranet\IntranetController@enviar_sugestao');
+    Route::get('/tutoriais/tutorial_relatorio_viagem', 'Intranet\IntranetController@tutorial_relatorio_viagem');
     //ROTAS AGENDA
     Route::get('/agenda', 'Intranet\IntranetController@agenda');
     Route::post('/eventos', 'Intranet\IntranetController@eventos');

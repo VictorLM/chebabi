@@ -125,7 +125,7 @@
                                             R$ {{$total_despesas-$relatorio->caucao ?? null}}
                                         @endif                                        
                                     </td>
-                                    <td>{{str_limit($relatorio->observacoes ?? null, 30, '...')}}</td>
+                                    <td>{{str_limit($relatorio->observacoes ?? null, 50, '...')}}</td>
                                 </tr>
 
                             @endforeach
