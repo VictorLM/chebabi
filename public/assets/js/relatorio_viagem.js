@@ -531,6 +531,7 @@ $(document).ready(function(){
             $(".infos-clientes").hide(300);
             $("#control-infos-clientes").addClass('glyphicon-plus').removeClass('glyphicon-minus');
         }
+        clientesDespesas();
      });
 
      $('#finaliza-despesas').click(function(){
@@ -586,6 +587,7 @@ $(document).ready(function(){
             $("#tipo_viagem").focus();
         }
         calculaDistancia();
+        clientesDespesas();
      });
 
      $('#finaliza-valores').click(function(){
