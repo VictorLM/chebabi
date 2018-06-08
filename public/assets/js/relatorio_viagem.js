@@ -89,6 +89,7 @@ $(document).ready(function(){
                 next = true;
             }
         }
+        setRequiredDespesas();
     });
     //MOSTRA OS INPUTS ADICIONAIS DE CLIENTE E DESCRIÇÃO DE VIAGEM
     $('#add-cliente').click(function(){
@@ -216,7 +217,7 @@ $(document).ready(function(){
     };
 
     clientesDespesas = function(){
-        $('.clientes-despesas').empty().append('<option value="TODOS">TODOS OS CLIENTES</option>');
+        $('.clientes-despesas').empty().append('<option value="" selected></option>');
         var next = false;
         var i = 1;
         var options = '';
@@ -231,8 +232,36 @@ $(document).ready(function(){
                 next = true;
             }
         }
+        options += '<option value="TODOS">TODOS OS CLIENTES</option>';
         $('.clientes-despesas').append(options);
     };
+
+    setRequiredDespesas = function(){
+        var next = false;
+        var i = 1;
+        while (!next){
+            if($('#descricaodespesa'+i).val() != '' || $('#despesasgerais'+i).val() != ''){
+                $('#descricaodespesa'+i+', #despesasgerais'+i).prop('required',true);
+                $('#descricaodespesa'+i+', #despesasgerais'+i).addClass('required');
+                $("input[name='despesapasta"+i+"'], select[name='clientedespesa"+i+"']").prop('required',true);
+                $("input[name='despesapasta"+i+"'], select[name='clientedespesa"+i+"']").addClass('required');
+            }else{
+                $('#descricaodespesa'+i+', #despesasgerais'+i).prop('required',false);
+                $('#descricaodespesa'+i+', #despesasgerais'+i).removeClass('required');
+                $("input[name='despesapasta"+i+"'], select[name='clientedespesa"+i+"']").prop('required',false);
+                $("input[name='despesapasta"+i+"'], select[name='clientedespesa"+i+"']").removeClass('required');
+            }
+            i++;
+            if(i>3){
+                next = true;
+            }
+        }
+    }
+
+    $("#descricaodespesa1, #descricaodespesa2, #descricaodespesa3, #descricaodespesa4, #despesasgerais1, #despesasgerais2, #despesasgerais3, #despesasgerais44").on('keyup change', function (){
+        setRequiredDespesas();
+    });
+
     
     //////////////////////////////////////////////////////////////////////////
     // ------  CHAMADAS E GATILHOS DAS FUNÇÕES DO RELATÓRIO DE VIAGEM ----- //
@@ -535,10 +564,32 @@ $(document).ready(function(){
      });
 
      $('#finaliza-despesas').click(function(){
-        $(".infos-valores").show(300);
-        $("#control-infos-valores").addClass('glyphicon-minus').removeClass('glyphicon-plus');
-        $(".infos-despesas").hide(300);
-        $("#control-infos-despesas").addClass('glyphicon-plus').removeClass('glyphicon-minus');
+        var next = false;
+        var camposVazios = false;
+        var i = 1;
+        while (!next){
+            if($('#descricaodespesa'+i).attr('required') && $('#descricaodespesa'+i).val() == ''){
+                camposVazios = true;
+            }else if($('#despesasgerais'+i).attr('required') && $('#despesasgerais'+i).val() == ''){
+                camposVazios = true;
+            }else if($("input[name='despesapasta"+i+"']").attr('required') && $("input[name='despesapasta"+i+"']").val() == ''){
+                camposVazios = true;
+            }else if($("select[name='clientedespesa"+i+"']").attr('required') && $("select[name='clientedespesa"+i+"']").val() == ''){
+                camposVazios = true;
+            }
+            i++;
+            if(i>3){
+                next = true;
+            }
+        }
+        if(camposVazios){
+            alert("Preencha todos os campos das despesas e selecione corretamente o cliente relacionado!");
+        }else{
+            $(".infos-valores").show(300);
+            $("#control-infos-valores").addClass('glyphicon-minus').removeClass('glyphicon-plus');
+            $(".infos-despesas").hide(300);
+            $("#control-infos-despesas").addClass('glyphicon-plus').removeClass('glyphicon-minus');
+        }
     });
 
      $('#finaliza-viagem').click(function(){

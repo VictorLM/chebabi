@@ -518,7 +518,7 @@
                             <div class="row">
                                 <div class="col-md-6 @if($errors->has('descricaodespesa1')) has-error @endif">
                                     <label>Descrição: </label>
-                                    <input type="text" class="form-control" name="descricaodespesa1" maxlength="100" value="{{old('descricaodespesa1')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
+                                    <input type="text" class="form-control" name="descricaodespesa1" id="descricaodespesa1" maxlength="100" value="{{old('descricaodespesa1')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
                                     @if ($errors->has('descricaodespesa1'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('descricaodespesa1') }}</strong>
@@ -568,7 +568,7 @@
                                 <hr>
                                 <div class="col-md-6 @if($errors->has('descricaodespesa2')) has-error @endif">
                                     <label>Descrição: </label>
-                                    <input type="text" class="form-control" name="descricaodespesa2" maxlength="100" value="{{old('descricaodespesa2')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
+                                    <input type="text" class="form-control" name="descricaodespesa2" id="descricaodespesa2" maxlength="100" value="{{old('descricaodespesa2')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
                                     @if ($errors->has('descricaodespesa2'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('descricaodespesa2') }}</strong>
@@ -616,7 +616,7 @@
                                 <hr>
                                 <div class="col-md-6 @if($errors->has('descricaodespesa3')) has-error @endif">
                                     <label>Descrição: </label>
-                                    <input type="text" class="form-control" name="descricaodespesa3" maxlength="100" value="{{old('descricaodespesa3')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
+                                    <input type="text" class="form-control" name="descricaodespesa3" id="descricaodespesa3" maxlength="100" value="{{old('descricaodespesa3')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
                                     @if ($errors->has('descricaodespesa3'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('descricaodespesa3') }}</strong>
@@ -664,7 +664,7 @@
                                 <hr>
                                 <div class="col-md-6 @if($errors->has('descricaodespesa4')) has-error @endif">
                                     <label>Descrição: </label>
-                                    <input type="text" class="form-control" name="descricaodespesa4" maxlength="100" value="{{old('descricaodespesa4')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
+                                    <input type="text" class="form-control" name="descricaodespesa4" id="descricaodespesa4" maxlength="100" value="{{old('descricaodespesa4')}}" placeholder="Estacionamento, Alimentação, Cópias, etc.">
                                     @if ($errors->has('descricaodespesa4'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('descricaodespesa4') }}</strong>
