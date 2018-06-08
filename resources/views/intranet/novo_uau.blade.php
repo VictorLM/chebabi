@@ -16,7 +16,7 @@
                 </h2>
             </div>
 
-            <div class="panel-body">
+            <div class="panel-body inline">
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -30,33 +30,33 @@
 
                 <form method="POST" id="form" action="{{action('Intranet\IntranetController@enviar_uau')}}">
                     {!! csrf_field() !!}
-                    <div class="form-group">
-                        <label for="para">Para</label>
-                        <select class="form-control" name="para" id="para" required @if($errors->has('para')) style="border-color:red;" autofocus @endif>
+                    <div style="margin:1em;">
+                        <span>Eu, <b>{{Auth::user()->name}},</b> atesto que &nbsp;</span>
+                        <select class="novo-uau-input" style="width:auto;height:auto;" name="para" id="para" required @if($errors->has('para')) style="border-color:red;" autofocus @endif>
                             <option></option>
-                        @foreach($users as $user)
-                            <option value="{{$user->id}}" @if(old('para')==$user->id) selected @endif>{{$user->name}}</option>
-                        @endforeach
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}" @if(old('para')==$user->id) selected @endif>{{$user->name}}</option>
+                            @endforeach
                         </select>
-                        @if ($errors->has('para'))
-                            <small style="color:red;">
-                                {{ $errors->first('para') }}
-                            </small>
-                            <br/>
-                        @endif
+                        <span>arrasa no dia a dia!</span>
+                        <br/><br/>
+                        <span>Participa, muda, inova, surpreende, marca e causa <b>UAU! </b> Porque:</span>
+                        <br/><br/>
+                        <textarea class="novo-uau-input" name="motivo" id="motivo" maxlength="200" 
+                        @if($errors->has('motivo')) style="border-color:red;" @endif>{{old('motivo')}}</textarea>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <img class="novo-uau-logo-pr" src="{{url('assets/imagens/logopr.png')}}" alt="Logo Ponto de Referência">
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <img class="novo-uau-logo-ic" src="{{url('assets/imagens/logo_md_20_anos.png')}}" alt="Logo Izique Chebabi">
+                            </div>
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary btn-lg" style="float:right;"><i class="glyphicon glyphicon-send"></i> Enviar</button>
                     </div>
-                    <div class="form-group">
-                        <label for="motivo">Motivo</label>
-                        <textarea class="form-control" name="motivo" id="motivo" maxlength="200" 
-                        @if($errors->has('motivo')) style="border-color:red;" autofocus @endif>{{old('motivo')}}</textarea>
-                        @if ($errors->has('motivo'))
-                            <small style="color:red;">
-                                {{ $errors->first('motivo') }}
-                            </small>
-                            <br/>
-                        @endif
-                    </div>
-                    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-send"></i> Enviar</button>
+                    
                 </form>
 
             </div>

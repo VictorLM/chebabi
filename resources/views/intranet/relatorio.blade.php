@@ -876,6 +876,25 @@
         </div>
     </div>
 
+    <!-- Modal Cliente -->
+    <div class="modal fade" id="modalCliente" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Selecione corretamente um resultado na lista exibida abaixo do campo "Cliente".</p>
+                    <p>Caso o cliente não seja exibido na lista, selecione a opção "OUTRO" conforme exemplos abaixo:</p>
+                    <img src="{{ asset('assets/imagens/relatorio/5.gif') }}" class="img-responsive img-rounded img-thumbnail">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @push ('scripts')

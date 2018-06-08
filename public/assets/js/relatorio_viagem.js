@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+
     //////////////////////////////////////////////////////////////////////////
     // ------------------ FUNÇÕES DO RELATÓRIO DE VIAGEM ------------------ //
     //////////////////////////////////////////////////////////////////////////
@@ -142,6 +142,7 @@ $(document).ready(function(){
                 next = true;
             }
         }
+        clientesDespesas();
     });
     //MOSTRA OS INPUTS ADICIONAIS DE ENDEREÇO
     $('#add-endereco').click(function(){
@@ -214,8 +215,8 @@ $(document).ready(function(){
         $("#aserdevolvido").val(valorDev.toFixed(2));
     };
 
-    clientesDepsesas = function(){
-        $('.clientes-despesas').empty().append('<option value="" selected></option>');
+    clientesDespesas = function(){
+        $('.clientes-despesas').empty().append('<option value="TODOS">TODOS OS CLIENTES</option>');
         var next = false;
         var i = 1;
         var options = '';
@@ -230,7 +231,6 @@ $(document).ready(function(){
                 next = true;
             }
         }
-        options += '<option value="TODOS">TODOS OS CLIENTES</option>';
         $('.clientes-despesas').append(options);
     };
     
@@ -250,7 +250,7 @@ $(document).ready(function(){
     });
 
     $(".cliente").on('keyup change', function (){
-        clientesDepsesas();
+        clientesDespesas();
     });
     
     $(".calcend").change(function(){
@@ -328,8 +328,7 @@ $(document).ready(function(){
         $("#display"+id).hide();
     });
 
-    //CHECAGEM GERAL ANTES DE SUBMETER O FORMULÁRIO
-    ////////////////
+    //CHECAGEM GERAL ANTES DE SUBMETER O FORMULÁRIO 1
     $("#enviar").click(function(){
         $('.required').each(function(){
             if($(this).val() == ""){
@@ -353,7 +352,7 @@ $(document).ready(function(){
             }
         });
     });
-    //////////////////
+    //CHECAGEM GERAL ANTES DE SUBMETER O FORMULÁRIO 2
     $(document).on('submit','form#form_relatorio',function(){
 
         if ($('#totalkm').val() == '' || $('#valorkm').val() == ''){
@@ -383,7 +382,13 @@ $(document).ready(function(){
             alert("Erro! Confira se preencheu os campos corretamente e tente novamente!");
             return false;
         }
-        
+        if(!$('#cliente1').attr('readonly')){
+            $('#modalCliente').modal('show');
+            $(".infos-clientes").show(300);
+            $('#control-infos-clientes').addClass('glyphicon-minus').removeClass('glyphicon-plus');
+            $('#cliente1').focus();
+            return false;
+        }
         $('#loaderModal').modal('show');
         $('#loaderModal').modal({backdrop: 'static', keyboard: false});
     });
@@ -411,7 +416,7 @@ $(document).ready(function(){
             $("#descricao_cliente"+id).text($("#cliente"+id).val().toUpperCase());
         }
         $("#display-cliente"+id).empty();
-        clientesDepsesas();
+        clientesDespesas();
     });
 
     //CONTROLES MINIMIZAR E MAXIMIZAR/////////////////////////////////////////
@@ -518,6 +523,8 @@ $(document).ready(function(){
      $('#finaliza-clientes').click(function(){
         if($('#pasta1').val() == '' || $('#cliente1').val() == '' || $('#contrario1').val() == '' || $('#proc1').val() == ''){
             alert("Preencha ao menos os dados de um clientes por completo!");
+        }else if(!$('#cliente1').attr('readonly')){
+            $('#modalCliente').modal('show');
         }else{
             $(".infos-viagem").show(300);
             $("#control-infos-viagem").addClass('glyphicon-minus').removeClass('glyphicon-plus');

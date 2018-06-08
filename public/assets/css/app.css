@@ -77,6 +77,20 @@ textarea {
     padding-right: 1em;
     opacity: 0.6;
 }
+.novo-uau-logo-pr{
+    max-width: 60%;
+    padding-left: 1em;
+    padding-right: 1em;
+    opacity: 0.6;
+    float: left;
+}
+.novo-uau-logo-ic{
+    max-width: 90%;
+    padding-left: 1em;
+    padding-right: 1em;
+    opacity: 0.6;
+    float: right;
+}
 .float-left{
     float: left;
 }
@@ -135,4 +149,46 @@ textarea {
 #control-infos-gerais, #control-infos-clientes, #control-infos-viagem, #control-infos-despesas, 
 #control-infos-valores, #control-infos-obs, #control-infos-comprovantes {
     cursor: pointer;
+}
+.uau-ranking-index{
+    color: black;
+    padding: 0;
+    margin: 0;
+}
+.uau-ranking-index:hover{
+    text-decoration: none;
+}
+.cols-index{
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+}
+.inline{
+    background-image: url(../imagens/novo-uau-bg.png);
+    background-repeat: repeat;
+}
+.inline span{
+    font-size: 2em;
+}
+.novo-uau-input{
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 1.2em;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+textarea.novo-uau-input{
+    height: auto;
+    width: 100%;
+}
+
+@media (min-width: 1200px){
+    .container-index {
+        max-width: 1400px;
+        margin-right: auto;
+        margin-left: auto;
+    }
 }

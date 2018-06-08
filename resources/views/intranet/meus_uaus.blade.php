@@ -56,19 +56,19 @@
                                             <button type="button" class="fechar close" data-dismiss="modal">&times;</button>
                                             <h1 class="modal-title text-center uau-title">UAU!</h1>
                                         </div>
-                                    <div class="uau modal-body">
-                                        <p>Eu, <b>{{$uau->de_nome->name}},</b> atesto que <b>{{$uau->para_nome->name}}</b> 
-                                        arrasa no dia a dia!</p>
-                                        <p>Participa, muda, inova, surpreende, marca e causa UAU!</p>
-                                        <p>Porque: <b>{{$uau->motivo}}</b></p>
-                                        <div class="row">
-                                            <img src="{{url('assets/imagens/logopr.png')}}" class="float-left" alt="Logo Ponto de Referência">
-                                            <img src="{{url('assets/imagens/logo_md.png')}}" class="float-right" alt="Logo Izique Chebabi">
+                                        <div class="uau modal-body">
+                                            <p>Eu, <b>{{$uau->de_nome->name}},</b> atesto que <b>{{$uau->para_nome->name}}</b> 
+                                            arrasa no dia a dia!</p>
+                                            <p>Participa, muda, inova, surpreende, marca e causa UAU!</p>
+                                            <p>Porque: <b>{{$uau->motivo}}</b></p>
+                                            <div class="row">
+                                                <img src="{{url('assets/imagens/logopr.png')}}" class="float-left" alt="Logo Ponto de Referência">
+                                                <img src="{{url('assets/imagens/logo_md.png')}}" class="float-right" alt="Logo Izique Chebabi">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="fechar btn btn-default" data-dismiss="modal">Fechar</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="fechar btn btn-default" data-dismiss="modal">Fechar</button>
+                                        </div>
                                     </div>
             
                                 </div>
