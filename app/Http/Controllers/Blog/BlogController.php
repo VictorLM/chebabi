@@ -414,7 +414,7 @@ class BlogController extends Controller
             'titulo' => 'required|string|max:200',
             'link' => 'required|string|max:100',
             'tags' => 'required|string|max:200',
-            'descricao' => 'required|string|min:100|max:5000',
+            'descricao' => 'required|string|min:100|max:8000',
         ]);
 
         if (!$validatedData->fails()){
