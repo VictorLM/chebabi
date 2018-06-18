@@ -159,32 +159,25 @@
         
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 text-justify">
                     <p>
-                        &emsp;Fundado em 1998, o escritório <strong>IZIQUE CHEBABI ADVOGADOS ASSOCIADOS</strong> re&uacute;ne a  
-                        experi&ecirc;ncia de mais de 30 anos de sua s&oacute;cia <strong>MARILDA IZIQUE CHEBABI</strong>,  
-                        Desembargadora do Tribunal Regional do Trabalho da 15a Regi&atilde;o,  aposentada, ex-professora da 
-                        Escola Superior da Magistratura, de cursos de  p&oacute;s-gradua&ccedil;&atilde;o e autora de in&uacute;meros 
-                        trabalhos publicados na &aacute;rea  trabalhista.</p><br/>
-        
-                        <p>Ao lado da reconhecida trajet&oacute;ria da s&oacute;cia fundadora, o  escrit&oacute;rio conta com advogados e 
-                        consultores com s&oacute;lida e cont&iacute;nua forma&ccedil;&atilde;o  acad&ecirc;mica, especialistas na &aacute;rea 
-                        trabalhista, sindical, empresarial, c&iacute;vel,  banc&aacute;ria, comercial, contratual, tribut&aacute;ria, administrativa, 
-                        ambiental,  previdenci&aacute;ria e consumidor, com atua&ccedil;&atilde;o consultiva (pareceres e orienta&ccedil;&otilde;es) e  
-                        contenciosa (judicial e administrativa).</p><br/>
-        
-                        <p>A busca por solu&ccedil;&otilde;es r&aacute;pidas e a constante preocupa&ccedil;&atilde;o com  resultados, 
-                        como a redu&ccedil;&atilde;o de passivos trabalhistas, c&iacute;veis e fiscais e a  elimina&ccedil;&atilde;o 
-                        de riscos jur&iacute;dicos e, ainda, os investimentos em ferramentas de  atualiza&ccedil;&atilde;o de processos pela internet, 
-                        com emiss&atilde;o peri&oacute;dica de relat&oacute;rios por  e-mail, resumem os tr&ecirc;s principais pontos de destaque do 
-                        escrit&oacute;rio: efici&ecirc;ncia,  compet&ecirc;ncia e transpar&ecirc;ncia.</p><br/>
-        
-                        <p>Essa postura, aliada &agrave;s constantes orienta&ccedil;&otilde;es voltadas &agrave; tomada  de decis&otilde;es estrat&eacute;gicas, 
-                        com suporte jur&iacute;dico a novos neg&oacute;cios, t&ecirc;m rendido ao  escrit&oacute;rio clientes destacados no cen&aacute;rio 
-                        nacional e internacional.</p><br/>
-        
-                        <p>Pela privilegiada localiza&ccedil;&atilde;o de sua sede, na cidade de Campinas  e de suas filiais em S&atilde;o Paulo, 
-                        Florian&oacute;polis e Bebedouro, a menos de 100 km de S&atilde;o Jos&eacute; do Rio Preto, com  correspondentes em  
-                        Santos, Bauru, Ribeir&atilde;o Preto e Taubat&eacute;, o  escrit&oacute;rio atende a seus clientes nas principais cidades 
-                        e regi&otilde;es do Estado de  S&atilde;o Paulo.
+                        &emsp;Há 20 anos atuando na área jurídica empresarial, unindo tradição, modernidade e vanguarda, o escritório 
+                        Izique Chebabi Advogados Associados se orgulha de oferecer aos seus clientes um serviço jurídico especializado, 
+                        competente, eficiente, estratégico e, sobretudo, comprometido com os interesses do cliente.
+                    </p><br/>
+                    <p>
+                        Com o foco em soluções jurídicas responsáveis e olhos no resultado, a equipe, integrada por talentos de alta 
+                        performance, desenvolve a melhor estratégia para cada caso.
+                    </p><br/>
+                    <p>
+                        A interação com o cliente para compreender as suas necessidades, anseios, preocupações e expectativas, 
+                        sempre com o propósito de prestar o serviço como o cliente quer, deseja e merece ser atendido, aliado 
+                        ao constante fortalecimento do espírito de equipe entre os seus destacados profissionais, são os principais 
+                        ingredientes dessa receita de sucesso.
+                    </p><br/>
+                    <p>
+                        E é por isso que as 60 pessoas que fazem parte do Izique Chebabi Advogados Associados se orgulham de trabalhar 
+                        numa banca de advocacia que ainda prestigia a manutenção de um ambiente familiar. Afinal, são 20 anos construindo 
+                        relacionamentos, fortalecendo os vínculos pessoais, estabelecendo parcerias e dividindo experiências, tudo como 
+                        uma grande família. 
                     </p>
                 </div>
         
