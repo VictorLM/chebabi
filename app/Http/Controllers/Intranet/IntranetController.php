@@ -25,6 +25,11 @@ class IntranetController extends Controller
 
     public function index()
     {
+        /*
+        $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name,ativo')
+            ->orderBy('created_at', 'Desc')
+            ->paginate(10);
+        */
         $unread_uaus = DB::table('uaus')->where([
             ['para', Auth::user()->id],
             ['lido', '0'],
@@ -57,13 +62,24 @@ class IntranetController extends Controller
             ->get();
             
         $aniversariantes = count($aniversariantes);
-        
+        /*
+        $ranking = DB::table('users')
+            ->select('id', 'name', 'uaus')
+            ->where([
+                ['ativo', '=',TRUE], 
+                ['uaus', '>', 0]
+             ])
+            ->orderBy('uaus', 'Desc')
+            ->limit(10)
+            ->get();
+        */
         DB::table('users')
             ->where('id', Auth::user()->id)
             ->update(['last_login' => Carbon::now()]);
         
         $title = 'Intranet | Izique Chebabi Advogados Associados';
-        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin'));
+        //return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'uaus'));
+        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking','uaus'));
     }
 
     public function sugestao(){
@@ -344,10 +360,56 @@ class IntranetController extends Controller
         $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name')
             ->where('para', Auth::user()->id)
             ->orderBy('created_at', 'Desc')
-            ->limit(100)
             ->paginate(20);
         $title = 'Uau | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.meus_uaus', compact('title', 'uaus'));
+    }
+
+    public function uaus_enviados(){
+        $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name')
+            ->where('de', Auth::user()->id)
+            ->orderBy('created_at', 'Desc')
+            ->paginate(20);
+        $title = 'Uaus Enviados | Intranet Izique Chebabi Advogados Associados';
+        return view('intranet.uaus_enviados', compact('title', 'uaus'));
+    }
+
+    public function editar_uau($id){
+        
+        $uau = Uau::with('de_nome:id,name', 'para_nome:id,name')->find($id);
+        
+        if(!empty($uau) && Auth::user()->id == $uau->de_nome->id){
+
+            $title = 'Editar Uau | Intranet Izique Chebabi Advogados Associados';
+            return view('intranet.editar_uau', compact('title', 'uau'));
+
+        }else{
+            return null;
+        }
+
+    }
+
+    public function atualiza_uau(Request $request, $id){
+        
+        $uau = Uau::with('de_nome:id,name', 'para_nome:id,name')->find($id);
+
+        if(!empty($uau) && Auth::user()->id == $uau->de_nome->id){
+
+            $validator = Validator::make($request->all(),$uau->rules);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }else{
+                $uau->motivo = $request->motivo;
+                $uau->updated_at = Carbon::now();
+                $uau->save();
+                $request->session()->flash('alert-success', 'Uau editado com sucesso!');
+                return redirect()->action('Intranet\IntranetController@index');
+            }
+        }else{
+            return null;
+        }
+
     }
     
     public function novo_uau(){

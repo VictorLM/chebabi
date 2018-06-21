@@ -70,6 +70,9 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/uau', 'Intranet\IntranetController@uau');
     Route::get('/meus-uaus', 'Intranet\IntranetController@meus_uaus');
     Route::get('/novo-uau', 'Intranet\IntranetController@novo_uau');
+    Route::get('/uaus-enviados', 'Intranet\IntranetController@uaus_enviados');
+    Route::get('/uaus-enviados/{id}/editar', 'Intranet\IntranetController@editar_uau');
+    Route::post('/uaus-enviados/{id}/editar', 'Intranet\IntranetController@atualiza_uau');
     Route::post('/enviar_uau', 'Intranet\IntranetController@enviar_uau');
     //ROTAS AJAX
     Route::post('/call_legalone_api', 'APIs\LegalOneController@legalone_api');

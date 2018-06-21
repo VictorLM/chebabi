@@ -184,6 +184,9 @@ textarea.novo-uau-input{
     height: auto;
     width: 100%;
 }
+.display-inline{
+    display: inline;
+}
 
 @media (min-width: 1200px){
     .container-index {

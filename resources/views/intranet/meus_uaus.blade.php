@@ -10,14 +10,24 @@
 
             <div class="panel-heading">
 
-                <h2>
-                    <a href="{{url('/intranet/uau')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> 
-                    Meus Uaus
-                    <a href="{{url('/intranet/novo-uau')}}">
-                    <button type="button" class="uaubtn btn btn-md btn-primary">
-                        <i class="glyphicon glyphicon-send"></i> Enviar Uau
-                    </button></a>
-                </h2>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <h2 style="margin-top:0px;">
+                            <a href="{{url('/intranet/uau')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> 
+                            Uaus Recebidos
+                        </h2>
+                    </div>
+                    <div class="text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <a href="{{url('/intranet/uaus-enviados')}}">
+                        <button type="button" class="btn btn-sm btn-success">
+                            <i class="glyphicon glyphicon-star"></i> Uaus <br/> Enviados
+                        </button></a>
+                        <a href="{{url('/intranet/novo-uau')}}">
+                        <button type="button" class="btn btn-sm btn-primary">
+                            <i class="glyphicon glyphicon-send"></i> Enviar <br/> Uau!
+                        </button></a>
+                    </div>
+                </div>
 
             </div>
 
