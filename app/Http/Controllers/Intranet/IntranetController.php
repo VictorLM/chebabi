@@ -25,11 +25,7 @@ class IntranetController extends Controller
 
     public function index()
     {
-        /*
-        $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name,ativo')
-            ->orderBy('created_at', 'Desc')
-            ->paginate(10);
-        */
+
         $unread_uaus = DB::table('uaus')->where([
             ['para', Auth::user()->id],
             ['lido', '0'],
@@ -62,7 +58,7 @@ class IntranetController extends Controller
             ->get();
             
         $aniversariantes = count($aniversariantes);
-        /*
+        
         $ranking = DB::table('users')
             ->select('id', 'name', 'uaus')
             ->where([
@@ -72,14 +68,14 @@ class IntranetController extends Controller
             ->orderBy('uaus', 'Desc')
             ->limit(10)
             ->get();
-        */
+        
         DB::table('users')
             ->where('id', Auth::user()->id)
             ->update(['last_login' => Carbon::now()]);
         
         $title = 'Intranet | Izique Chebabi Advogados Associados';
-        //return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'uaus'));
-        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking','uaus'));
+        
+        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking'));
     }
 
     public function sugestao(){

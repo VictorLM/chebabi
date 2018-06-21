@@ -13,6 +13,7 @@ npm-debug.log
 yarn-error.log
 .env
 .env.production
+INTRANET.txt
 /database/seeds/ApikeysTableSeeder.php
 /database/seeds/UsersTableSeeder.php
 /storage/fonts
