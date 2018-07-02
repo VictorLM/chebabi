@@ -19,7 +19,7 @@ class CreateUausTable extends Migration
             $table->foreign('de')->references('id')->on('users');
             $table->integer('para')->unsigned();
             $table->foreign('para')->references('id')->on('users');
-            $table->string('motivo', 255);
+            $table->text('motivo');
             $table->boolean('lido');
             $table->timestamps();
         });

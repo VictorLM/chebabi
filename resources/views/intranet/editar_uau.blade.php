@@ -39,7 +39,7 @@
                         <br/><br/>
                         <span>Participa, muda, inova, surpreende, marca e causa <b>UAU! </b> Porque:</span>
                         <br/><br/>
-                        <textarea class="novo-uau-input" name="motivo" id="motivo" maxlength="200" autofocus
+                        <textarea class="novo-uau-input" name="motivo" id="motivo" maxlength="400" autofocus
                         @if($errors->has('motivo')) style="border-color:red;" @endif>{{$uau->motivo}}</textarea>
                         <br/>
                         <div class="row">
