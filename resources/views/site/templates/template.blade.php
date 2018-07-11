@@ -100,7 +100,7 @@
                 <hr/>
                 <div class="row row-eq-height">
 
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-justify display-grid">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-justify display-grid">
                         <h4 class="text-center">
                             <a class="advs-link" target="_blank" href="https://www.google.com.br/maps/place/Izique+Chebabi+Advogados+Associados/@-22.9045245,-47.0595491,17z/data=!3m1!4b1!4m5!3m4!1s0x94c8cf4b41463e59:0x34f30ab1abcdae88!8m2!3d-22.9045295!4d-47.0573604">
                                 CAMPINAS - SP
@@ -113,7 +113,7 @@
                         </small>
                     </div>
                     
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-justify display-grid">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-justify display-grid">
                         <h4 class="text-center">
                             <a class="advs-link" target="_blank" href="https://www.google.com/maps/place/Av.+Marqu%C3%AAs+de+S%C3%A3o+Vicente,+446+-+Barra+Funda,+S%C3%A3o+Paulo+-+SP,+01139-020/@-23.521579,-46.664113,17z/data=!4m5!3m4!1s0x94ce5808878cdd29:0x18f44bb73842b40f!8m2!3d-23.5214401!4d-46.6603877?hl=pt-BR">
                                 SÃO PAULO - SP
@@ -126,7 +126,20 @@
                         </small>
                     </div>
 
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 text-justify display-grid">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-justify display-grid">
+                        <h4 class="text-center">
+                            <a class="advs-link" target="_blank" href="https://goo.gl/maps/84js4RqRHPQ2">
+                                RIO DE JANEIRO - RJ
+                            </a>
+                        </h4>
+                        <small class="text-left">
+                            R. Evaristo da Veiga, 65, Setor 2, Sala 1501, 
+                            Centro - Rio de Janeiro - RJ - CEP 20031-040 - 
+                            Fone/Fax: (21) 2184-6206
+                        </small>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-justify display-grid">
                         <h4 class="text-center">
                             <a class="advs-link" target="_blank" href="https://www.google.com/maps/place/R.+Eur%C3%ADco+Hosterno,+38+-+Santa+Monica,+Florian%C3%B3polis+-+SC,+88035-400/@-27.588722,-48.506201,17z/data=!4m5!3m4!1s0x952738e47d5c9f45:0xacc8139ab7d359e4!8m2!3d-27.5887219!4d-48.5062012?hl=pt-BR">
                                 FLORIANÓPOLIS - SC

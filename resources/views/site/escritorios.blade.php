@@ -77,6 +77,33 @@
                     <div class="card">
                         <div class="card-body">
                             <h2 class="card-title text-center">
+                                <a class="advs-link" target="_blank" href="https://goo.gl/maps/84js4RqRHPQ2">
+                                    Rio de Janeiro - RJ
+                                </a>
+                            </h2>
+                            <p>
+                                R. Evaristo da Veiga, 65, Setor 2, Sala 1501, 
+                                Centro - Rio de Janeiro - RJ - CEP 20031-040 - 
+                                Fone/Fax: (21) 2184-6206
+                            <p/>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3675.0496085115165!2d-43.1804072!3d-22.911541!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f63c2cd5169%3A0x7cc91329331f5e6d!2sR.+Evaristo+da+Veiga%2C+65+-+Centro%2C+Rio+de+Janeiro+-+RJ%2C+20031-040!5e0!3m2!1spt-BR!2sbr!4v1531338618028"></iframe>
+                            </div>
+                            <p>Nova filial para abranger clientes e serviços fora do estado de S&atilde;o Paulo.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr/>
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title text-center">
                                 <a class="advs-link" target="_blank" href="https://www.google.com/maps/place/R.+Eur%C3%ADco+Hosterno,+38+-+Santa+Monica,+Florian%C3%B3polis+-+SC,+88035-400/@-27.588722,-48.506201,17z/data=!4m5!3m4!1s0x952738e47d5c9f45:0xacc8139ab7d359e4!8m2!3d-27.5887219!4d-48.5062012?hl=pt-BR">
                                     Florianópolis - SC
                                 </a>
