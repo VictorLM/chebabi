@@ -82,7 +82,7 @@
                                 </a>
                             </h2>
                             <p>
-                                R. Evaristo da Veiga, 65, Setor 2, Sala 1501, 
+                                R. Evaristo da Veiga, 65, Torre 2, Sala 1501, 
                                 Centro - Rio de Janeiro - RJ - CEP 20031-040 - 
                                 Fone/Fax: (21) 2184-6206
                             <p/>
