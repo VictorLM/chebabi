@@ -192,10 +192,17 @@
                 <div class="modal-content aniversario">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h1 class="modal-title" id="memberModalLabel">Parabéns!</h1>
                     </div>
-                    <div class="modal-body">
-                        <p>Parabéns pelo seu aniversário! Muita saúde e felicidade.</p>
+                    <div class="modal-body text-justify" style="font-weight:bold;">
+                        <br/>
+                        <h1 class="text-center">Parabéns, {{Auth::user()->name}}!</h1>
+                        <p>Nesta data desejamos a você mais do que muitos anos de vida!</p>
+                        <p>Desejamos que a cada ano você tenha novas conquistas para comemorar, que nunca lhe falte motivos para sorrir e que a sua vida seja carregada de felicidade, sonhos realizados e muito sucesso!</p>
+                        <p>Que possamos comemorar não apenas o seu aniversário mas todas as suas realizações!</p>
+                        <p class="text-center">Parabéns pelo seu dia!</p>
+                    <div class="text-center">
+                        <img class="img-fluid" src="{{url('assets/imagens/logo_pq.png')}}"/>
+                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>

@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         '\Intranet\Console\Commands\AtualizaTiposAndamentosLegalOne',
         '\Intranet\Console\Commands\AndamentosDataCloudProgressCrawler',
         '\Intranet\Console\Commands\AtualizaNoticiasAASP',
+        '\Intranet\Console\Commands\EmailAniversario',
     ];
 
     /**
@@ -58,6 +59,9 @@ class Kernel extends ConsoleKernel
         //FIM ANDAMENTOS DATA CLOUD
         $schedule->command('AtualizaNoticiasAASP:refresh')
                 ->hourly()
+                ->appendOutputTo(storage_path('logs/schedule.log'));
+        $schedule->command('EmailAniversario:enviar')
+                ->dailyAt('09:00')
                 ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 

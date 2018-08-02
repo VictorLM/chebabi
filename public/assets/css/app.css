@@ -110,10 +110,10 @@ textarea {
     font-size: 4em;
 }
 .aniversario{
-    background-image: url(../imagens/bolo.png);
+    background-image: url(../imagens/baloes.png);
     background-repeat: no-repeat;
-    background-size: 35%;
-    background-position: center;
+    background-size: 100%;
+    background-position: top;
 }
 .userelogout{
     margin-top: 1em!important;

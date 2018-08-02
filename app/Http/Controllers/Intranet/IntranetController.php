@@ -35,7 +35,7 @@ class IntranetController extends Controller
             ->select('last_login')
             ->where('id', Auth::user()->id)
             ->first();
-
+        
         if(Carbon::parse(Auth::user()->nascimento)->format('d/m') 
             == Carbon::parse(Carbon::today())->format('d/m')
             && Carbon::parse($last_login->last_login)->format('Y-m-d') 
