@@ -134,6 +134,18 @@
                             <i class="glyphicon glyphicon-globe"></i><br/>VOLTAR PARA O SITE</a>
                         </div>
                     </div>
+
+                    <div class="col-md-4">
+                        <div class="intra-atalhos well well-lg">
+                            <a href="http://central.bragasistemas.com.br/brasisweb/cliente/" target="_blank">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            <i class="glyphicon glyphicon-globe"></i><br/>CHAMADOS TI</a>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
                     
                     @if ($admin)
                         <div class="col-md-4">

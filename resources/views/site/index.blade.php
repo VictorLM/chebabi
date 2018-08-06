@@ -69,6 +69,7 @@
                                 @foreach ($artigos as $artigo)
                                     <p class="card-text card-text-home">
                                         <a href="{{$artigo->url}}" target="_blank">{{$artigo->titulo}}</a>
+                                        <span style="color: grey;"> - <i>{{Carbon\Carbon::parse($artigo->created_at)->format('d/m')}}</i></span>
                                     </p>
                                 @endforeach
                             @else
@@ -98,7 +99,10 @@
                         <div class="card-body">
                                 @if(count($noticias)>0)
                                     @foreach($noticias as $noticia)
-                                        <p class="card-text card-text-home"><a href="{{$noticia->link}}" target="_blank">{{$noticia->titulo}}</a></p>
+                                        <p class="card-text card-text-home">
+                                            <a href="{{$noticia->link}}" target="_blank">{{$noticia->titulo}}</a>
+                                            <span style="color: grey;"> - <i>{{Carbon\Carbon::parse($noticia->publicacao)->format('d/m')}}</i></span>
+                                        </p>
                                     @endforeach
                                 @else
                                     <p class="card-text card-text-home">Nenhuma notícia encontrada.</p>
@@ -134,7 +138,10 @@
                                     </div>
                                     <br/>
                                     -->
-                                    <p class="card-text card-text-home"><a href="{{$historia->url}}" target="_blank">{{$historia->titulo}}</a></p>
+                                    <p class="card-text card-text-home">
+                                        <a href="{{$historia->url}}" target="_blank">{{$historia->titulo}}</a>
+                                        <span style="color: grey;"> - <i>{{Carbon\Carbon::parse($historia->created_at)->format('d/m')}}</i></span>
+                                    </p>
                                 @endforeach
                             @else
                                 <p class="card-text">Nenhuma história encontrado.</p>
