@@ -123,7 +123,13 @@ class IntranetController extends Controller
     public function eventos(){
         //PARA O AJAX DO FULL CALENDAR
         $eventos = Eventos::whereDate('start', '>=', Carbon::today()->subMonth())->get();
-        
+        for($i=0;$i<count($eventos);$i++){
+            $eventos[$i]->dow = unserialize($eventos[$i]->dow);
+            if(!empty($eventos[$i]->dow)){
+                $eventos[$i]->start = Carbon::parse($eventos[$i]->start)->format('H:i:s');
+                $eventos[$i]->end = Carbon::parse($eventos[$i]->end)->format('H:i:s');
+            }
+        }
         return \Response::json($eventos);
     }
     

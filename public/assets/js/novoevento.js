@@ -1,4 +1,18 @@
 $('#my-select').multiSelect();
+$("#recorrencia-select").multipleSelect({
+    selectAll: false,
+    onClick: function(view) {
+        if(view.label == "Evento único"){
+            $("#recorrencia-select").multipleSelect("uncheckAll");
+            $('#recorrencia-select').multipleSelect('disable');
+            $('#recorrencia-select').multipleSelect({
+                isOpen: false,
+            });
+            $(".ms-choice").text("Evento único");
+        }
+    }
+});
+
 
 $("#iniciodata").on('keyup change', function (){
 

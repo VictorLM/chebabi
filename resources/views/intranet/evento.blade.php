@@ -43,11 +43,54 @@
                 </tr>
                 <tr>
                     <td><b>Início: </b></td>
-                    <td>@if(isset($evento)) {{Carbon\Carbon::parse($evento->start)->format('d/m/Y H:i')}} @endif</td>
+                    <td>
+                        @if(!empty(unserialize($evento->dow)))
+                            Toda  
+                            @foreach(unserialize($evento->dow) as $dia)
+                                @if($dia == 1)
+                                    Segunda-feira;
+                                @elseif($dia == 2)
+                                    Terça-feira;
+                                @elseif($dia == 3)
+                                    Quarta-feira;
+                                @elseif($dia == 4)
+                                    Quinta-feira;
+                                @elseif($dia == 5)
+                                    Sexta-feira;
+                                @endif
+                            @endforeach
+                            às 
+                            @if(isset($evento)) {{Carbon\Carbon::parse($evento->start)->format('H:i')}} @endif
+                            <small><b><i> * Evento recorrente </b></i></small>
+                        @else
+                            @if(isset($evento)) {{Carbon\Carbon::parse($evento->start)->format('d/m/Y H:i')}} @endif
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <td><b>Término: </b></td>
-                    <td>@if(isset($evento)) {{Carbon\Carbon::parse($evento->end)->format('d/m/Y H:i')}} @endif</td>
+                    <td>
+                        @if(!empty(unserialize($evento->dow)))
+                            Toda  
+                            @foreach(unserialize($evento->dow) as $dia)
+                                @if($dia == 1)
+                                    Segunda-feira;
+                                @elseif($dia == 2)
+                                    Terça-feira;
+                                @elseif($dia == 3)
+                                    Quarta-feira;
+                                @elseif($dia == 4)
+                                    Quinta-feira;
+                                @elseif($dia == 5)
+                                    Sexta-feira;
+                                @endif
+                            @endforeach
+                            às 
+                            @if(isset($evento)) {{Carbon\Carbon::parse($evento->end)->format('H:i')}} @endif
+                        @else
+                            @if(isset($evento)) {{Carbon\Carbon::parse($evento->start)->format('d/m/Y H:i')}} @endif
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <td><b>Criado por: </b></td>

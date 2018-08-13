@@ -61,3 +61,27 @@ if(count($request->envolvidos)>0){
   }while($i < count($request->envolvidos) && $i > 0);
 
 }
+
+if(!empty($request->recorrencia)){
+  $recurrence = array (
+    "recurrence" =>
+    array (
+      "pattern" =>
+      array (
+        "type" => "weekly",
+        "interval" => 1,
+        "daysOfWeek" => 
+        array ()
+      ),
+      "range" =>
+      array (
+        "startDate" => $request->iniciodata,
+        "type" => "noEnd"
+      )
+    )
+  );
+  foreach($request->recorrencia as $dia){
+    $recurrence["recurrence"]["pattern"]["daysOfWeek"][] = $dia;
+  }
+  $evento = array_merge($evento, $recurrence);
+}

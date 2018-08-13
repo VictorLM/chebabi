@@ -21,7 +21,7 @@ class MicrosoftController extends Controller
     }
 
     public function criar_evento(Request $request){
-
+        
         $validatedData = Validator::make($request->all(), [
             'titulo' => 'required|string|max:200',
             'tipo' => [
@@ -35,8 +35,9 @@ class MicrosoftController extends Controller
             'terminohora' => 'required|date_format:H:i',
             'envolvidos' => 'nullable|array|min:1|max:60', //MAX 60 ENVOLVIDOS
             'descricao' => 'nullable|string|max:2000',
+            'recorrencia' => 'nullable|array|max:5'
         ]);
-
+        
         if (!$validatedData->fails()){
 
             if(!empty($request->envolvidos)){
@@ -56,7 +57,7 @@ class MicrosoftController extends Controller
             require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento.json.php';
 
             $evento = json_encode($evento);
-
+            //dd(json_decode($evento));
             $parameters = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events';
             
             $ch = curl_init();
@@ -94,7 +95,25 @@ class MicrosoftController extends Controller
                 }else{
                     $color = NULL;
                 }
-
+                
+                if(!empty($request->recorrencia)){
+                    foreach($request->recorrencia as $dia){
+                        if($dia == "Monday"){
+                            $dow[] = 1;
+                        }elseif($dia == "Tuesday"){
+                            $dow[] = 2;
+                        }elseif($dia == "Wednesday"){
+                            $dow[] = 3;
+                        }elseif($dia == "Thursday"){
+                            $dow[] = 4;
+                        }elseif($dia == "Friday"){
+                            $dow[] = 5;
+                        }
+                    }
+                }else{
+                    $dow = null;
+                }
+                
                 DB::table('eventos')->insert([
                     'id' => $result['id'],
                     'title' => $result['subject'],
@@ -111,6 +130,7 @@ class MicrosoftController extends Controller
                     'local' => $result['location']['displayName'],
                     'envolvidos' => serialize($result['attendees']),
                     'color' => $color,
+                    'dow' => serialize($dow),
                 ]);
                 
                 $request->session()->flash('alert-success', 'Evento cadastrado com sucesso!');
@@ -142,7 +162,6 @@ class MicrosoftController extends Controller
             Auth::user()->email == 'recepcao@chebabi.com' &&
             $evento->end > Carbon::now() && 
             !$evento->cancelado){
-            
 
             $validatedData = Validator::make($request->all(), [
                 'id' => 'required|string',
@@ -158,6 +177,7 @@ class MicrosoftController extends Controller
                 'terminohora' => 'required|date_format:H:i',
                 'envolvidos' => 'nullable|array|min:1|max:60', //MAX 60 ENVOLVIDOS
                 'descricao' => 'nullable|string|max:2000',
+                'recorrencia' => 'nullable|array|max:5'
             ]);
     
             if (!$validatedData->fails()){
@@ -179,7 +199,7 @@ class MicrosoftController extends Controller
                 require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento_update.json.php';
     
                 $evento_atualizado = json_encode($evento_atualizado);
-    
+                //dd(json_decode($evento_atualizado));
                 $parameters = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events/'.$request->id;
                 
                 $ch = curl_init();
@@ -218,6 +238,24 @@ class MicrosoftController extends Controller
                         $color = NULL;
                     }
 
+                    if(!empty($request->recorrencia)){
+                        foreach($request->recorrencia as $dia){
+                            if($dia == "Monday"){
+                                $dow[] = 1;
+                            }elseif($dia == "Tuesday"){
+                                $dow[] = 2;
+                            }elseif($dia == "Wednesday"){
+                                $dow[] = 3;
+                            }elseif($dia == "Thursday"){
+                                $dow[] = 4;
+                            }elseif($dia == "Friday"){
+                                $dow[] = 5;
+                            }
+                        }
+                    }else{
+                        $dow = null;
+                    }
+
                     $alterado = '* Evento alterado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';
     
                     Eventos::where('id', $request->id)
@@ -234,6 +272,7 @@ class MicrosoftController extends Controller
                             'envolvidos' => serialize($result['attendees']),
                             'color' => $color,
                             'alterado' => $alterado,
+                            'dow' => serialize($dow),
                         ]);
     
                     $request->session()->flash('alert-success', 'Evento atualizado com sucesso!');

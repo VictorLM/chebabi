@@ -2,7 +2,8 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{url("assets/css/multi-select.dist.css")}}"/>
-    <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{asset('assets/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/multiple-select/1.2.0/multiple-select.min.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -69,7 +70,7 @@
                     @endif
                 </div>
                 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="iniciodata">Início - data</label>
                     <input type="date" class="form-control" name="iniciodata" id="iniciodata" value="{{old('iniciodata')}}" required @if($errors->has('iniciodata')) style="border-color:red;" autofocus @endif>
                     @if ($errors->has('iniciodata'))
@@ -79,7 +80,7 @@
                     @endif
                 </div>
                 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="iniciohora">Início - hora</label>
                     <input type="time" class="form-control" name="iniciohora" id="iniciohora" value="{{old('iniciohora')}}" required @if($errors->has('iniciohora')) style="border-color:red;" autofocus @endif>
                     @if ($errors->has('iniciohora'))
@@ -89,7 +90,7 @@
                     @endif
                 </div>
     
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="terminodata">Término - dia</label>
                     <input type="date" class="form-control" name="terminodata" id="terminodata" value="{{old('terminodata')}}" required @if($errors->has('terminodata')) style="border-color:red;" autofocus @endif>
                     @if ($errors->has('terminodata'))
@@ -99,7 +100,7 @@
                     @endif
                 </div>
                 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-2">
                     <label for="terminohora">Término - hora</label>
                     <input type="time" class="form-control" name="terminohora" id="terminohora" value="{{old('terminohora')}}" required @if($errors->has('terminohora')) style="border-color:red;" autofocus @endif>
                     @if ($errors->has('terminohora'))
@@ -108,12 +109,29 @@
                         </small>
                     @endif
                 </div>
+
+                <div class="form-group col-md-4">
+                    <label for="terminohora">Recorrência</label>
+                    <select multiple="multiple" class="form-control" name="recorrencia[]" id="recorrencia-select" style="width:90%;" @if($errors->has('recorrencia')) style="border-color:red;" @endif>
+                        <option value="">Evento único</option>
+                        <option value="Monday" {{(collect(old('recorrencia'))->contains("Monday")) ? 'selected':''}}>Toda segunda-feira</option>
+                        <option value="Tuesday" {{(collect(old('recorrencia'))->contains("Tuesday")) ? 'selected':''}}>Toda terça-feira</option>
+                        <option value="Wednesday" {{(collect(old('recorrencia'))->contains("Wednesday")) ? 'selected':''}}>Toda quarta-feira</option>
+                        <option value="Thursday" {{(collect(old('recorrencia'))->contains("Thursday")) ? 'selected':''}}>Toda quinta-feira</option>
+                        <option value="Friday" {{(collect(old('recorrencia'))->contains("Friday")) ? 'selected':''}}>Toda sexta-feira</option>
+                    </select>
+                    @if ($errors->has('recorrencia'))
+                        <small style="color:red;">
+                            <strong>{{ $errors->first('recorrencia') }}</strong>
+                        </small>
+                    @endif
+                </div>
                     
                 <div class="form-group col-md-12">
                     <label for="envolvidos">Envolvidos</label>
                     <select class="form-control" multiple="multiple" id="my-select" name="envolvidos[]" @if($errors->has('envolvidos')) style="border-color:red;" autofocus @endif>
                     @foreach($users as $user)
-                        <option value="{{$user->id}}" {{ (collect(old('envolvidos'))->contains($user->id)) ? 'selected':'' }}>{{$user->name}}</option>
+                        <option value="{{$user->id}}" {{(collect(old('envolvidos'))->contains($user->id)) ? 'selected':''}}>{{$user->name}}</option>
                     @endforeach
                     </select>
                     <small>** O criador do evento é envolvido automaticamente.</small><br/>
@@ -167,6 +185,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/js/jquery.multi-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/pt-br.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/multiple-select/1.2.0/multiple-select.min.js"></script>
     <script src="{{url('assets/js/novoevento.js')}}"></script>
     <script src="{{asset('assets/js/modal_loader.js')}}"></script>
 @endpush

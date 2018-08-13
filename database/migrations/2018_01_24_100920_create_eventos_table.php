@@ -20,6 +20,7 @@ class CreateEventosTable extends Migration
             $table->enum('tipo', ['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']);
             $table->dateTime('start');
             $table->dateTime('end');
+            $table->string('dow', 30)->nullable()->default(null);
             $table->text('descricao')->nullable();
             $table->string('organizador_nome');
             $table->string('organizador_email');
