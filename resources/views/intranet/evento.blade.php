@@ -88,7 +88,7 @@
                             às 
                             @if(isset($evento)) {{Carbon\Carbon::parse($evento->end)->format('H:i')}} @endif
                         @else
-                            @if(isset($evento)) {{Carbon\Carbon::parse($evento->start)->format('d/m/Y H:i')}} @endif
+                            @if(isset($evento)) {{Carbon\Carbon::parse($evento->end)->format('d/m/Y H:i')}} @endif
                         @endif
                     </td>
                 </tr>
