@@ -21,7 +21,7 @@ class MicrosoftController extends Controller
     }
 
     public function criar_evento(Request $request){
-        
+        //dd($request);
         $validatedData = Validator::make($request->all(), [
             'titulo' => 'required|string|max:200',
             'tipo' => [
@@ -160,7 +160,7 @@ class MicrosoftController extends Controller
         if(Auth::user()->email == $evento->organizador_email || 
             Auth::user()->tipo == 'admin' || 
             Auth::user()->email == 'recepcao@chebabi.com' &&
-            $evento->end > Carbon::now() && 
+            //$evento->end > Carbon::now() && //NÃO SE APLICA AOS EVENTOS RECORRENTES
             !$evento->cancelado){
 
             $validatedData = Validator::make($request->all(), [
@@ -171,10 +171,11 @@ class MicrosoftController extends Controller
                     Rule::in(['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']),
                 ],
                 'local' => 'required|string|max:100',
-                //'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today',//NÃO SE APLICA AOS EVENTOS RECORRENTES
+                //'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today', //NÃO SE APLICA AOS EVENTOS RECORRENTES
                 'iniciodata' => 'required|date_format:Y-m-d',
                 'iniciohora' => 'required|date_format:H:i',
-                'terminodata' => 'required|date_format:Y-m-d|after_or_equal:today',
+                //'terminodata' => 'required|date_format:Y-m-d|after_or_equal:today', //NÃO SE APLICA AOS EVENTOS RECORRENTES
+                'terminodata' => 'required|date_format:Y-m-d', 
                 'terminohora' => 'required|date_format:H:i',
                 'envolvidos' => 'nullable|array|min:1|max:60', //MAX 60 ENVOLVIDOS
                 'descricao' => 'nullable|string|max:2000',
@@ -196,9 +197,27 @@ class MicrosoftController extends Controller
                 ->select('token')
                 ->where('name', 'Microsoft Graph')
                 ->first();
+
+                if(!empty($request->recorrencia)){
+                    foreach($request->recorrencia as $dia){
+                        if($dia == "Monday"){
+                            $dow[] = 1;
+                        }elseif($dia == "Tuesday"){
+                            $dow[] = 2;
+                        }elseif($dia == "Wednesday"){
+                            $dow[] = 3;
+                        }elseif($dia == "Thursday"){
+                            $dow[] = 4;
+                        }elseif($dia == "Friday"){
+                            $dow[] = 5;
+                        }
+                    }
+                }else{
+                    $dow = null;
+                }
             
                 require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento_update.json.php';
-    
+
                 $evento_atualizado = json_encode($evento_atualizado);
                 //dd(json_decode($evento_atualizado));
                 $parameters = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events/'.$request->id;
@@ -237,24 +256,6 @@ class MicrosoftController extends Controller
                         $color = '#80bfff';
                     }else{
                         $color = NULL;
-                    }
-
-                    if(!empty($request->recorrencia)){
-                        foreach($request->recorrencia as $dia){
-                            if($dia == "Monday"){
-                                $dow[] = 1;
-                            }elseif($dia == "Tuesday"){
-                                $dow[] = 2;
-                            }elseif($dia == "Wednesday"){
-                                $dow[] = 3;
-                            }elseif($dia == "Thursday"){
-                                $dow[] = 4;
-                            }elseif($dia == "Friday"){
-                                $dow[] = 5;
-                            }
-                        }
-                    }else{
-                        $dow = null;
                     }
 
                     $alterado = '* Evento alterado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';

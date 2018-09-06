@@ -4,15 +4,11 @@ $('.agendar-btn').click(function(){
 
     var confirmar = confirm("Confirma o agendamento de uma seção de massagem rápida para o dia "+id+"?");
 
-    if (confirmar == true) {
+    if(confirmar == true) {
         console.log("CONFIRMADO!");
-    } else {
+    }else{
         console.log("CANCELADO!");
         return false;
     }
 
 });
-
-
-
-

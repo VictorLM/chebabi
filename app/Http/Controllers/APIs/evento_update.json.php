@@ -37,7 +37,7 @@ $evento_atualizado = array (
   ),
 );
 
-if(count($request->envolvidos)>0){
+if(isset($request->envolvidos) && count($request->envolvidos)>0){
 
   $i = count($request->envolvidos);
   $contador = 0;
@@ -62,7 +62,33 @@ if(count($request->envolvidos)>0){
 
 }
 
-if(!empty($request->recorrencia)){
+
+if(!empty($request->recorrencia) && !empty(unserialize($evento->dow))){
+
+  if(unserialize($evento->dow) != $dow){
+    $recurrence = array (
+      "recurrence" =>
+      array (
+        "pattern" =>
+        array (
+          "type" => "weekly",
+          "interval" => 1,
+          "daysOfWeek" => 
+          array ()
+        ),
+        "range" =>
+        array (
+          "startDate" => $request->iniciodata,
+          "type" => "noEnd"
+        )
+      )
+    );
+    foreach($request->recorrencia as $dia){
+      $recurrence["recurrence"]["pattern"]["daysOfWeek"][] = $dia;
+    }
+    $evento_atualizado = array_merge($evento_atualizado, $recurrence);
+  }
+}elseif(!empty($request->recorrencia) && empty(unserialize($evento->dow))){
   $recurrence = array (
     "recurrence" =>
     array (

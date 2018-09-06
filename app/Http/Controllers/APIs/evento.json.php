@@ -37,7 +37,7 @@ $evento = array (
   ),
 );
 
-if(count($request->envolvidos)>0){
+if(isset($request->envolvidos) && count($request->envolvidos)>0){
 
   $i = count($request->envolvidos);
   $contador = 0;
