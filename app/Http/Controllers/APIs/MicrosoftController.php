@@ -171,7 +171,8 @@ class MicrosoftController extends Controller
                     Rule::in(['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']),
                 ],
                 'local' => 'required|string|max:100',
-                'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today',
+                //'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today',//NÃO SE APLICA AOS EVENTOS RECORRENTES
+                'iniciodata' => 'required|date_format:Y-m-d',
                 'iniciohora' => 'required|date_format:H:i',
                 'terminodata' => 'required|date_format:Y-m-d|after_or_equal:today',
                 'terminohora' => 'required|date_format:H:i',

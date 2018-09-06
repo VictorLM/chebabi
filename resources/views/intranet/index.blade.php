@@ -30,7 +30,7 @@
                     
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
-                            <a href="{{url('intranet/agenda')}}">
+                            <a href="#" id="agenda" data-toggle="popover" data-trigger="focus" data-content="#">
                                 <i class="glyphicon glyphicon-calendar"></i>
                                 <i class="glyphicon glyphicon-time"></i><br/>AGENDA</a>
                         </div>
@@ -61,7 +61,7 @@
                     
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
-                            <a href="#" id="popov" data-toggle="popover" data-trigger="focus" data-content="#">
+                            <a href="#" id="legalone" data-toggle="popover" data-trigger="focus" data-content="#">
                             <i class="glyphicon glyphicon-cloud"></i>
                             <i class="glyphicon glyphicon-globe"></i><br/>LEGAL ONE</a>
                         </div>

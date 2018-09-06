@@ -123,22 +123,24 @@
                 <span>{{$evento->alterado}}</span></br>
             @endif
 
-            @if($evento->end < Carbon\Carbon::now() || $evento->cancelado)
+            @if(empty(unserialize($evento->dow)) && ($evento->end < Carbon\Carbon::now() || $evento->cancelado))
                 <span>* Evento finalizado.</span>
             @endif
 
-            @if($edit_cancel && !$evento->cancelado && $evento->end > Carbon\Carbon::now()) 
-                </br>
-                <a href="{{action('Intranet\IntranetController@editEvento', $evento->id)}}">
-                    <button class="btn btn-primary" type="button">
-                        <i class="glyphicon glyphicon-pencil"></i> Editar
-                    </button>
-                </a>
-                <a href="{{action('APIs\MicrosoftController@cancela_evento', $evento->id)}}">
-                    <button class="btn btn-danger" type="button">
-                        <i class="glyphicon glyphicon-trash"></i> Cancelar
-                    </button>
-                </a>
+            @if($edit_cancel && !$evento->cancelado)
+                @if(!empty(unserialize($evento->dow)) || $evento->end > Carbon\Carbon::now())
+                    </br>
+                    <a href="{{action('Intranet\IntranetController@editEvento', $evento->id)}}">
+                        <button class="btn btn-primary" type="button">
+                            <i class="glyphicon glyphicon-pencil"></i> Editar
+                        </button>
+                    </a>
+                    <a href="{{action('APIs\MicrosoftController@cancela_evento', $evento->id)}}">
+                        <button class="btn btn-danger" type="button">
+                            <i class="glyphicon glyphicon-trash"></i> Cancelar
+                        </button>
+                    </a>
+                @endif
             @endif
 
         </div>

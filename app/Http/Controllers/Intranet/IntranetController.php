@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Mail;
 use Intranet\Uau;
+use Intranet\Massagem;
 use Validator;
 use Intranet\Eventos;
 
@@ -196,16 +197,86 @@ class IntranetController extends Controller
         }else{
             return null;
         }
+    }
 
+    public function agendamento_massagem(){
+        $title = 'Agendamento Massagem | Intranet Izique Chebabi Advogados Associados';
+
+        $terca = array();
+        $quarta = array();
+
+        $segunda = Carbon::now()->startOfWeek();
+        $terca['dia'] = $segunda->copy()->addDay();
+        $quarta['dia'] = $terca['dia']->copy()->addDay();
+
+        $terca['disponivel'] = $quarta['disponivel'] = true;
+
+        $terca['horarios']['14:00'] = $quarta['horarios']['14:00'] = false;
+        $terca['horarios']['14:10'] = $quarta['horarios']['14:10'] = false;
+        $terca['horarios']['14:20'] = $quarta['horarios']['14:20'] = false;
+        $terca['horarios']['14:30'] = $quarta['horarios']['14:30'] = false;
+        $terca['horarios']['14:40'] = $quarta['horarios']['14:40'] = false;
+        $terca['horarios']['14:50'] = $quarta['horarios']['14:50'] = false;
+        $terca['horarios']['15:00'] = $quarta['horarios']['15:00'] = false;
+        $terca['horarios']['15:10'] = $quarta['horarios']['15:10'] = false;
+        $terca['horarios']['15:20'] = $quarta['horarios']['15:20'] = false;
+        //15H30 ÀS 15H40 É A PAUSA DA MASSAGISTA
+        $terca['horarios']['15:40'] = $quarta['horarios']['15:40'] = false;
+        $terca['horarios']['15:50'] = $quarta['horarios']['15:50'] = false;
+        $terca['horarios']['16:00'] = $quarta['horarios']['16:00'] = false;
+        $terca['horarios']['16:10'] = $quarta['horarios']['16:10'] = false;
+        $terca['horarios']['16:20'] = $quarta['horarios']['16:20'] = false;
+        $terca['horarios']['16:30'] = $quarta['horarios']['16:30'] = false;
+        $terca['horarios']['16:40'] = $quarta['horarios']['16:40'] = false;
+        $terca['horarios']['16:50'] = $quarta['horarios']['16:50'] = false;
+        $terca['horarios']['17:00'] = $quarta['horarios']['17:00'] = false;
+
+        $dias_sem_massagem = DB::table('dias_sem_massagens')->whereDate('data', '>=', $segunda)->get();
+        foreach($dias_sem_massagem as $dia){
+            if($dia->data == $terca['dia']){
+                $terca['disponivel'] = false;
+            }else if($dia == $quarta['dia']){
+                $quarta['disponivel'] = false;
+            }
+        }
+        
+        $massagens_agendadas = Massagem::with('usuario')->whereDate('inicio_data', '>=', $segunda)->get();
+        foreach($massagens_agendadas as $massagem){
+            if($massagem->inicio_data == $terca['dia']){
+
+                if($massagem->inicio_hora == '14:00'){
+                    $terca['horarios']['14:00'] = $massagem->usuario->name;
+                }else if($massagem->inicio_hora == '14:10'){
+                    $terca['horarios']['14:10'] = $massagem->usuario->name;
+                }
+                //.
+                //.
+                //.
+            }else if($massagem->inicio_data == $quarta['dia']){
+                if($massagem->inicio_hora == '14:00'){
+                    $quarta['horarios']['14:00'] = $massagem->usuario->name;
+                }else if($massagem->inicio_hora == '14:10'){
+                    $quarta['horarios']['14:10'] = $massagem->usuario->name;
+                }
+                //.
+                //.
+                //.
+            }
+        }
+        dd($terca);
+        return view('intranet.agendamento_massagem', compact('title','terca','quarta'));
+    }
+
+    public function agendar_massagem(Request $request){
+        dd($request->data." - ".$request->hora);
     }
     
-    public function contatos()
-    {
+    public function contatos(){
         $users = DB::table('users')
                 ->select('id', 'name', 'ramal', 'telefone', 'email')
                 ->where('ativo', TRUE)
                 ->orderBy('name')
-                ->paginate(20);
+                ->get();
         $title = 'Contatos | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.contatos', compact('title', 'users'));
     }
@@ -217,7 +288,7 @@ class IntranetController extends Controller
             ->where('ativo', TRUE)
             ->whereMonth('nascimento', '=', $mes)
             ->orderByRaw(DB::raw("DAY(nascimento) ASC"))
-            ->paginate(20);
+            ->paginate(30);
 
         $title = 'Aniversariantes | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.aniversariantes', compact('title', 'users', 'mes'));
@@ -237,7 +308,7 @@ class IntranetController extends Controller
                 ->where('ativo', TRUE)
                 ->whereMonth('nascimento', '=', $mes)
                 ->orderByRaw(DB::raw("DAY(nascimento) ASC"))
-                ->paginate(20);
+                ->paginate(30);
         
         $title = 'Aniversariantes | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.aniversariantes_filtrados', compact('title', 'users', 'mes'));
@@ -252,14 +323,14 @@ class IntranetController extends Controller
         if(Auth::user()->tipo == "admin"){
             $procedimentos = DB::table('procedimentos')
             ->orderBy('name')
-            ->paginate(20);
+            ->paginate(30);
         }else{
             $procedimentos = DB::table('procedimentos')
             ->where(function ($query) {
             $query->where('tipo', '=', 'Geral')
             ->orWhere('tipo', '=', Auth::user()->tipo);})
             ->orderBy('name')
-            ->paginate(20);
+            ->paginate(30);
         }
 
         $title = 'Procedimentos | Intranet Izique Chebabi Advogados Associados';
@@ -271,7 +342,7 @@ class IntranetController extends Controller
 
         $tarifadores = DB::table('tarifadores')
             ->orderBy('cliente')
-            ->paginate(20);
+            ->paginate(30);
 
         $title = 'Tarifadores | Intranet Izique Chebabi Advogados Associados';
         
@@ -282,7 +353,7 @@ class IntranetController extends Controller
 
         $tutoriais = DB::table('tutoriais')
             ->orderBy('name')
-            ->paginate(20);
+            ->paginate(30);
 
         $title = 'Tutoriais | Intranet Izique Chebabi Advogados Associados';
         
