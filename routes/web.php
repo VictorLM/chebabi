@@ -48,7 +48,11 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/agenda/editar-evento', 'APIs\MicrosoftController@update_evento');
     //ROTAS AGENDAMENTO MASSAGEM
     Route::get('/agendamento-massagem', 'Intranet\IntranetController@agendamento_massagem');
-    Route::post('/agendar-massagem', 'Intranet\IntranetController@agendar_massagem');
+    Route::get('/agendamento-massagem/todos-agendamentos', 'Intranet\IntranetController@todos_agendamentos_massagem');
+    Route::get('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@form_dia_sem_massagem');
+    Route::post('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@incluir_dia_sem_massagem');
+    Route::post('/agendamento-massagem/agendar-massagem', 'APIs\MicrosoftController@criar_evento_massagem');
+    Route::post('/agendamento-massagem/cancelar-massagem', 'APIs\MicrosoftController@cancelar_evento_massagem');
     //ROTAS LEGAL ONE
     Route::get('/andamentos-datacloud', 'APIs\LegalOneController@andamentos_datacloud');
     //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR

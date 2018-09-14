@@ -46,7 +46,19 @@
                                 <i class="glyphicon glyphicon-calendar"></i><br/>ANIVERSARIANTES</a>
                         </div>
                     </div>
-                    
+
+                    <div class="col-md-4">
+                        <div class="intra-atalhos well well-lg">
+                            <a href="http://central.bragasistemas.com.br/brasisweb/cliente/" target="_blank">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            <i class="glyphicon glyphicon-globe"></i><br/>CHAMADOS TI</a>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/contatos')}}">
@@ -54,10 +66,6 @@
                                 <i class="glyphicon glyphicon-user"></i><br/>CONTATOS</a>
                         </div>
                     </div>
-
-                </div>
-                
-                <div class="row">
                     
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -74,7 +82,11 @@
                             <i class="glyphicon glyphicon-list-alt"></i><br/>PROCEDIMENTOS</a>
                         </div>
                     </div>
-                    
+
+                </div>
+                
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/relatorio')}}">
@@ -82,10 +94,6 @@
                             <i class="glyphicon glyphicon-road"></i><br/>RELATÓRIO DE VIAGEM</a>
                         </div>
                     </div>
-
-                </div>
-                
-                <div class="row">
                     
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -103,6 +111,10 @@
                         </div>
                     </div>
 
+                </div>
+                
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             @if($unread_uaus>0)
@@ -113,10 +125,6 @@
                             <i class="glyphicon glyphicon-star"></i><br/>UAU!</a>
                         </div>
                     </div>
-
-                </div>
-                
-                <div class="row">
                     
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -135,14 +143,6 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="intra-atalhos well well-lg">
-                            <a href="http://central.bragasistemas.com.br/brasisweb/cliente/" target="_blank">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            <i class="glyphicon glyphicon-globe"></i><br/>CHAMADOS TI</a>
-                        </div>
-                    </div>
-                    
                 </div>
 
                 <div class="row">

@@ -16,8 +16,8 @@ $(document).ready(function(){
     $('#agenda').popover({
         placement: placement,
         html: true,
-        //template: '<div class="popover container"><div class="arrow"></div><a class="list-group-item" href="/intranet/agenda"><i class="glyphicon glyphicon-calendar" style="font-size:1em!important;"></i> Eventos Agenda</a><a class="list-group-item" href="/intranet/agendamento-massagem"><i class="glyphicon glyphicon-ok-circle" style="font-size:1em!important;"></i> Agendamento Massagem</a></div>'
-        template: '<div class="popover container"><div class="arrow"></div><a class="list-group-item" href="/intranet/agenda"><i class="glyphicon glyphicon-calendar" style="font-size:1em!important;"></i> Eventos Agenda</a></div>'
+        template: '<div class="popover container"><div class="arrow"></div><a class="list-group-item" href="/intranet/agenda"><i class="glyphicon glyphicon-calendar" style="font-size:1em!important;"></i> Eventos Agenda</a><a class="list-group-item" href="/intranet/agendamento-massagem"><i class="glyphicon glyphicon-ok-circle" style="font-size:1em!important;"></i> Agendamento Massagem</a></div>'
+        //template: '<div class="popover container"><div class="arrow"></div><a class="list-group-item" href="/intranet/agenda"><i class="glyphicon glyphicon-calendar" style="font-size:1em!important;"></i> Eventos Agenda</a></div>'
     });
 
 });

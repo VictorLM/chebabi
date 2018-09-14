@@ -8,7 +8,7 @@ class Massagem extends Model
 {
     protected $table = 'massagens';
 
-    public function usuario(){
+    public function user(){
         return $this->belongsTo('Intranet\User', 'usuario');
     }
 }
