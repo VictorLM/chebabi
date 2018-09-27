@@ -56,10 +56,8 @@ class BackupDB extends Command
      */
     public function handle()
     {
-        /*
         try{
             $this->process->mustRun();
-            //$this->info('Backup efetudo com sucesso.');
         }catch(ProcessFailedException $exception){
             $this->error('Erro ao executar o backup: '.$exception);
         }
@@ -74,14 +72,7 @@ class BackupDB extends Command
                 $message->attach(storage_path('backups/backup_intranet_'.$this->data.'.gz'));
             });
             //APAGA O BACKUP DO SERVIDOR DEPOIS DE ENVIAR POE E-MAIL
-            Storage::disk('local')->delete('/backups/backup_intranet_'.$this->data.'.gz');
-        }
-        */
-        try{
             File::delete(storage_path('backups/backup_intranet_'.$this->data.'.gz'));
-        }catch (\Exception $e){
-            dd($e);
-        }
-        
+        }        
     }
 }

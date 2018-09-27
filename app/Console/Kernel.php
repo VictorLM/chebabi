@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         '\Intranet\Console\Commands\AndamentosDataCloudProgressCrawler',
         '\Intranet\Console\Commands\AtualizaNoticiasAASP',
         '\Intranet\Console\Commands\EmailAniversario',
+        '\Intranet\Console\Commands\BackupDB',
     ];
 
     /**
@@ -62,6 +63,9 @@ class Kernel extends ConsoleKernel
                 ->appendOutputTo(storage_path('logs/schedule.log'));
         $schedule->command('EmailAniversario:enviar')
                 ->dailyAt('09:00')
+                ->appendOutputTo(storage_path('logs/schedule.log'));
+        $schedule->command('db:backup')
+                ->dailyAt('22:00')
                 ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 
