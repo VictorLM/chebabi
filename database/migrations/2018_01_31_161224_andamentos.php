@@ -20,7 +20,7 @@ class Andamentos extends Migration
             $table->integer('tipo')->unsigned();
             $table->foreign('tipo')->references('id')->on('tipos_andamentos_legalone');
             $table->string('pasta');
-            $table->mediumText('descricao');
+            $table->string('descricao', 2000)->nullable();
             $table->string('observacoes');
             $table->timestamps();
         });
