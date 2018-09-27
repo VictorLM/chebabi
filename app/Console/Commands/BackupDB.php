@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class BackupDB extends Command
 {
@@ -26,6 +27,8 @@ class BackupDB extends Command
 
     protected $process;
 
+    protected $data;
+
     /**
      * Create a new command instance.
      *
@@ -35,12 +38,14 @@ class BackupDB extends Command
     {
         parent::__construct();
 
+        $this->data = Carbon::parse(Carbon::now())->format('d-m-Y');
+
         $this->process = new Process(sprintf(
             'mysqldump -u%s -p%s %s | gzip > %s',
             config('database.connections.mysql.username'),
             config('database.connections.mysql.password'),
             config('database.connections.mysql.database'),
-            storage_path('backups/backup_intranet_'.Carbon::parse(Carbon::now())->format('d-m-Y').'.gz')
+            storage_path('backups/backup_intranet_'.$this->data.'.gz')
         ));
     }
 
@@ -51,15 +56,6 @@ class BackupDB extends Command
      */
     public function handle()
     {
-        Mail::send('emails.backup', ['content' => Carbon::parse(Carbon::now())->format('d-m-Y')], 
-            function ($message)
-        {
-            $message->from('intranet@chebabi.adv.br', 'Intranet Chebabi');
-            $message->to('victor@chebabi.com', null);
-            $message->subject('Backup '.Carbon::parse(Carbon::now())->format('d-m-Y'));
-            $message->attach(storage_path('backups/backup_intranet_'.Carbon::parse(Carbon::now())->format('d-m-Y').'.gz'));
-        });
-        /*
         try{
             $this->process->mustRun();
             //$this->info('Backup efetudo com sucesso.');
@@ -68,17 +64,16 @@ class BackupDB extends Command
         }
 
         if($this->process->isSuccessful()){
-            Mail::send('emails.backup', ['content' => Carbon::parse(Carbon::now())->format('d-m-Y')], 
-                function ($message)
+            Mail::send('emails.backup', ['content' => $this->data], 
+            function ($message)
             {
                 $message->from('intranet@chebabi.adv.br', 'Intranet Chebabi');
                 $message->to('victor@chebabi.com', null);
-                $message->subject('Backup '.Carbon::parse(Carbon::now())->format('d-m-Y'));
-                $message->attach("../storage/backups/backup_intranet_".Carbon::parse(Carbon::now())->format('d-m-Y').".gz");
+                $message->subject('Backup Intranet '.$this->data);
+                $message->attach(storage_path('backups/backup_intranet_'.$this->data.'.gz'));
             });
-            //E-MAIL
-            //EXCLUI O ARQUIVO
+            //APAGA O BACKUP DO SERVIDOR DEPOIS DE ENVIAR POE E-MAIL
+            Storage::disk('local')->delete('/backups/backup_intranet_'.$this->data.'.gz');
         }
-        */
     }
 }
