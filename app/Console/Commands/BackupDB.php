@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class BackupDB extends Command
 {
@@ -56,6 +56,7 @@ class BackupDB extends Command
      */
     public function handle()
     {
+        /*
         try{
             $this->process->mustRun();
             //$this->info('Backup efetudo com sucesso.');
@@ -75,5 +76,12 @@ class BackupDB extends Command
             //APAGA O BACKUP DO SERVIDOR DEPOIS DE ENVIAR POE E-MAIL
             Storage::disk('local')->delete('/backups/backup_intranet_'.$this->data.'.gz');
         }
+        */
+        try{
+            File::delete(storage_path('backups/backup_intranet_'.$this->data.'.gz'));
+        }catch (\Exception $e){
+            dd($e);
+        }
+        
     }
 }
