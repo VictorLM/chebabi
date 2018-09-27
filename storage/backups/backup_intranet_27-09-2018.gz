@@ -1,0 +1,86 @@
+DADOS
+IMPRESSORAS
+PAPERCUT
+CÓDIGOS CLIENTES
+BANDEJAS
+SCANNERS
+TONNER
+PAPEL
+WIFI
+USBs
+SEGUNDA TELA
+LEGAL ONE
+CHAMADOS C/ DETALHES
+
+Chebabi Backup
+Senha : icadv12345
+
+
+PORTA MINI PRINT 3000?
+
+TIRAR COMENTARIOS JSs RECS()
+
+/tinder-tools/like-id/5b22a4a3fe07453631d88ea8
+
+BOT:		5b4e2fba3dc09c0e2df558a5
+PIRULETA:	5b22a4a3fe07453631d88ea8
+
+
+php artisan GetTinderRecs:run
+
+victor.meireles.dev@gmail.com
+
+22421-000
+
+Central de Ativação Microsoft: 0800-888-4081
+
+(11) 3803-7920 / SUPORTE THOMSOM
+
+luiz.lisboa@thomsonreuters.com
+
+
+88 BD:		561851787170601
+88 HEADER:	507481429274304
+
+SELECT * FROM `locais` WHERE nome like "%club%";
+
+INSERT INTO `coordenadas` (`id`, `latitude`, `longitude`, `created_at`, `updated_at`) VALUES
+(1, '-22.697564', '-47.008041', '2018-06-06 03:00:00', NULL),
+(2, '-22.883895', '-47.042304', '2018-06-06 03:00:00', NULL);
+
+
+SET FOREIGN_KEY_CHECKS = 0; 
+TRUNCATE table logged_profiles; 
+SET FOREIGN_KEY_CHECKS = 1;
+
+
++"photos": array:1 [?
+          0 => {#252 ?
+            +"id": "907a8b41-b06c-4303-9f36-ffec8d061270"
+            +"url": "https://images-ssl.gotinder.com/5b22a4a3fe07453631d88ea8/1080x1080_907a8b41-b06c-4303-9f36-ffec8d061270.jpg"
+            +"processedFiles": array:4 [?
+              0 => {#262 ?
+                +"url": "https://images-ssl.gotinder.com/5b22a4a3fe07453631d88ea8/640x640_907a8b41-b06c-4303-9f36-ffec8d061270.jpg"
+                +"height": 640
+                +"width": 640
+              }
+              1 => {#254 ?
+                +"url": "https://images-ssl.gotinder.com/5b22a4a3fe07453631d88ea8/320x320_907a8b41-b06c-4303-9f36-ffec8d061270.jpg"
+                +"height": 320
+                +"width": 320
+              }
+              2 => {#253 ?
+                +"url": "https://images-ssl.gotinder.com/5b22a4a3fe07453631d88ea8/172x172_907a8b41-b06c-4303-9f36-ffec8d061270.jpg"
+                +"height": 172
+                +"width": 172
+              }
+              3 => {#251 ?
+                +"url": "https://images-ssl.gotinder.com/5b22a4a3fe07453631d88ea8/84x84_907a8b41-b06c-4303-9f36-ffec8d061270.jpg"
+                +"height": 84
+                +"width": 84
+              }
+            ]
+            +"fileName": "907a8b41-b06c-4303-9f36-ffec8d061270.jpg"
+            +"extension": "jpg"
+          }
+        ]

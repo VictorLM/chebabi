@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Illuminate\Support\Facades\Mail;
 
 class BackupDB extends Command
 {
@@ -50,6 +51,15 @@ class BackupDB extends Command
      */
     public function handle()
     {
+        Mail::send('emails.backup', ['content' => Carbon::parse(Carbon::now())->format('d-m-Y')], 
+            function ($message)
+        {
+            $message->from('intranet@chebabi.adv.br', 'Intranet Chebabi');
+            $message->to('victor@chebabi.com', null);
+            $message->subject('Backup '.Carbon::parse(Carbon::now())->format('d-m-Y'));
+            $message->attach("../storage/backups/backup_intranet_".Carbon::parse(Carbon::now())->format('d-m-Y').".gz");
+        });
+        /*
         try{
             $this->process->mustRun();
             //$this->info('Backup efetudo com sucesso.');
@@ -58,9 +68,17 @@ class BackupDB extends Command
         }
 
         if($this->process->isSuccessful()){
-            //ZIPA?
+            Mail::send('emails.backup', ['content' => Carbon::parse(Carbon::now())->format('d-m-Y')], 
+                function ($message)
+            {
+                $message->from('intranet@chebabi.adv.br', 'Intranet Chebabi');
+                $message->to('victor@chebabi.com', null);
+                $message->subject('Backup '.Carbon::parse(Carbon::now())->format('d-m-Y'));
+                $message->attach("../storage/backups/backup_intranet_".Carbon::parse(Carbon::now())->format('d-m-Y').".gz");
+            });
             //E-MAIL
             //EXCLUI O ARQUIVO
         }
+        */
     }
 }
