@@ -57,7 +57,7 @@ class BackupDB extends Command
             $message->from('intranet@chebabi.adv.br', 'Intranet Chebabi');
             $message->to('victor@chebabi.com', null);
             $message->subject('Backup '.Carbon::parse(Carbon::now())->format('d-m-Y'));
-            $message->attach("../storage/backups/backup_intranet_".Carbon::parse(Carbon::now())->format('d-m-Y').".gz");
+            $message->attach(storage_path('backups/backup_intranet_'.Carbon::parse(Carbon::now())->format('d-m-Y').'.gz'));
         });
         /*
         try{
