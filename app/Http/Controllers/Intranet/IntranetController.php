@@ -487,15 +487,15 @@ class IntranetController extends Controller
 
         if(Auth::user()->tipo == "admin"){
             $procedimentos = DB::table('procedimentos')
-            ->orderBy('name')
-            ->paginate(30);
+            ->orderBy('created_at', 'desc')
+            ->get();
         }else{
             $procedimentos = DB::table('procedimentos')
             ->where(function ($query) {
             $query->where('tipo', '=', 'Geral')
             ->orWhere('tipo', '=', Auth::user()->tipo);})
-            ->orderBy('name')
-            ->paginate(30);
+            ->orderBy('created_at', 'desc')
+            ->get();
         }
 
         $title = 'Procedimentos | Intranet Izique Chebabi Advogados Associados';
@@ -507,7 +507,7 @@ class IntranetController extends Controller
 
         $tarifadores = DB::table('tarifadores')
             ->orderBy('cliente')
-            ->paginate(30);
+            ->get();
 
         $title = 'Tarifadores | Intranet Izique Chebabi Advogados Associados';
         
@@ -517,8 +517,8 @@ class IntranetController extends Controller
     public function tutoriais(){
 
         $tutoriais = DB::table('tutoriais')
-            ->orderBy('name')
-            ->paginate(30);
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $title = 'Tutoriais | Intranet Izique Chebabi Advogados Associados';
         

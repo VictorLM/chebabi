@@ -6,8 +6,8 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h2 style="display:inline;"><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Contatos</h2>
-        <input type="text" class="form-control" id="nome" placeholder="Pesquisar pelo nome" style="display:inline;width:auto;margin-left:1em;">
+        <h2 class="display-inline"><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Contatos</h2>
+        <input type="text" class="form-control" id="pesquisa-mark-js" placeholder="Pesquisar">
       </div>
 
       <div class="panel-body">
@@ -20,7 +20,7 @@
                   <th>Email</th>
                 </tr>
               </thead>
-              <tbody id="contatos">
+              <tbody id="tbody">
               @foreach($users as $user)
                   <tr>
                       <td>{{$user->name}}</td>
@@ -31,8 +31,7 @@
               @endforeach
               </tbody>
             </table>
-          
-            {{-- {!! $users->links() !!} --}}
+
       </div>
 
     </div>
@@ -41,7 +40,7 @@
 
 @push ('scripts')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
-  <script src="{{asset('assets/js/contatos.js')}}"></script>
+  <script src="{{asset('assets/js/mark-js-pesquisa.js')}}"></script>
 @endpush
 
 @endsection

@@ -126,9 +126,8 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <label>* Currículo</label>
-                        <div class="custom-file{{ $errors->has('curriculo') ? ' is-invalid' : '' }}">
-                            <input type="file" class="custom-file-input" name="curriculo">
-                            <label class="custom-file-label">Anexar currículo</label>
+                        <div class="custom-file anexo-cv{{ $errors->has('curriculo') ? ' is-invalid' : '' }}">
+                            <input type="file" class="form-control-file" name="curriculo">
                         </div>
                         @if ($errors->has('curriculo'))
                             <div class="invalid-feedback">{{ $errors->first('curriculo') }}</div>
@@ -137,6 +136,7 @@
                     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         {!! NoCaptcha::display() !!}
                     </div>
+                    
                 </div>
 
                 <div class="form-row">

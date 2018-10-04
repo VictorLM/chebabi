@@ -134,6 +134,10 @@ body{
 .carousel-inner > .carousel-item > img{
     margin:auto;
 }
+.anexo-cv{
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}    
 
 @media (min-width: 1200px){
     .container {

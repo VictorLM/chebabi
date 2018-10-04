@@ -187,6 +187,11 @@ textarea.novo-uau-input{
 .display-inline{
     display: inline;
 }
+#pesquisa-mark-js{
+    display: inline;
+    width: auto;
+    margin-left: 1em;
+}
 
 @media (min-width: 1200px){
     .container-index {
