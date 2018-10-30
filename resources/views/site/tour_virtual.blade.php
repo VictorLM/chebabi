@@ -25,6 +25,6 @@
         </style>
     </head>
     <body>
-        <iframe src="https://my.matterport.com/show/?m=Fkw4fpvqNe4&play=1&ts=1&lp=1&wh=0&hl=0&qs=1&title=2&brand=1&help=0&utm_source=4"></iframe>
+        <iframe src="https://my.matterport.com/show/?m=Fkw4fpvqNe4&help=1" frameborder="0" allowfullscreen></iframe>
     </body>
 </html>

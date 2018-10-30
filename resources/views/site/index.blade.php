@@ -165,7 +165,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="embed-responsive embed-responsive-21by9">
-                        <iframe id="tour-home" class="embed-responsive-item" src="https://my.matterport.com/show/?m=Fkw4fpvqNe4&play=1&ts=1&lp=1&wh=0&hl=0&qs=1&title=2&brand=1&help=0&utm_source=4"></iframe>
+                        <iframe id="tour-home" class="embed-responsive-item" src="https://my.matterport.com/show/?m=Fkw4fpvqNe4&play=0&help=1" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
