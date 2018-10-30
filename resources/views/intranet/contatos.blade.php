@@ -7,7 +7,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h2 class="display-inline"><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Contatos</h2>
-        <input type="text" class="form-control" id="pesquisa-mark-js" placeholder="Pesquisar">
+        <input type="text" class="form-control" id="pesquisa-mark-js" placeholder="Pesquisar" autofocus>
       </div>
 
       <div class="panel-body">

@@ -45,6 +45,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="{{url('/#escritorio')}}">O ESCRITÓRIO</a>
                                 <a class="dropdown-item" href="{{url('/#principios')}}">PRINCÍPIOS</a>
+                                <a class="dropdown-item" href="{{url('/tour-virtual')}}" target="_blank">TOUR VIRTUAL</a>
                             </div>
                         </li>
                         <li class="nav-item">

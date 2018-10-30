@@ -121,7 +121,7 @@
                                                             <span><i>Data e/ou horário passados.</i></span>
                                                         @endif
                                                     @else
-                                                        <small><i>Já existe um agendamento realizado por você neste dia.</i></small>
+                                                        <small><i>Já existe um agendamento realizado por você neste dia ou seu limite de agendamentos mensais foi atingido.</i></small>
                                                     @endif
                                                 @endif
                                             </td>
@@ -231,7 +231,7 @@
                                                             <span><i>Data e/ou horário passados.</i></span>
                                                         @endif
                                                     @else
-                                                        <small><i>Já existe um agendamento realizado por você neste dia.</i></small>
+                                                        <small><i>Já existe um agendamento realizado por você neste dia ou seu limite de agendamentos mensais foi atingido.</i></small>
                                                     @endif
                                                 @endif
                                             </td>

@@ -14,10 +14,10 @@
 .panel-body a{
     text-decoration: none!important;
 }
-.intra-atalhos i{
+.intra-atalhos i, .clientes-well i{
     font-size: 1.8em!important;
 }
-.intra-atalhos{
+.intra-atalhos, .clientes-well{
     box-shadow: none!important;
     transition: box-shadow 0.2s!important;
     padding: 0!important;
@@ -25,11 +25,11 @@
     text-align: center;
     font-family: 'Dosis', sans-serif;
 }
-.intra-atalhos a{
+.intra-atalhos a, .clientes-well a{
     display:block!important;
     padding: 1em;
 }
-.intra-atalhos:hover {
+.intra-atalhos:hover, .clientes-well:hover {
    box-shadow: 0.5em 0.5em 0.3em #888888!important;
 }
 .seta-voltar{
@@ -192,6 +192,50 @@ textarea.novo-uau-input{
     width: auto;
     margin-left: 1em;
 }
+
+.clientes-well a{
+    padding: 0.5em;
+}
+
+.clientes-well{
+    height: 200px;
+}
+
+.cliente-logo{
+    max-width:200px;
+    max-height:100px;
+    margin:0 auto;
+}
+
+.cliente-logo-mini{
+    max-width:100px;
+    max-height:50px;
+    margin:0 auto;
+    float: left;
+}
+
+.adv-img-modal{
+    max-width: 90%;
+    max-height: 120px;
+}
+
+.li-adv-cliente{
+    list-style:none;
+    padding:0;
+}
+
+.li-adv-cliente li{
+    margin-bottom: 0.4em;
+}
+
+.tipo-adv-modal-cliente{
+    margin-top: 0;
+}
+
+.empresas{
+    font-size: 1.5em;
+}
+
 
 @media (min-width: 1200px){
     .container-index {

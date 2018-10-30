@@ -157,6 +157,18 @@
                 </div>
             
             </div>
+
+            <hr/>
+            <h1 class="text-center"><a class="h4-link" href="{{url('/tour-virtual')}}" target="_blank">TOUR VIRTUAL</a></h1>
+            <hr/>
+        
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="embed-responsive embed-responsive-21by9">
+                        <iframe id="tour-home" class="embed-responsive-item" src="https://my.matterport.com/show/?m=Fkw4fpvqNe4&play=1&ts=1&lp=1&wh=0&hl=0&qs=1&title=2&brand=1&help=0&utm_source=4"></iframe>
+                    </div>
+                </div>
+            </div>
             
             <hr/>
             <h1 class="text-center" id="escritorio">O ESCRITÓRIO</h1>

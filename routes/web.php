@@ -22,6 +22,7 @@ Route::get('/trabalhe-conosco', 'Site\SiteController@trabalheconosco');
 Route::get('/escritorios', 'Site\SiteController@escritorios');
 Route::post('/enviar_contato', 'Site\SiteController@enviar_contato');
 Route::post('/enviar_curriculo', 'Site\SiteController@enviar_curriculo');
+Route::get('/tour-virtual', 'Site\SiteController@tour_virtual');
 //ROTAS DO BLOG
 Route::get('/blog', 'Blog\BlogController@index');
 Route::get('/blog/categorias/{categoria}', 'Blog\BlogController@categoria');
@@ -67,8 +68,9 @@ Route::group(['prefix'=>'intranet'],function(){
     //DEMAIS ROTAS
     Route::get('/aniversariantes', 'Intranet\IntranetController@aniversariantes');
     //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR
-    Route::get('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');    
-    Route::post('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');  
+    Route::get('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');
+    Route::post('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');
+    Route::get('/clientes', 'Intranet\IntranetController@clientes');
     Route::get('/contatos', 'Intranet\IntranetController@contatos');
     Route::get('/procedimentos', 'Intranet\IntranetController@procedimentos');
     Route::get('/tarifadores', 'Intranet\IntranetController@tarifadores');

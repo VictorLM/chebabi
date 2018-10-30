@@ -37,12 +37,12 @@
                                     {{ method_field('DELETE') }}
                 
                                     <a href="{{action('Advogados\AdvogadosController@edit', $adv->id)}}">
-                                        <button class="btn btn-primary" type="button">
+                                        <button class="btn btn-primary btn-block" type="button">
                                             <i class="glyphicon glyphicon-pencil"></i> Editar
                                         </button>
                                     </a>
-                
-                                    <button class="btn btn-danger" type="submit">
+                                    <br/>
+                                    <button class="btn btn-danger btn-block" type="submit">
                                         <i class="glyphicon glyphicon-trash"></i> Excluir
                                     </button>
                                 </form>

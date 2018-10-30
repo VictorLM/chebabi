@@ -184,4 +184,9 @@ class SiteController extends Controller
         $title = 'Advogados | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
         return view('site.equipe', compact('title', 'equipe', 'agent'));
     }
+
+    public function tour_virtual(){
+        $title = 'Tour Virtual | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
+        return view('site.tour_virtual', compact('title'));
+    }
 }
