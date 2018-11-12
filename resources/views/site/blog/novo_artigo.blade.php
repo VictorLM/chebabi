@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6{{ $errors->has('imagem') ? ' has-error' : '' }}">
-                        <label>** Imagem</label>
+                        <label>Imagem (Tamanho máximo 1MB)</label>
                         <input type="file" class="form-control" name="imagem">
                         @if ($errors->has('imagem'))
                             <span class="help-block">
@@ -98,7 +98,7 @@
                 <div class="row">
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12{{ $errors->has('descricao') ? ' has-error' : '' }}">
-                        <label>* Descrição</label>
+                        <label>* Descrição (Máximo 20.000 caracteres)</label>
                         <div id="editor"></div>
                         @if ($errors->has('descricao'))
                             <span class="help-block">
@@ -116,7 +116,6 @@
                         <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
                         <br/><br/>
                         <span>* Campos obrigatórios.</span><br/>
-                        <span>** Tamanho máximo 1MB.</span>
                     </div>
 
                 </div>

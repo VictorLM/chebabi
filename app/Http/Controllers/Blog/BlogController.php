@@ -244,7 +244,7 @@ class BlogController extends Controller
             'autor' => 'required|string|max:100',
             'categoria' => 'required|in:Cível,Trabalhista,Outros',
             'tags' => 'required|string|max:200',
-            'descricao' => 'required|string|min:100|max:8000',
+            'descricao' => 'required|string|min:100|max:20000',
             'imagem' => 'nullable|image|max:1000',
         ]);
 
@@ -285,7 +285,7 @@ class BlogController extends Controller
             'autor' => 'required|string|max:100',
             'categoria' => 'required|in:Cível,Trabalhista,Outros',
             'tags' => 'required|string|max:200',
-            'descricao' => 'required|string|min:100|max:8000',
+            'descricao' => 'required|string|min:100|max:20000',
             'imagem' => 'nullable|image|max:1000',
         ]);
 
