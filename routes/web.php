@@ -125,6 +125,13 @@ Route::group(['prefix'=>'intranet/admin'],function(){
     Route::put('/users/active/{id}', 'User\UserController@active');
     //ROTAS CRUD ADVOGADOS
     Route::resource('/advs', 'Advogados\AdvogadosController');
+    //ROTAS CRUD CLIENTES
+    Route::get('/clientes', 'Admin\AdminController@clientes_index');
+    Route::get('/novo-cliente', 'Admin\AdminController@form_cliente');
+    Route::post('/novo-cliente', 'Admin\AdminController@novo_cliente');
+    Route::get('/clientes/{id}/editar', 'Admin\AdminController@edit_cliente');
+    Route::post('/clientes/{id}/editar', 'Admin\AdminController@update_cliente');
+    Route::post('/clientes/{id}/excluir', 'Admin\AdminController@delete_cliente');
     //ROTAS CADASTRO E DELEÇÃO PROCEDIMENTOS
     Route::get('/novo_procedimento', 'Admin\AdminController@form_procedimento');
     Route::post('/novo_procedimento', 'Admin\AdminController@novo_procedimento');

@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="terminohora">Recorrência</label>
+                    <label for="recorrencia">Recorrência</label>
                     <select multiple="multiple" class="form-control" name="recorrencia[]" id="recorrencia-select" style="width:90%;" @if($errors->has('recorrencia')) style="border-color:red;" @endif>
                         <option value="">Evento único</option>
                         <option value="Monday" {{(collect(old('recorrencia'))->contains("Monday")) ? 'selected':''}}>Toda segunda-feira</option>

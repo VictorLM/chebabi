@@ -17,4 +17,4 @@ INTRANET.txt
 /database/seeds/ApikeysTableSeeder.php
 /database/seeds/UsersTableSeeder.php
 /storage/fonts
-/storage/backups/*
+/storage/backups

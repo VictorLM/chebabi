@@ -17,7 +17,7 @@
 .intra-atalhos i, .clientes-well i{
     font-size: 1.8em!important;
 }
-.intra-atalhos, .clientes-well{
+.intra-atalhos{
     box-shadow: none!important;
     transition: box-shadow 0.2s!important;
     padding: 0!important;
@@ -197,10 +197,6 @@ textarea.novo-uau-input{
     padding: 0.5em;
 }
 
-.clientes-well{
-    height: 200px;
-}
-
 .cliente-logo{
     max-width:200px;
     max-height:100px;
@@ -214,18 +210,17 @@ textarea.novo-uau-input{
     float: left;
 }
 
-.adv-img-modal{
-    max-width: 90%;
-    max-height: 120px;
-}
-
 .li-adv-cliente{
     list-style:none;
     padding:0;
+    margin: 0;
+    font-size: 0.95em;
 }
 
-.li-adv-cliente li{
-    margin-bottom: 0.4em;
+.li-empresas-cliente{
+    padding:0;
+    margin: 0;
+    font-size: 0.9em;
 }
 
 .tipo-adv-modal-cliente{
@@ -236,6 +231,19 @@ textarea.novo-uau-input{
     font-size: 1.5em;
 }
 
+.hr-advs-clientes{
+    padding: 0;
+    margin: 0.3em 0 0.3em 0;
+}
+
+.clientes-well{
+    box-shadow: none!important;
+    transition: box-shadow 0.2s!important;
+    padding: 0.5em 0.1em 0.1em 0.1em!important;
+    font-size: 1.5em;
+    text-align: center;
+    font-family: 'Dosis', sans-serif;
+}
 
 @media (min-width: 1200px){
     .container-index {

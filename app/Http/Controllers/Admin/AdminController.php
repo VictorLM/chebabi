@@ -10,6 +10,9 @@ use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Intranet\Cliente;
+use Illuminate\Support\Facades\Input;
+use Intranet\Advogados;
 
 class AdminController extends Controller
 {
@@ -172,6 +175,144 @@ class AdminController extends Controller
         
         DB::table('tarifadores')->where('id', $request->id)->delete();
         $request->session()->flash('alert-success', 'Tarifadores excluídos com sucesso!');
+        return redirect()->action('Admin\AdminController@index');
+    }
+
+    public function clientes_index(){
+        $clientes = Cliente::with('advogado_civel_1','advogado_civel_2','advogado_civel_3','advogado_trab_1','advogado_trab_2','advogado_trab_3')
+            ->orderBy('nome')
+            ->paginate(10);
+        $title = 'Clientes | Intranet Izique Chebabi Advogados Associados';
+        return view('admin.clientes.index', compact('title', 'clientes'));
+    }
+
+    public function form_cliente(){
+        $advs = Advogados::pluck('usuario')->all();
+        $users = User::whereIn('id', $advs)
+            ->where('ativo', TRUE)
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+        $title = 'Novo Cliente | Intranet Izique Chebabi Advogados Associados';
+        return view('admin.clientes.create_edit', compact('title','users'));
+    }
+
+    public function novo_cliente(Request $request){
+        $cliente = new Cliente;
+        $validator = Validator::make($request->all(),$cliente->rules);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }else{
+            if ($request->hasFile('logo')){
+                $ext = Input::file('logo')->getClientOriginalExtension();
+                $nome = preg_replace('/[^a-zA-Z0-9-_\.]/','', $request->nome);
+                $request->file('logo')->storeAs('/imagens/logo-clientes', $nome.'.'.$ext, 'public');
+                $logo = "assets/imagens/logo-clientes/".$nome.'.'.$ext;
+            }else{
+                $logo = null;
+            }
+            $cliente->nome = $request->nome;
+            $cliente->logo = $logo;
+            $cliente->ativo = true;
+            if(!empty($request->adv_civel)){
+                $i = 1;
+                foreach($request->adv_civel as $adv_civel){
+                    $cliente->{"adv_civel_".$i} = $adv_civel;
+                    $i++;
+                }
+            }
+            if(!empty($request->adv_trab)){
+                $i = 1;
+                foreach($request->adv_trab as $adv_trab){
+                    $cliente->{"adv_trab_".$i} = $adv_trab;
+                    $i++;
+                }
+            }
+            $cliente->empresas = json_encode(explode(";",$request->empresas));
+            if(!$cliente->save()){
+                return abort(403, 'Erro ao salvar no banco de dados.');
+            }
+            $request->session()->flash('alert-success', 'Cliente cadastrado com sucesso!');
+            return redirect()->action('Admin\AdminController@index');
+        }
+    }
+
+    public function edit_cliente($id){
+        $cliente = Cliente::with('advogado_civel_1:id,name,email,ramal','advogado_civel_2:id,name,email,ramal','advogado_civel_3:id,name,email,ramal','advogado_trab_1:id,name,email,ramal','advogado_trab_2:id,name,email,ramal','advogado_trab_3:id,name,email,ramal')
+            ->where('ativo', true)
+            ->find($id);
+
+            $advs = Advogados::pluck('usuario')->all();
+            $users = User::whereIn('id', $advs)
+                ->where('ativo', TRUE)
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get();
+
+        $title = 'Editar Cliente | Intranet Izique Chebabi Advogados Associados';
+        return view('admin.clientes.create_edit', compact('title', 'cliente', 'users'));
+    }
+
+    public function update_cliente(Request $request, $id){
+        $cliente = Cliente::find($id);
+
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|string|max:200',
+            'logo' => 'nullable|image|max:300',
+            'adv_civel'  => 'nullable|array|max:3',
+            'adv_trab'  => 'nullable|array|max:3',
+            'empresas' => 'nullable|string|max:2000',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }else{
+            if ($request->hasFile('logo')){
+                $ext = Input::file('logo')->getClientOriginalExtension();
+                $nome = preg_replace('/[^a-zA-Z0-9-_\.]/','', $request->nome);
+                $request->file('logo')->storeAs('/imagens/logo-clientes', $nome.'.'.$ext, 'public');
+                $logo = "assets/imagens/logo-clientes/".$nome.'.'.$ext;
+            }else{
+                $logo = $cliente->logo;
+            }
+            $cliente->nome = $request->nome;
+            $cliente->logo = $logo;
+            $cliente->ativo = true;
+            $cliente->updated_at = Carbon::now();
+            if(!empty($request->adv_civel)){
+                $i = 1;
+                foreach($request->adv_civel as $adv_civel){
+                    $cliente->{"adv_civel_".$i} = $adv_civel;
+                    $i++;
+                }
+            }
+            if(!empty($request->adv_trab)){
+                $i = 1;
+                foreach($request->adv_trab as $adv_trab){
+                    $cliente->{"adv_trab_".$i} = $adv_trab;
+                    $i++;
+                }
+            }
+            $cliente->empresas = json_encode(explode(";",$request->empresas));
+            if(!$cliente->save()){
+                return abort(403, 'Erro ao salvar no banco de dados.');
+            }
+            $request->session()->flash('alert-success', 'Cliente alterado com sucesso!');
+            return redirect()->action('Admin\AdminController@index');
+        }
+    }
+
+    public function delete_cliente(Request $request, $id){
+        $cliente = Cliente::find($id);
+        $cliente->ativo = FALSE;
+        if(!$cliente->save()){
+            return abort(403, 'Erro ao salvar no banco de dados.');
+        }
+        if(!empty($cliente->logo)){
+            $logo = substr(strrchr($cliente->logo, "/"), 1);
+            Storage::disk('public')->delete('/imagens/logo-clientes/'.$logo);
+        }
+        $request->session()->flash('alert-success', 'Cliente escluído com sucesso!');
         return redirect()->action('Admin\AdminController@index');
     }
     

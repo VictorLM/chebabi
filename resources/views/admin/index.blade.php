@@ -117,29 +117,29 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="panel panel-primary">
-                                <div class="panel-heading">PROCEDIMENTOS</div>
+                                <div class="panel-heading">CLIENTES</div>
                                 <div class="panel-body">
                                     
                                     <div class="col-md-6">
                                         <div class="intra-atalhos well well-lg">
-                                            <a href="{{url('intranet/admin/novo_procedimento')}}">
+                                            <a href="{{url('intranet/admin/novo-cliente')}}">
                                                 <i class="glyphicon glyphicon-plus"></i>
-                                                <i class="glyphicon glyphicon-ok"></i>
-                                                <i class="glyphicon glyphicon-list-alt"></i>
+                                                <i class="glyphicon glyphicon-briefcase"></i>
+                                                <i class="glyphicon glyphicon-user"></i>
                                                 <br/>CADASTRAR</a>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="intra-atalhos well well-lg">
-                                            <a href="{{url('intranet/admin/del_procedimento')}}">
-                                                <i class="glyphicon glyphicon-trash"></i>
-                                                <i class="glyphicon glyphicon-ok"></i>
-                                                <i class="glyphicon glyphicon-list-alt"></i>
-                                                <br/>EXCLUIR</a>
+                                            <a href="{{url('intranet/admin/clientes')}}">
+                                                <i class="glyphicon glyphicon-pencil"></i>
+                                                <i class="glyphicon glyphicon-briefcase"></i>
+                                                <i class="glyphicon glyphicon-user"></i>
+                                                <br/>EDITAR</a>
                                         </div>
                                     </div>
                                     
@@ -150,6 +150,35 @@
                     </div>
                                 
                     <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">PROCEDIMENTOS</div>
+                                    <div class="panel-body">
+                                        
+                                        <div class="col-md-6">
+                                            <div class="intra-atalhos well well-lg">
+                                                <a href="{{url('intranet/admin/novo_procedimento')}}">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                    <i class="glyphicon glyphicon-ok"></i>
+                                                    <i class="glyphicon glyphicon-list-alt"></i>
+                                                    <br/>CADASTRAR</a>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-6">
+                                            <div class="intra-atalhos well well-lg">
+                                                <a href="{{url('intranet/admin/del_procedimento')}}">
+                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                    <i class="glyphicon glyphicon-ok"></i>
+                                                    <i class="glyphicon glyphicon-list-alt"></i>
+                                                    <br/>EXCLUIR</a>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
 
                         <div class="col-md-6">
                             <div class="panel panel-primary">
@@ -179,7 +208,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+
+                    </div>
+
+                    <div class="row">
+
                         <div class="col-md-6">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">TUTORIAIS</div>
@@ -208,10 +241,6 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-
-                    <div class="row">
                         
                         <div class="col-md-6">
                             <div class="panel panel-primary">

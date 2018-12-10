@@ -17,7 +17,7 @@ class CreateAdvogadosTable extends Migration
             $table->increments('id');
             $table->integer('usuario')->unsigned()->unique();
             $table->foreign('usuario')->references('id')->on('users');
-            $table->mediumText('texto');
+            $table->string('texto', 1000)->nullable();
             $table->string('oab', 15);
             $table->enum('tipo_adv', ['Trabalhista', 'Cível'])->nullable();
             $table->string('foto', 100)->nullable();

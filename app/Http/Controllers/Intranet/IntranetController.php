@@ -16,6 +16,7 @@ use Intranet\Uau;
 use Intranet\Massagem;
 use Validator;
 use Intranet\Eventos;
+use Intranet\Cliente;
 
 class IntranetController extends Controller
 {
@@ -444,6 +445,14 @@ class IntranetController extends Controller
                 ->get();
         $title = 'Contatos | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.contatos', compact('title', 'users'));
+    }
+
+    public function clientes(){
+        $clientes = Cliente::with('advogado_civel_1','advogado_civel_2','advogado_civel_3','advogado_trab_1','advogado_trab_2','advogado_trab_3')
+            ->where('ativo', true)
+            ->get();
+        $title = 'Clientes | Intranet Izique Chebabi Advogados Associados';
+        return view('intranet.clientes', compact('title', 'clientes'));
     }
     
     public function aniversariantes(){

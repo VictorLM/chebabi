@@ -61,9 +61,17 @@
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
+                            <a href="{{url('intranet/clientes')}}">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <i class="glyphicon glyphicon-briefcase"></i><br/>CLIENTES</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/contatos')}}">
-                                <i class="glyphicon glyphicon-phone-alt"></i>
-                                <i class="glyphicon glyphicon-user"></i><br/>CONTATOS</a>
+                            <i class="glyphicon glyphicon-phone"></i>
+                            <i class="glyphicon glyphicon-envelope"></i><br/>CONTATOS</a>
                         </div>
                     </div>
                     
@@ -74,7 +82,11 @@
                             <i class="glyphicon glyphicon-globe"></i><br/>LEGAL ONE</a>
                         </div>
                     </div>
-                    
+
+                </div>
+                
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/procedimentos')}}"> 
@@ -82,10 +94,6 @@
                             <i class="glyphicon glyphicon-list-alt"></i><br/>PROCEDIMENTOS</a>
                         </div>
                     </div>
-
-                </div>
-                
-                <div class="row">
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -98,11 +106,15 @@
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/tarifadores')}}">
-                            <i class="glyphicon glyphicon-earphone"></i> 
+                            <i class="glyphicon glyphicon-phone-alt"></i> 
                             <i class="glyphicon glyphicon-print"></i><br/>TARIFADORES</a>
                         </div>
                     </div>
-                    
+
+                </div>
+                
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/tutoriais')}}">
@@ -110,10 +122,6 @@
                             <i class="glyphicon glyphicon-book"></i><br/>TUTORIAIS</a>
                         </div>
                     </div>
-
-                </div>
-                
-                <div class="row">
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -133,7 +141,11 @@
                             <i class="glyphicon glyphicon-globe"></i><br/>WEBMAIL</a>
                         </div>
                     </div>
-                
+
+                </div>
+
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{route('logout')}}" onclick="event.preventDefault();
@@ -142,10 +154,6 @@
                             <i class="glyphicon glyphicon-globe"></i><br/>VOLTAR PARA O SITE</a>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="row">
                     
                     @if ($admin)
                         <div class="col-md-4">
