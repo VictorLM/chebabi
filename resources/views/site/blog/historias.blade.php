@@ -32,9 +32,11 @@
                                     <small class="text-muted">
                                         <i>{{Carbon\Carbon::parse($historia->created_at)->format('d/m/Y H:i')}}</i>
                                     </small>
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
-                                    </div>
+                                    @if(!empty($historia->link))
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
+                                        </div>
+                                    @endif
                                     <br/>
                                     <p>&emsp;{{strip_tags(str_limit($historia->descricao, 330, ' [...]'))}} </p>
                                     <small class="text-muted"><i>Tags: </small><small>{{$historia->tags}}</i></small>

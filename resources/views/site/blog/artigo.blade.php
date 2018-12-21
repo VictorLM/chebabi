@@ -257,11 +257,17 @@
                         <div class="card-body">
                             @if(isset($historias) && count($historias)>0)
                                 @foreach ($historias as $historia)
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
-                                    </div>
-                                    <br/>
-                                    <p class="card-text card-text-home"></p>
+                                    @if(!empty($historia->link))
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
+                                        </div>
+                                        <p class="card-text card-text-home"></p>
+                                    @else
+                                        <p class="card-text card-text-home">
+                                            <a href="{{$historia->url}}" target="_blank">{{$historia->titulo}}</a>
+                                            <span style="color: grey;"> - <i>{{Carbon\Carbon::parse($historia->created_at)->format('d/m')}}</i></span>
+                                        </p>
+                                    @endif
                                 @endforeach
                             @else
                                 <p class="card-text">Nenhuma história encontrado.</p>

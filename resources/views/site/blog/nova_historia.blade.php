@@ -45,7 +45,7 @@
                             ** Link 
                             <a data-toggle="modal" href="#link-tip"><i class="glyphicon glyphicon-question-sign"></i></a>
                         </label>
-                        <input type="text" class="form-control" name="link" maxlength="100" value="{{old('link')}}" placeholder="https://www.youtube.com/embed/a1b2c3d4e5" required>
+                        <input type="text" class="form-control" name="link" maxlength="100" value="{{old('link')}}" placeholder="https://www.youtube.com/embed/a1b2c3d4e5">
                         @if ($errors->has('link'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('link') }}</strong>

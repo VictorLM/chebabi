@@ -412,7 +412,7 @@ class BlogController extends Controller
 
         $validatedData = Validator::make($request->all(), [
             'titulo' => 'required|string|max:200',
-            'link' => 'required|string|max:100',
+            'link' => 'nullable|string|max:100',
             'tags' => 'required|string|max:200',
             'descricao' => 'required|string|min:100|max:8000',
         ]);
@@ -441,7 +441,7 @@ class BlogController extends Controller
         $validatedData = Validator::make($request->all(), [
             'id' => 'required|numeric',
             'titulo' => 'required|string|max:200',
-            'link' => 'required|string|max:100',
+            'link' => 'nullable|string|max:100',
             'tags' => 'required|string|max:200',
             'descricao' => 'required|string|min:100|max:8000',
         ]);
