@@ -100,7 +100,7 @@
                 <div>
                     <span>Trabalhe conosco - <a href="http://www.chebabi.com/trabalhe-conosco">Clique aqui para enviar seu currículo.</a></span>
                     <br/>
-                    <span>Fone/Fax: (19) 3237-3747 - (19) 3203-4744 - <a href="mailto:atendimento@chebabi.com">atendimento@chebabi.com</a></span>
+                    <span>Fone/Fax:  (19) 3203-4744 / (19) 3237-3747 - <a href="mailto:atendimento@chebabi.com">atendimento@chebabi.com</a></span>
                 </div>
 
             </form>

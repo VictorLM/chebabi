@@ -110,7 +110,7 @@
                         <small class="text-left">
                             Rua Concei&ccedil;&atilde;o, 233, Cj. 102, 103, 
                             109 ao 115, Centro - Campinas - SP - CEP 13010-050 -
-                            Fone/Fax: (19) 3237-3747 - (19) 3203-4744
+                            Fone/Fax: (19) 3203-4744 / (19) 3237-3747
                         </small>
                     </div>
                     

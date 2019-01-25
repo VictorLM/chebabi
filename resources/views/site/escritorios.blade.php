@@ -26,7 +26,7 @@
                             </h2>
                             <p>
                                 Rua Concei&ccedil;&atilde;o, 233, Cj. 102, 103, 109 ao 115, Centro, 
-                                Campinas - SP - CEP 13010-050 / Fone/Fax: (19) 3237-3747 - (19) 3203-4744
+                                Campinas - SP - CEP 13010-050 / Fone/Fax: (19) 3203-4744 / (19) 3237-3747
                             <p/>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7350.506233895621!2d-47.058792!3d-22.904033!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x34f30ab1abcdae88!2sIzique+Chebabi+Advogados+Associados!5e0!3m2!1spt-BR!2s!4v1413155835701"></iframe>
