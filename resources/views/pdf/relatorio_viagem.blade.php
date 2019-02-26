@@ -56,7 +56,7 @@
             <tbody>
                 <tr>
                     <td class="w50"><strong>RESPONSÁVEL: </strong>{{mb_strtoupper(Auth::user()->name, 'UTF-8') ?? null}}</td>
-                    <td class="w50"><strong>TIPO DE VIAGEM: </strong>@if($relatorio->kilometragem) COM KILOMETRAGEM @else SEM KILOMETRAGEM @endif</td>
+                    <td class="w50"><strong>TIPO DE VIAGEM: </strong>@if($relatorio->kilometragem) COM QUILOMETRAGEM @else SEM QUILOMETRAGEM @endif</td>
                 </tr>
                 <tr>
                     <td class="w50"><strong>VEÍCULO: </strong>{{$relatorio->veiculo ?? null}}</td>

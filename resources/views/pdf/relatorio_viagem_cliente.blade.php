@@ -125,7 +125,7 @@
                     <th class="w50 center"><strong>CUSTO:</strong></th>
                 </tr>
                 <tr>
-                    <td class="w50">KILOMETRAGEM ({{$relatorio->totalkm ?? null}} KM x R$ {{unserialize($relatorio->clientes)[$i]['VALOR_KM'] ?? 0.80}})</td>
+                    <td class="w50">QUILOMETRAGEM ({{$relatorio->totalkm ?? null}} KM x R$ {{unserialize($relatorio->clientes)[$i]['VALOR_KM'] ?? 0.80}})</td>
                     <td class="w50">R$ {{$valor_km ?? null}}</td>
                 </tr>
                 @foreach(unserialize($relatorio->despesas) as $despesa)
@@ -147,7 +147,7 @@
                     <th class="w50 center"><strong>CUSTO:</strong></th>
                 </tr>
                 <tr>
-                    <td class="w50">KILOMETRAGEM ({{$relatorio->totalkm ?? null}} KM x R$ {{unserialize($relatorio->clientes)[$i]['VALOR_KM'] ?? 0.80}})</td>
+                    <td class="w50">QUILOMETRAGEM ({{$relatorio->totalkm ?? null}} KM x R$ {{unserialize($relatorio->clientes)[$i]['VALOR_KM'] ?? 0.80}})</td>
                     <td class="w50">R$ {{$valor_km ?? null}}</td>
                 </tr>
             </table>

@@ -116,8 +116,8 @@
                                     <label><i class="glyphicon glyphicon-asterisk"></i> Tipo de viagem: </label>
                                     <select name="kilometragem" id="tipo_viagem" class="form-control required" form="form_relatorio" required="required">
                                         <option value="">Selecione uma opção</option>
-                                        <option value="1" @if(old('kilometragem') == '1') selected @endif>Com kilometragem</option>
-                                        <option value="0" @if(old('kilometragem') == '0') selected @endif>Sem kilometragem</option>
+                                        <option value="1" @if(old('kilometragem') == '1') selected @endif>Com quilometragem</option>
+                                        <option value="0" @if(old('kilometragem') == '0') selected @endif>Sem quilometragem</option>
                                     </select>
                                     @if ($errors->has('kilometragem'))
                                         <span class="help-block">
