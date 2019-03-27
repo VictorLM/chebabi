@@ -27,7 +27,7 @@
                             <p>
                                 Rua Concei&ccedil;&atilde;o, 233, Cj. 102, 103, 109 ao 115, Centro, 
                                 Campinas - SP - CEP 13010-050 / Fone/Fax: (19) 3203-4744 / (19) 3237-3747
-                            <p/>
+                            </p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7350.506233895621!2d-47.058792!3d-22.904033!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x34f30ab1abcdae88!2sIzique+Chebabi+Advogados+Associados!5e0!3m2!1spt-BR!2s!4v1413155835701"></iframe>
                             </div>
@@ -58,7 +58,7 @@
                             <p>
                                 Av. Marquês de São Vicente, 446, Salas 1501/1502, Barra Funda, 
                                 São Paulo - SP - CEP 01139-000 / Fone/Fax: (11) 2548-3960
-                            <p/>
+                            </p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.303626918504!2d-46.66630158502285!3d-23.521579484702734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5807131506f9%3A0xdda706a42c7bfd17!2sAv.+Marqu%C3%AAs+de+S%C3%A3o+Vicente%2C+446+-+Barra+Funda%2C+S%C3%A3o+Paulo+-+SP%2C+01139-000!5e0!3m2!1spt-BR!2sbr!4v1506969740973"></iframe>
                             </div>
@@ -85,7 +85,7 @@
                                 R. Evaristo da Veiga, 65, Torre 2, Sala 1501, 
                                 Centro - Rio de Janeiro - RJ - CEP 20031-040 - 
                                 Fone/Fax: (21) 2184-6206
-                            <p/>
+                            </p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3675.0496085115165!2d-43.1804072!3d-22.911541!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x997f63c2cd5169%3A0x7cc91329331f5e6d!2sR.+Evaristo+da+Veiga%2C+65+-+Centro%2C+Rio+de+Janeiro+-+RJ%2C+20031-040!5e0!3m2!1spt-BR!2sbr!4v1531338618028"></iframe>
                             </div>
@@ -104,16 +104,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h2 class="card-title text-center">
-                                <a class="advs-link" target="_blank" href="https://www.google.com/maps/place/R.+Eur%C3%ADco+Hosterno,+38+-+Santa+Monica,+Florian%C3%B3polis+-+SC,+88035-400/@-27.588722,-48.506201,17z/data=!4m5!3m4!1s0x952738e47d5c9f45:0xacc8139ab7d359e4!8m2!3d-27.5887219!4d-48.5062012?hl=pt-BR">
+                                <a class="advs-link" target="_blank" href="https://goo.gl/maps/RMG3YZsDxkt">
                                     Florianópolis - SC
                                 </a>
                             </h2>
                             <p>
-                                Rua Eurico Hosterno, 38 - Sala 201, Sta. Monica, Florian&oacute;polis - SC - 
+                                Av. Osvaldo Rodrigues Cabral, 1570, Centro- Florian&oacute;polis - SC
                                 CEP 88035-400 / Fone/Fax: (48) 3024-0011
-                            <p/>
+                            </p>
                             <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.156568959378!2d-48.505957699999996!3d-27.588675100000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952738e47cda62e7%3A0x12d8e90ce9c509b8!2sR.+Eur%C3%ADco+Hosterno%2C+38+-+Santa+Monica%2C+Florian%C3%B3polis+-+SC%2C+88035-400!5e0!3m2!1spt-BR!2sbr!4v1439411714418"></iframe>
+                                <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3535.982188179413!2d-48.56384738488211!3d-27.594081828610676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952737f4da416061%3A0x454babacef21389b!2sAv.+Osvaldo+Rodrigues+Cabral%2C+1570+-+Centro%2C+Florian%C3%B3polis+-+SC%2C+88015-710!5e0!3m2!1spt-BR!2sbr!4v1553693701976"></iframe>
                             </div>
                             <p>Nova filial para abranger clientes e serviços fora do estado de S&atilde;o Paulo.</p>
                         </div>

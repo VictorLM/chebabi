@@ -73,7 +73,6 @@
                 <a href="https://www.linkedin.com/company/izique-chebabi-advogados-associados" target="_blank" class="fa fa-linkedin @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
                 <a href="https://www.facebook.com/Izique-Chebabi-Advogados-Associados-346767155816975" target="_blank" class="fa fa-facebook @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
                 <!-- <a href="#" class="fa fa-youtube @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a> -->
-                <a href="https://plus.google.com/+IziqueChebabiAdvogadosAssociadosCampinas" target="_blank" class="fa fa-google @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
                 <hr/>
                 <div class="row row-eq-height">
 
@@ -118,14 +117,14 @@
 
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 text-justify display-grid">
                         <h4 class="text-center">
-                            <a class="advs-link" target="_blank" href="https://www.google.com/maps/place/R.+Eur%C3%ADco+Hosterno,+38+-+Santa+Monica,+Florian%C3%B3polis+-+SC,+88035-400/@-27.588722,-48.506201,17z/data=!4m5!3m4!1s0x952738e47d5c9f45:0xacc8139ab7d359e4!8m2!3d-27.5887219!4d-48.5062012?hl=pt-BR">
+                            <a class="advs-link" target="_blank" href="https://goo.gl/maps/RMG3YZsDxkt">
                                 FLORIANÓPOLIS - SC
                             </a>
                         </h4>
                         <small class="text-left">
-                            Rua Eurico Hosterno, 38 - Sala 201, Sta. Monica 
-                            - Florian&oacute;polis - SC - CEP 88035-400 - 
-                            Fone/Fax: (48) 3024-0011
+                            Av. Osvaldo Rodrigues Cabral, 1570, Centro
+                            - Florian&oacute;polis - SC - CEP 88015-710
+                            Fone/Fax: (48) 3024-0011                            
                         </small>
                     </div>
 
@@ -134,7 +133,7 @@
                 <hr/>
             </div>
             
-            <p>© Copyright © {{Carbon\Carbon::now()->year}} - Izique Chebabi Advogados Associados. Todos os direitos reservados. Desenvolvido por <a href="http://twitter.com/IAmDinamite" target="_blank">Victor Meireles.</a></p>
+            <p>© Copyright © {{Carbon\Carbon::now()->year}} - Izique Chebabi Advogados Associados. Todos os direitos reservados. Desenvolvido por <a href="http://jeto.pro" target="_blank">jeto.Pro.</a></p>
         </footer>
 
     </body>
