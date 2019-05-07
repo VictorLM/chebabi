@@ -40,7 +40,9 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/tutoriais/tutorial_relatorio_viagem', 'Intranet\IntranetController@tutorial_relatorio_viagem');
     //ROTAS AGENDA
     Route::get('/agenda', 'Intranet\IntranetController@agenda');
-    Route::post('/eventos', 'Intranet\IntranetController@eventos');
+    Route::post('/eventos', 'Intranet\IntranetController@eventos');//AJAX
+    Route::post('/agenda/checagem_salas_reuniao', 'Intranet\IntranetController@checagem_salas_reuniao');//AJAX
+    Route::get('/agenda/novo-evento/reuniao', 'Intranet\IntranetController@novo_evento_reuniao');
     Route::get('/agenda/evento/{id}', 'Intranet\IntranetController@showEvento');
     Route::get('/agenda/evento/{id}/editar', 'Intranet\IntranetController@editEvento');
     Route::get('/agenda/evento/{id}/cancelar', 'APIs\MicrosoftController@cancela_evento');

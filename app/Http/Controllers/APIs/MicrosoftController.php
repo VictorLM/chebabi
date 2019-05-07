@@ -20,14 +20,126 @@ class MicrosoftController extends Controller
     {
         $this->middleware('auth');
     }
+    //cURL
+    private function curl($url, $evento_json, $request_type){
+        $token = DB::table('apikeys')
+            ->where('name', 'Microsoft Graph')
+            ->value('token');
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $evento_json);
+        if($request_type == "POST"){
+            curl_setopt($ch, CURLOPT_POST, 1);
+        }else if($request_type == "PATCH"){
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        }
+        
+        $headers = array();
+        $headers[] = "Authorization: Bearer ".$token;
+        $headers[] = "Content-Type:application/json";
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        
+        if (curl_errno($ch)) {
+            $erro["error"] = "Erro ao fazer a requisição cURL. Informe ao dpto. responsável.";
+            return $erro;
+        }
+        $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close ($ch);
+        
+        $result = json_decode($result,true);
+        
+        if($response_code == 200 || $response_code == 201 || $response_code == 202){
+            return ($result);
+        }else{
+            if(!empty($result['error']['message'])){
+                $mensagem = $result['error']['message'];
+            }else{
+                $mensagem = 'NULL';
+            }
+            $erro["error"] = 'Erro! informe ao dpto. responsável a seguinte mensagem: Response code: ' .$response_code. '. Erro: ' .$mensagem;
+            return $erro;
+        }
+    }
+
+    ////////// FUNÇÕES EVENTOS AGENDA@CHEBABI.COM //////////
+
+    //CHECA DISPONIBILIDADE SALA DE REUNIÃO
+    public function checagem_reuniao(Request $request){
+        if($request->local == "Sala 1" || $request->local == "Sala 2"){
+            //PEGA SÓ OS EVENTOS NÃO CANCELADOs, DO TIPO REUNIÃO E COM SALA ESPECIFICADA
+            $eventos = Eventos::select("id","start","end")
+                        ->where('cancelado', false)
+                        ->where('tipo', 'Reunião')
+                        ->where('local', $request->local)
+                        ->whereDate('start', $request->iniciodata);
+                        //O CERTO SERIA FAZER A LÓGICA COM A DATA DE TÉRMINO TAMBÉM, MAS REUNIÕES GERALMENTE ACABAM NO MESMO DIA
+                        
+            if($request->has('id')){ 
+                $eventos->where('id','!=',$request->id); 
+            };
+
+            $eventos = $eventos->get();
+
+            $conflito = false;
+
+            foreach($eventos as $evento){
+                
+                if
+                //REQUEST   |----------|
+                //EVENTO    |----------|
+                (Carbon::parse($request->iniciohora)->format('H:i') >= Carbon::parse($evento->start)->format('H:i')  && 
+                Carbon::parse($request->terminohora)->format('H:i') <= Carbon::parse($evento->end)->format('H:i')){
+                    $conflito = true;
+                }else if
+                //REQUEST   |----------|---|
+                //EVENTO        |----------|
+                (Carbon::parse($request->iniciohora)->format('H:i') <= Carbon::parse($evento->start)->format('H:i') && 
+                    Carbon::parse($request->terminohora)->format('H:i') <= Carbon::parse($evento->end)->format('H:i')  && 
+                    Carbon::parse($request->iniciohora)->format('H:i') < Carbon::parse($evento->end)->format('H:i') &&
+                    Carbon::parse($request->terminohora)->format('H:i') > Carbon::parse($evento->start)->format('H:i')){
+                    $conflito = true;
+                }else if
+                //REQUEST   |---|----------|
+                //EVENTO    |----------|
+                (Carbon::parse($request->iniciohora)->format('H:i') >= Carbon::parse($evento->start)->format('H:i') && 
+                    Carbon::parse($request->terminohora)->format('H:i') >= Carbon::parse($evento->end)->format('H:i')  && 
+                    Carbon::parse($request->iniciohora)->format('H:i') < Carbon::parse($evento->end)->format('H:i') && 
+                    Carbon::parse($request->terminohora)->format('H:i') > Carbon::parse($evento->start)->format('H:i')){
+                    $conflito = true;
+                }else if
+                //REQUEST   |------------------|
+                //EVENTO        |----------|
+                (Carbon::parse($request->iniciohora)->format('H:i') < Carbon::parse($evento->start)->format('H:i') && 
+                    Carbon::parse($request->terminohora)->format('H:i') > Carbon::parse($evento->end)->format('H:i')){
+                    $conflito = true;
+                }
+                else if
+                //REQUEST       |----------|
+                //EVENTO    |------------------|
+                (Carbon::parse($request->iniciohora)->format('H:i') > Carbon::parse($evento->start)->format('H:i') && 
+                    Carbon::parse($request->terminohora)->format('H:i') < Carbon::parse($evento->end)->format('H:i')){
+                    $conflito = true;
+                }
+            }
+                
+            return ($conflito);
+
+        }else{
+            return false;
+        }
+    }
 
     public function criar_evento(Request $request){
-        //dd($request);
         $validatedData = Validator::make($request->all(), [
             'titulo' => 'required|string|max:200',
             'tipo' => [
                 'required',
-                Rule::in(['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']),
+                Rule::in(['Ausente', 'Reunião', 'Carro', 'Outro']),
             ],
             'local' => 'required|string|max:100',
             'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today',
@@ -38,7 +150,7 @@ class MicrosoftController extends Controller
             'descricao' => 'nullable|string|max:2000',
             'recorrencia' => 'nullable|array|max:5'
         ]);
-        
+
         if (!$validatedData->fails()){
 
             if(!empty($request->envolvidos)){
@@ -50,105 +162,152 @@ class MicrosoftController extends Controller
                 $user = NULL;
             }
 
-            $token = DB::table('apikeys')
-            ->select('token')
-            ->where('name', 'Microsoft Graph')
-            ->first();
-        
+            /////////
             require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento.json.php';
+            $evento_json = json_encode($evento);
+            $url = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events';
+            /////////
 
-            $evento = json_encode($evento);
-            //dd(json_decode($evento));
-            $parameters = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events';
-            
-            $ch = curl_init();
+            //SE TIPO REUNIÃO, CHECA DISPONIBILIDADE SALA
+            if($request->tipo == 'Reunião'){
 
-            curl_setopt($ch, CURLOPT_URL, $parameters);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $evento);
-            curl_setopt($ch, CURLOPT_POST, 1);
+                $conflito_reuniao = $this->checagem_reuniao($request);
+                if(!$conflito_reuniao){
 
-            $headers = array();
-            $headers[] = "Authorization: Bearer ".$token->token;
-            $headers[] = "Content-Type:application/json";
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                    //cURL
+                    $result = $this->curl($url, $evento_json, "POST");
 
-            $result = curl_exec($ch);
-            
-            if (curl_errno($ch)) {
-                echo 'Error:' . curl_error($ch);
-            }
-            $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close ($ch);
-            
-            $result = json_decode($result,true);
-
-            if($response_code == 201 && !empty($result)){
-
-                if($request->tipo == 'Ausente'){
-                    $color = 'yellow';
-                }else if($request->tipo == 'Carro'){
-                    $color = '#00e600';
-                }else if($request->tipo == 'Motorista'){
-                    $color = '#ffa31a';
-                }else if($request->tipo == 'Reunião'){
-                    $color = '#80bfff';
-                }else{
-                    $color = NULL;
-                }
-                
-                if(!empty($request->recorrencia)){
-                    foreach($request->recorrencia as $dia){
-                        if($dia == "Monday"){
-                            $dow[] = 1;
-                        }elseif($dia == "Tuesday"){
-                            $dow[] = 2;
-                        }elseif($dia == "Wednesday"){
-                            $dow[] = 3;
-                        }elseif($dia == "Thursday"){
-                            $dow[] = 4;
-                        }elseif($dia == "Friday"){
-                            $dow[] = 5;
+                    if(empty($result["error"])){
+                        
+                        if($request->tipo == 'Ausente'){
+                            $color = 'yellow';
+                        }else if($request->tipo == 'Carro'){
+                            $color = '#00e600';
+                        }else if($request->tipo == 'Reunião'){
+                            $color = '#80bfff';
+                        }else{
+                            $color = NULL;
                         }
-                    }
-                }else{
-                    $dow = null;
-                }
-                
-                DB::table('eventos')->insert([
-                    'id' => $result['id'],
-                    'title' => $result['subject'],
-                    'tipo' => $request->tipo,
-                    'start' => Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s'),
-                    'end' => Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s'),
-                    'descricao' => preg_replace("/\r|\n/", "", strip_tags($result['body']['content'])),
-                    'created_at' => Carbon::now(),
-                    'organizador_nome' => Auth::user()->name,
-                    'organizador_email' => Auth::user()->email,
-                    'url' => "/intranet/agenda/evento/".$result['id'],
-                    'allDay' => $result['isAllDay'],
-                    'cancelado' => $result['isCancelled'],
-                    'local' => $result['location']['displayName'],
-                    'envolvidos' => serialize($result['attendees']),
-                    'color' => $color,
-                    'dow' => serialize($dow),
-                ]);
-                
-                $request->session()->flash('alert-success', 'Evento cadastrado com sucesso!');
-                return redirect('/intranet/agenda/evento/'.$result['id']);
-            }else{
-                if(!empty($result['error'])){
-                    $mensagem = $result['error']['message'];
-                    $mensagem .= '/ '.$result['error']['code'].'.';
-                }else{
-                    $mensagem = 'NULL';
-                }
-                return redirect()->back()
-                    ->withInput()
-                    ->withErrors(array('message' => 'Erro ao cadastrar! Favor informar o departamento responsável a seguinte mensagem: '. 
-                                        'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
-            }
+                        
+                        if(!empty($request->recorrencia)){
+                            foreach($request->recorrencia as $dia){
+                                if($dia == "Monday"){
+                                    $dow[] = 1;
+                                }elseif($dia == "Tuesday"){
+                                    $dow[] = 2;
+                                }elseif($dia == "Wednesday"){
+                                    $dow[] = 3;
+                                }elseif($dia == "Thursday"){
+                                    $dow[] = 4;
+                                }elseif($dia == "Friday"){
+                                    $dow[] = 5;
+                                }
+                            }
+                        }else{
+                            $dow = null;
+                        }
 
+                        $evento = new Eventos;
+
+                        $evento->id = $result['id'];
+                        $evento->title = $result['subject'];
+                        $evento->tipo = $request->tipo;
+                        $evento->start = Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s');
+                        $evento->end = Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s');
+                        $evento->descricao = preg_replace("/\r|\n/", "", strip_tags($result['body']['content']));
+                        $evento->created_at = Carbon::now();
+                        $evento->organizador_nome = Auth::user()->name;
+                        $evento->organizador_email = Auth::user()->email;
+                        $evento->url = "/intranet/agenda/evento/".$result['id'];
+                        $evento->allDay = $result['isAllDay'];
+                        $evento->cancelado = $result['isCancelled'];
+                        $evento->local = $result['location']['displayName'];
+                        $evento->envolvidos = serialize($result['attendees']);
+                        $evento->color = $color;
+                        $evento->dow = serialize($dow);
+
+                        if(!$evento->save()){
+                            return abort(403, 'Erro ao salvar no banco de dados.');
+                        }else{
+                            $request->session()->flash('alert-success', 'Evento cadastrado com sucesso!');
+                            return redirect('/intranet/agenda/evento/'.$result['id']);
+                        }
+                        
+                    }else{
+                        return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
+                    }
+
+                }else{
+                    return redirect()->back()->withInput()->withErrors(array('message' => 'Há uma reunião já agendada que conflita com a sala, data e horário selecionado.'));
+                }
+            //SE NÃO TIPO REUNIÃO
+            }else{
+                //cURL
+                $result = $this->curl($url, $evento_json, "POST");
+
+                if(empty($result["error"])){
+                    
+                    if($request->tipo == 'Ausente'){
+                        $color = 'yellow';
+                    }else if($request->tipo == 'Carro'){
+                        $color = '#00e600';
+                    }else if($request->tipo == 'Reunião'){
+                        $color = '#80bfff';
+                    }else{
+                        $color = NULL;
+                    }
+                    
+                    if(!empty($request->recorrencia)){
+                        foreach($request->recorrencia as $dia){
+                            if($dia == "Monday"){
+                                $dow[] = 1;
+                            }elseif($dia == "Tuesday"){
+                                $dow[] = 2;
+                            }elseif($dia == "Wednesday"){
+                                $dow[] = 3;
+                            }elseif($dia == "Thursday"){
+                                $dow[] = 4;
+                            }elseif($dia == "Friday"){
+                                $dow[] = 5;
+                            }
+                        }
+                    }else{
+                        $dow = null;
+                    }
+
+                    $evento = new Eventos;
+
+                    $evento->id = $result['id'];
+                    $evento->title = $result['subject'];
+                    $evento->tipo = $request->tipo;
+                    $evento->start = Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s');
+                    $evento->end = Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s');
+                    $evento->descricao = preg_replace("/\r|\n/", "", strip_tags($result['body']['content']));
+                    $evento->created_at = Carbon::now();
+                    $evento->organizador_nome = Auth::user()->name;
+                    $evento->organizador_email = Auth::user()->email;
+                    $evento->url = "/intranet/agenda/evento/".$result['id'];
+                    $evento->allDay = $result['isAllDay'];
+                    $evento->cancelado = $result['isCancelled'];
+                    $evento->local = $result['location']['displayName'];
+                    $evento->envolvidos = serialize($result['attendees']);
+                    $evento->color = $color;
+                    $evento->dow = serialize($dow);
+
+                    if(!$evento->save()){
+                        return abort(403, 'Erro ao salvar no banco de dados.');
+                    }else{
+                        $request->session()->flash('alert-success', 'Evento cadastrado com sucesso!');
+                        return redirect('/intranet/agenda/evento/'.$result['id']);
+                    }
+                    
+                }else{
+                    return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
+                }
+
+            }
+            
+            
         }else{
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
@@ -169,7 +328,7 @@ class MicrosoftController extends Controller
                 'titulo' => 'required|string|max:200',
                 'tipo' => [
                     'required',
-                    Rule::in(['Ausente', 'Motorista', 'Reunião', 'Carro', 'Outro']),
+                    Rule::in(['Ausente', 'Reunião', 'Carro', 'Outro']),
                 ],
                 'local' => 'required|string|max:100',
                 //'iniciodata' => 'required|date_format:Y-m-d|after_or_equal:today', //NÃO SE APLICA AOS EVENTOS RECORRENTES
@@ -193,112 +352,149 @@ class MicrosoftController extends Controller
                 }else{
                     $user = NULL;
                 }
-    
-                $token = DB::table('apikeys')
-                ->select('token')
-                ->where('name', 'Microsoft Graph')
-                ->first();
 
-                if(!empty($request->recorrencia)){
-                    foreach($request->recorrencia as $dia){
-                        if($dia == "Monday"){
-                            $dow[] = 1;
-                        }elseif($dia == "Tuesday"){
-                            $dow[] = 2;
-                        }elseif($dia == "Wednesday"){
-                            $dow[] = 3;
-                        }elseif($dia == "Thursday"){
-                            $dow[] = 4;
-                        }elseif($dia == "Friday"){
-                            $dow[] = 5;
-                        }
-                    }
-                }else{
-                    $dow = null;
-                }
-            
+                /////
                 require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento_update.json.php';
-
                 $evento_atualizado = json_encode($evento_atualizado);
-                //dd(json_decode($evento_atualizado));
-                $parameters = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events/'.$request->id;
-                
-                $ch = curl_init();
-    
-                curl_setopt($ch, CURLOPT_URL, $parameters);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $evento_atualizado);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-    
-                $headers = array();
-                $headers[] = "Authorization: Bearer ".$token->token;
-                $headers[] = "Content-Type:application/json";
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    
-                $result = curl_exec($ch);
-                
-                if (curl_errno($ch)) {
-                    echo 'Error:' . curl_error($ch);
-                }
-                $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                curl_close ($ch);
-                
-                $result = json_decode($result,true);
-                
-                if($response_code == 200 && !empty($result)){
-    
-                    if($request->tipo == 'Ausente'){
-                        $color = 'yellow';
-                    }else if($request->tipo == 'Carro'){
-                        $color = '#00e600';
-                    }else if($request->tipo == 'Motorista'){
-                        $color = '#ffa31a';
-                    }else if($request->tipo == 'Reunião'){
-                        $color = '#80bfff';
+                $url = 'https://graph.microsoft.com/v1.0/users/agenda@chebabi.com/events/'.$request->id;
+                /////
+
+                //SE TIPO REUNIÃO, CHECA DISPONIBILIDADE SALA
+                if($request->tipo == 'Reunião'){
+
+                    $conflito_reuniao = $this->checagem_reuniao($request);
+                    if(!$conflito_reuniao){
+
+                        //cURL
+                        $result = $this->curl($url, $evento_atualizado, "PATCH");
+
+                        if(empty($result["error"])){
+                        
+                            $color = '#80bfff';
+
+                            if(!empty($request->recorrencia)){
+                                foreach($request->recorrencia as $dia){
+                                    if($dia == "Monday"){
+                                        $dow[] = 1;
+                                    }elseif($dia == "Tuesday"){
+                                        $dow[] = 2;
+                                    }elseif($dia == "Wednesday"){
+                                        $dow[] = 3;
+                                    }elseif($dia == "Thursday"){
+                                        $dow[] = 4;
+                                    }elseif($dia == "Friday"){
+                                        $dow[] = 5;
+                                    }
+                                }
+                            }else{
+                                $dow = null;
+                            }
+
+                            $alterado = '* Evento alterado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';
+
+                            $evento = Eventos::find($request->id);
+
+                            $evento->title = $result['subject'];
+                            $evento->tipo = $request->tipo;
+                            $evento->start = Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s');
+                            $evento->end = Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s');
+                            $evento->descricao = preg_replace("/\r|\n/", "", strip_tags($result['body']['content']));
+                            $evento->updated_at = Carbon::now();
+                            $evento->url = "/intranet/agenda/evento/".$result['id'];
+                            $evento->allDay = $result['isAllDay'];
+                            $evento->cancelado = $result['isCancelled'];
+                            $evento->local = $result['location']['displayName'];
+                            $evento->envolvidos = serialize($result['attendees']);
+                            $evento->color = $color;
+                            $evento->dow = serialize($dow);
+
+                            if(!$evento->save()){
+                                return abort(403, 'Erro ao salvar no banco de dados.');
+                            }else{
+                                $request->session()->flash('alert-success', 'Evento alterado com sucesso!');
+                                return redirect('/intranet/agenda/evento/'.$result['id']);
+                            }
+                            
+                        }else{
+                            return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
+                        }
+                        
                     }else{
-                        $color = NULL;
+                        return redirect()->back()->withInput()->withErrors(array('message' => 'Há uma reunião já agendada que conflita com a sala, data e horário selecionado.'));
                     }
 
-                    $alterado = '* Evento alterado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';
-    
-                    Eventos::where('id', $request->id)
-                        ->update([
-                            'title' => $result['subject'],
-                            'tipo' => $request->tipo,
-                            'start' => Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s'),
-                            'end' => Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s'),
-                            'descricao' => preg_replace("/\r|\n/", "", strip_tags($result['body']['content'])),
-                            'updated_at' => Carbon::now(),
-                            'allDay' => $result['isAllDay'],
-                            'cancelado' => $result['isCancelled'],
-                            'local' => $result['location']['displayName'],
-                            'envolvidos' => serialize($result['attendees']),
-                            'color' => $color,
-                            'alterado' => $alterado,
-                            'dow' => serialize($dow),
-                        ]);
-    
-                    $request->session()->flash('alert-success', 'Evento atualizado com sucesso!');
-                    return redirect('/intranet/agenda/evento/'.$request->id);
-                }else{
-                    if(!empty($result['error'])){
-                        $mensagem = $result['error']['message'];
-                        $mensagem .= '/ '.$result['error']['code'].'.';
-                    }else{
-                        $mensagem = 'NULL';
-                    }
-                    return redirect()->back()
-                        ->withInput()
-                        ->withErrors(array('message' => 'Erro ao atualizar! Favor informar o departamento responsável a seguinte mensagem: '. 
-                                            'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
                 }
-    
+                //SE NÃO TIPO REUNIÃO
+                else{
+
+                    //cURL
+                    $result = $this->curl($url, $evento_atualizado, "PATCH");
+
+                    if(empty($result["error"])){
+                        
+                        if($request->tipo == 'Ausente'){
+                            $color = 'yellow';
+                        }else if($request->tipo == 'Carro'){
+                            $color = '#00e600';
+                        }else if($request->tipo == 'Reunião'){
+                            $color = '#80bfff';
+                        }else{
+                            $color = NULL;
+                        }
+
+                        if(!empty($request->recorrencia)){
+                            foreach($request->recorrencia as $dia){
+                                if($dia == "Monday"){
+                                    $dow[] = 1;
+                                }elseif($dia == "Tuesday"){
+                                    $dow[] = 2;
+                                }elseif($dia == "Wednesday"){
+                                    $dow[] = 3;
+                                }elseif($dia == "Thursday"){
+                                    $dow[] = 4;
+                                }elseif($dia == "Friday"){
+                                    $dow[] = 5;
+                                }
+                            }
+                        }else{
+                            $dow = null;
+                        }
+
+                        $alterado = '* Evento alterado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';
+
+                        $evento = Eventos::find($request->id);
+
+                        $evento->title = $result['subject'];
+                        $evento->tipo = $request->tipo;
+                        $evento->start = Carbon::parse($result['start']['dateTime'])->format('Y-m-d H:i:s');
+                        $evento->end = Carbon::parse($result['end']['dateTime'])->format('Y-m-d H:i:s');
+                        $evento->descricao = preg_replace("/\r|\n/", "", strip_tags($result['body']['content']));
+                        $evento->updated_at = Carbon::now();
+                        $evento->url = "/intranet/agenda/evento/".$result['id'];
+                        $evento->allDay = $result['isAllDay'];
+                        $evento->cancelado = $result['isCancelled'];
+                        $evento->local = $result['location']['displayName'];
+                        $evento->envolvidos = serialize($result['attendees']);
+                        $evento->color = $color;
+                        $evento->dow = serialize($dow);
+
+                        if(!$evento->save()){
+                            return abort(403, 'Erro ao salvar no banco de dados.');
+                        }else{
+                            $request->session()->flash('alert-success', 'Evento alterado com sucesso!');
+                            return redirect('/intranet/agenda/evento/'.$result['id']);
+                        }
+                        
+                    }else{
+                        return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
+                    }
+                }
+
             }else{
                 return redirect()->back()->withErrors($validatedData)->withInput();
             }
-
         }else{
-            return null;
+            return abort(403, 'Evento inválido ou seu usuário não está autorizado.');
         }
 
     }
@@ -312,71 +508,41 @@ class MicrosoftController extends Controller
             Auth::user()->email == 'recepcao@chebabi.com' &&
             $evento->end > Carbon::now() && 
             !$evento->cancelado){
-        
-                $token = DB::table('apikeys')
-                ->select('token')
-                ->where('name', 'Microsoft Graph')
-                ->first();
 
                 require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/evento_cancelado.json.php';
 
                 $evento_cancelado = json_encode($evento_cancelado);
 
-                $parameters = 'https://graph.microsoft.com/beta/users/agenda@chebabi.com/events/'.$id.'/cancel';
+                $url = 'https://graph.microsoft.com/beta/users/agenda@chebabi.com/events/'.$id.'/cancel';
                 
-                $ch = curl_init();
-    
-                curl_setopt($ch, CURLOPT_URL, $parameters);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $evento_cancelado);
-                curl_setopt($ch, CURLOPT_POST, 1);
-    
-                $headers = array();
-                $headers[] = "Authorization: Bearer ".$token->token;
-                $headers[] = "Content-Type:application/json";
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    
-                $result = curl_exec($ch);
+                //cURL
+                $result = $this->curl($url, $evento_cancelado, "POST");
 
-                if (curl_errno($ch)) {
-                    echo 'Error:' . curl_error($ch);
-                }
-                $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                curl_close ($ch);
-                
-                $result = json_decode($result,true);
-                
-                if($response_code == 202){
+                if(empty($result["error"])){
 
                     $alterado = '* Evento cancelado pelo usuário '.Auth::user()->name.' em '.Carbon::parse(Carbon::now())->format('d/m/Y H:i').'.';
-    
-                    Eventos::where('id', $id)
-                        ->update([
-                            'updated_at' => Carbon::now(),
-                            'cancelado' => TRUE,
-                            'color' => 'red',
-                            'alterado' => $alterado,
-                        ]);
-    
-                    $request->session()->flash('alert-success', 'Evento cancelado com sucesso!');
-                    return redirect('/intranet/agenda/evento/'.$id);
-                }else{
-                    if(!empty($result['error'])){
-                        $mensagem = $result['error']['message'];
-                        $mensagem .= '/ '.$result['error']['code'].'.';
-                    }else{
-                        $mensagem = 'NULL';
-                    }
-                    return redirect()->back()
-                        ->withInput()
-                        ->withErrors(array('message' => 'Erro ao cancelar! Favor informar o departamento responsável a seguinte mensagem: '. 
-                                            'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
-                }
 
+                    $evento->updated_at = Carbon::now();
+                    $evento->cancelado = TRUE;
+                    $evento->color = 'red';
+                    $evento->alterado = $alterado;
+
+                    if(!$evento->save()){
+                        return abort(403, 'Erro ao salvar no banco de dados.');
+                    }else{
+                        $request->session()->flash('alert-success', 'Evento cancelado com sucesso!');
+                        return redirect('/intranet/agenda/evento/'.$id);
+                    }
+
+                }else{
+                    return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
+                }
         }else{
-            return null;
+            return abort(403, 'Evento inválido ou seu usuário não está autorizado.');
         }
     }
+
+    ////////// FUNÇÕES EVENTOS MASSAGEM@CHEBABI.COM //////////
 
     public function criar_evento_massagem(Request $request){
 
@@ -410,40 +576,16 @@ class MicrosoftController extends Controller
 
             if(!$dias_sem_massagem && $massagens_usuario_mes < 4 && !$massagens_usuario_dia && !$massagem_livre){
                 
-                $token = DB::table('apikeys')
-                    ->select('token')
-                    ->where('name', 'Microsoft Graph')
-                    ->first();
-        
                 require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/massagem.json.php';
                 
                 $evento = json_encode($evento);
                 
-                $parameters = 'https://graph.microsoft.com/v1.0/users/massagem@chebabi.com/events';
-                
-                $ch = curl_init();
+                $url = 'https://graph.microsoft.com/v1.0/users/massagem@chebabi.com/events';
 
-                curl_setopt($ch, CURLOPT_URL, $parameters);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $evento);
-                curl_setopt($ch, CURLOPT_POST, 1);
+                //cURL
+                $result = $this->curl($url, $evento, "POST");
 
-                $headers = array();
-                $headers[] = "Authorization: Bearer ".$token->token;
-                $headers[] = "Content-Type:application/json";
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-                $result = curl_exec($ch);
-                
-                if (curl_errno($ch)) {
-                    echo 'Error:' . curl_error($ch);
-                }
-                $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                curl_close ($ch);
-                
-                $result = json_decode($result,true);
-
-                if($response_code == 201 && !empty($result)){
+                if(empty($result["error"])){
 
                     Massagem::insert([
                         'evento_id' => $result['id'],
@@ -459,24 +601,13 @@ class MicrosoftController extends Controller
                     $request->session()->flash('alert-success', 'Massagem agendada com sucesso!');
                     return redirect('/intranet/agendamento-massagem');
                 }else{
-                    if(!empty($result['error'])){
-                        $mensagem = $result['error']['message'];
-                        $mensagem .= '/ '.$result['error']['code'].'.';
-                    }else{
-                        $mensagem = 'NULL';
-                    }
-                    return redirect()->back()
-                        ->withInput()
-                        ->withErrors(array('message' => 'Erro ao agendar! Favor informar o departamento responsável a seguinte mensagem: '. 
-                                            'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
+                    return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
                 }
-                
             }else{
                 return redirect()->back()
                         ->withInput()
                         ->withErrors(array('message' => 'Erro ao agendar! Conflito com o dia e/ou horário selecionado. Tente novamente.'));
             }
-
         }else{
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
@@ -508,59 +639,29 @@ class MicrosoftController extends Controller
 
                 if($massagem->count() > 0){
                     
-                    $token = DB::table('apikeys')
-                        ->select('token')
-                        ->where('name', 'Microsoft Graph')
-                        ->first();
-
                     $evento_cancelado = array (
                         'Comment' => 'Sessão de massagem cancelada.'
                     );
                     
                     $evento_cancelado = json_encode($evento_cancelado);
 
-                    $parameters = 'https://graph.microsoft.com/beta/users/massagem@chebabi.com/events/'.$massagem->evento_id.'/cancel';
-                    
-                    $ch = curl_init();
-        
-                    curl_setopt($ch, CURLOPT_URL, $parameters);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $evento_cancelado);
-                    curl_setopt($ch, CURLOPT_POST, 1);
-        
-                    $headers = array();
-                    $headers[] = "Authorization: Bearer ".$token->token;
-                    $headers[] = "Content-Type:application/json";
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        
-                    $result = curl_exec($ch);
+                    $url = 'https://graph.microsoft.com/beta/users/massagem@chebabi.com/events/'.$massagem->evento_id.'/cancel';
 
-                    if (curl_errno($ch)) {
-                        echo 'Error:' . curl_error($ch);
-                    }
-                    $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                    curl_close ($ch);
-                    
-                    $result = json_decode($result,true);
-                    
-                    if($response_code == 202){
-        
+                    //cURL
+                    $result = $this->curl($url, $evento_cancelado, "POST");
+
+                    if(empty($result["error"])){
                         $massagem->cancelado = TRUE;
-                        $massagem->save(); 
-        
-                        $request->session()->flash('alert-success', 'Agendamento cancelado com sucesso!');
-                        return redirect('/intranet/agendamento-massagem');
-                    }else{
-                        if(!empty($result['error'])){
-                            $mensagem = $result['error']['message'];
-                            $mensagem .= '/ '.$result['error']['code'].'.';
+
+                        if(!$massagem->save()){
+                            return abort(403, 'Erro ao salvar no banco de dados.');
                         }else{
-                            $mensagem = 'NULL';
+                            $request->session()->flash('alert-success', 'Agendamento cancelado com sucesso!');
+                            return redirect('/intranet/agendamento-massagem');
                         }
-                        return redirect()->back()
-                            ->withInput()
-                            ->withErrors(array('message' => 'Erro ao cancelar! Favor informar o departamento responsável a seguinte mensagem: '. 
-                                                'Response code: ' .$response_code. '. Mensagem: ' .$mensagem));
+                        
+                    }else{
+                        return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
                     }
 
                 }else{

@@ -18,7 +18,7 @@ class SiteController extends Controller
 {
     public function index(){
         $agent = new Agent();
-        $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(7)->get();
+        $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(5)->get();
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';

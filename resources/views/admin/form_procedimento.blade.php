@@ -48,13 +48,12 @@
 
                             <div class="col-md-6">
                                 <select class="form-control" name="tipo" id="tipo" required>
-                                    <option value="{{ old('tipo') }}">{{ old('tipo') }}</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="adv">Advogado</option>
-                                    <option value="adm">Administrativo</option>
-                                    <option value="admjur">Adm. Jurídico</option>
-                                    <option value="fin">Financeiro</option>
-                                    <option value="geral">Geral</option>
+                                    <option></option>
+                                    <option value="admin" @if((isset($user) && $user->tipo=='admin') || old('tipo') == "admin") selected @endif>Administrador</option>
+                                    <option value="adv" @if((isset($user) && $user->tipo=='adv') || old('tipo') == "adv") selected @endif>Advogado</option>
+                                    <option value="adm" @if((isset($user) && $user->tipo=='adm') || old('tipo') == "adm") selected @endif>Administrativo</option>
+                                    <option value="fin" @if((isset($user) && $user->tipo=='fin') || old('tipo') == "fin") selected @endif>Financeiro</option>
+                                    <option value="admjur" @if((isset($user) && $user->tipo=='admjur') || old('tipo') == "admjur") selected @endif>Adm. Jurídico</option>
                                 </select>
 
                                 @if ($errors->has('tipo'))

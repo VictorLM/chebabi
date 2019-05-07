@@ -1,5 +1,9 @@
 @extends('intranet.templates.template')
 
+@push('styles')
+    <link href="{{ asset('assets/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
 
 <div class="container">
@@ -120,7 +124,7 @@
             </table>
 
             @if(!empty($evento->alterado))
-                <span>{{$evento->alterado}}</span></br>
+                <span>{{$evento->alterado}}</span><br/>
             @endif
 
             @if(empty(unserialize($evento->dow)) && ($evento->end < Carbon\Carbon::now() || $evento->cancelado))
@@ -129,14 +133,14 @@
 
             @if($edit_cancel && !$evento->cancelado)
                 @if(!empty(unserialize($evento->dow)) || $evento->end > Carbon\Carbon::now())
-                    </br>
+                    <br/>
                     <a href="{{action('Intranet\IntranetController@editEvento', $evento->id)}}">
                         <button class="btn btn-primary" type="button">
                             <i class="glyphicon glyphicon-pencil"></i> Editar
                         </button>
                     </a>
                     <a href="{{action('APIs\MicrosoftController@cancela_evento', $evento->id)}}">
-                        <button class="btn btn-danger" type="button">
+                        <button class="btn btn-danger cancelar-btn" type="button">
                             <i class="glyphicon glyphicon-trash"></i> Cancelar
                         </button>
                     </a>
@@ -146,8 +150,24 @@
         </div>
 
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loaderModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content text-center">
+                <div class="modal-body">
+                    <h2>Aguarde...</h2>
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 10em;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
   
 </div>
+
+@push ('scripts')
+    <script src="{{asset('assets/js/evento.js')}}"></script>
+@endpush
 
 @endsection
 

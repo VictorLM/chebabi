@@ -125,6 +125,7 @@ class IntranetController extends Controller
     public function eventos(){
         //PARA O AJAX DO FULL CALENDAR
         $eventos = Eventos::whereDate('start', '>=', Carbon::today()->subMonth())->get();
+        //SÓ RETORNA OS EVENTOS DO ATÉ UM MÊS NO PASSADO
         for($i=0;$i<count($eventos);$i++){
             $eventos[$i]->dow = unserialize($eventos[$i]->dow);
             if(!empty($eventos[$i]->dow)){
@@ -144,6 +145,36 @@ class IntranetController extends Controller
             ->get();
         $title = 'Novo Evento | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.novo_evento', compact('title', 'users'));
+    }
+
+    public function novo_evento_reuniao(){
+        $users = DB::table('users')
+            ->select('id', 'name', 'email')
+            ->where('ativo', TRUE)
+            ->where('id', '!=', Auth::user()->id)
+            ->orderBy('name')
+            ->get();
+        $title = 'Novo Evento Reunião | Intranet Izique Chebabi Advogados Associados';
+        return view('intranet.novo_evento_reuniao', compact('title', 'users'));
+    }
+    //AJAX PARA CHECAR DISPONIBILIDADE DAS SALAS DE REUNIÃO
+    public function checagem_salas_reuniao(Request $request){
+        if($request->has('sala') && $request->has('data') && Carbon::parse($request->data)->format('Y-m-d') >= Carbon::today()->toDateString()){
+            if($request->sala == "Sala 1" || $request->sala == "Sala 2"){
+                $eventos = Eventos::select("id","title","start","end","local")
+                            ->where('cancelado', false)
+                            ->where('tipo', 'Reunião')
+                            ->where('local', $request->sala)
+                            ->whereDate('start', $request->data)
+                            ->orderBy('start')
+                            ->get();
+                return \Response::json($eventos);
+            }else{
+                return \Response::json(null);
+            }
+        }else{
+            return \Response::json(null);
+        }
     }
     
     public function showEvento(Request $request, $id){
@@ -190,7 +221,12 @@ class IntranetController extends Controller
                 Auth::user()->email == 'recepcao@chebabi.com' &&
                 $evento->end > Carbon::now()){
 
-                return view('intranet.editar_evento', compact('title', 'evento', 'users', 'envolvidos', 'titulo'));
+                if($evento->tipo == "Reunião"){
+                    return view('intranet.editar_evento_reuniao', compact('title', 'evento', 'users', 'envolvidos', 'titulo'));
+                    dd("TESTEEE");
+                }else{
+                    return view('intranet.editar_evento', compact('title', 'evento', 'users', 'envolvidos', 'titulo'));
+                }
 
             }else{
                 return null;

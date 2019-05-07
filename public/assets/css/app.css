@@ -245,6 +245,23 @@ textarea.novo-uau-input{
     font-family: 'Dosis', sans-serif;
 }
 
+#agendados{
+    display:none;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.h3-top-margin-5{
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.td-cores-agenda{
+    color:black;
+    text-align:center;
+    width: 20%;
+}
+
 @media (min-width: 1200px){
     .container-index {
         max-width: 1400px;

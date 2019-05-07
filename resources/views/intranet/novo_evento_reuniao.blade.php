@@ -14,7 +14,7 @@
 
         <div class="panel-heading">
             <h2>
-                <a href="{{url('/intranet/agenda')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Novo Evento
+                <a href="{{url('/intranet/agenda')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Novo Evento - Reunião
             </h2>
         </div>
 
@@ -36,11 +36,7 @@
                 <div class="form-group col-md-4">
                     <label for="tipo">Tipo</label>
                     <select class="form-control" id="tipo" name="tipo" required>
-                        <option value=""></option>
-                        <option value="Ausente" @if(old('tipo')=='Ausente') selected @endif>Ausente</option>
-                        <option value="Carro" @if(old('tipo')=='Carro') selected @endif>Carro</option>
-                        <option value="Reunião" @if(old('tipo')=='Reunião') selected @endif>Reunião</option>
-                        <option value="Outro" @if(old('tipo')=='Outro') selected @endif>Outro</option>
+                        <option value="Reunião" selected>Reunião</option>
                     </select>
                     @if ($errors->has('tipo'))
                     <small style="color:red;">
@@ -61,7 +57,13 @@
 
                 <div class="form-group col-md-4">
                     <label for="local">Local</label>
-                    <input type="text" class="form-control" name="local" maxlength="100" value="{{old('local')}}" required @if($errors->has('local')) style="border-color:red;" autofocus @endif>
+                    <select class="form-control" id="local" name="local" required>
+                        <option value=""></option>
+                        <option value="Sala 1" @if(old('local')=='Sala 1') selected @endif>Sala 1</option>
+                        <option value="Sala 2" @if(old('local')=='Sala 2') selected @endif>Sala 2</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                    <input type="text" class="form-control" name="" id="local_text" maxlength="100" value="{{old('local')}}" style="display:none;" placeholder="Preencha o local" @if($errors->has('local')) style="border-color:red;" autofocus @endif>
                     @if ($errors->has('local'))
                         <small style="color:red;">
                             <strong>{{ $errors->first('local') }}</strong>
@@ -125,6 +127,14 @@
                         </small>
                     @endif
                 </div>
+
+                
+                <div id="agendados" class="form-group col-md-12">
+                    <h3 id="h-tbl-agendados" class="text-center h3-top-margin-5"></h3>
+                    <table id="tabela_agendados" class="table table-bordered table-hover">
+                        <!-- APPEND AJAX AQUI -->
+                    </table>
+                </div>
                     
                 <div class="form-group col-md-12">
                     <label for="envolvidos">Envolvidos</label>
@@ -185,8 +195,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/pt-br.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/multiple-select/1.2.0/multiple-select.min.js"></script>
-    <script src="{{url('assets/js/novoevento.js')}}"></script>
+    <script src="{{url('assets/js/novo_evento_reuniao.js')}}"></script>
     <script src="{{asset('assets/js/modal_loader.js')}}"></script>
+    @if((!empty(old('iniciodata')) && !empty(old('local'))) || (!empty($evento)))
+        @if(old('local') == "Sala 1" || old('local') == "Sala 2")
+            <script>
+                eventos_reuniao("{{old('iniciodata')}}","{{old('local')}}");
+            </script>
+        @elseif(!empty($evento->local) && ($evento->local == "Sala 1" || $evento->local == "Sala 2"))
+            <script>
+                eventos_reuniao(Carbon\Carbon::parse($evento->start)->format('Y-m-d')),"$evento->local");
+            </script>
+        @endif
+    @endif
 @endpush
     
 @endsection

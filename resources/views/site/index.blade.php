@@ -110,7 +110,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{url('/blog/noticias')}}" class="btn btn-primary btn-sm">Ver todas</a>
+                            <a href="{{url('/blog/noticias')}}" class="btn btn-primary btn-sm">Ver tudo</a>
                         </div>
 
                     </div>

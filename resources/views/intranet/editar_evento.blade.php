@@ -15,7 +15,7 @@
         <div class="panel-heading">
             <h2>
                 <a href="{{url('/intranet/agenda')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> 
-                Editar Evento {{$evento->title}} / Criador: {{$evento->organizador_nome}}
+                Editar Evento: {{$evento->title}} / Criador: {{$evento->organizador_nome}}
             </h2>
         </div>
 
@@ -33,6 +33,22 @@
 
             <form method="POST" id="form" action="{{action('APIs\MicrosoftController@update_evento')}}">
                 {!! csrf_field() !!}
+                    
+                <div class="form-group col-md-4">
+                    <label for="tipo">Tipo</label>
+                    <select class="form-control" name="tipo" required>
+                        <option value=""></option>
+                        <option value="Ausente" @if($evento->tipo == 'Ausente') selected @endif>Ausente</option>
+                        <option value="Carro" @if($evento->tipo =='Carro') selected @endif>Carro</option>
+                        <option value="Reunião" @if($evento->tipo =='Reunião') selected @endif>Reunião</option>
+                        <option value="Outro" @if($evento->tipo =='Outro') selected @endif>Outro</option>
+                    </select>
+                    @if ($errors->has('tipo'))
+                    <small style="color:red;">
+                            <strong>{{ $errors->first('tipo') }}</strong>
+                        </small>
+                    @endif
+                </div>
 
                 <input type="hidden" name="id" value="{{$evento->id}}">
                 
@@ -42,23 +58,6 @@
                     @if ($errors->has('titulo'))
                         <small style="color:red;">
                             <strong>{{ $errors->first('titulo') }}</strong>
-                        </small>
-                    @endif
-                </div>
-    
-                <div class="form-group col-md-4">
-                    <label for="tipo">Tipo</label>
-                    <select class="form-control" name="tipo" required>
-                        <option value=""></option>
-                        <option value="Ausente" @if($evento->tipo == 'Ausente') selected @endif>Ausente</option>
-                        <option value="Carro" @if($evento->tipo =='Carro') selected @endif>Carro</option>
-                        <option value="Motorista" @if($evento->tipo =='Motorista') selected @endif>Motorista</option>
-                        <option value="Reunião" @if($evento->tipo =='Reunião') selected @endif>Reunião</option>
-                        <option value="Outro" @if($evento->tipo =='Outro') selected @endif>Outro</option>
-                    </select>
-                    @if ($errors->has('tipo'))
-                    <small style="color:red;">
-                            <strong>{{ $errors->first('tipo') }}</strong>
                         </small>
                     @endif
                 </div>

@@ -312,6 +312,7 @@ $(document).ready(function(){
             $("#display"+id).empty();
             $("#display"+id).show();
             $("#display-cliente"+id).empty();
+            $("#cliente"+id).prop('readonly', false);
         }
     });
     
