@@ -38,10 +38,9 @@ class IntranetController extends Controller
             ->where('id', Auth::user()->id)
             ->first();
         
-        if(Carbon::parse(Auth::user()->nascimento)->format('d/m') 
-            == Carbon::parse(Carbon::today())->format('d/m')
-            && Carbon::parse($last_login->last_login)->format('Y-m-d') 
-            != Carbon::parse(Carbon::today())->format('Y-m-d')){
+        if(!empty(Auth::user()->nascimento)
+            && Carbon::parse(Auth::user()->nascimento)->format('d/m') == Carbon::parse(Carbon::today())->format('d/m')
+            && Carbon::parse($last_login->last_login)->format('Y-m-d') != Carbon::parse(Carbon::today())->format('Y-m-d')){
             $aniversario = TRUE;
         }else{
             $aniversario = FALSE;
