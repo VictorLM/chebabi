@@ -60,15 +60,32 @@ class IntranetController extends Controller
             
         $aniversariantes = count($aniversariantes);
         
-        $ranking = DB::table('users')
-            ->select('id', 'name', 'uaus')
-            ->where([
-                ['ativo', '=',TRUE], 
-                ['uaus', '>', 0]
-             ])
-            ->orderBy('uaus', 'Desc')
-            ->limit(10)
-            ->get();
+        //RANKING UAU//
+        $ranking = Uau::with('para_nome:id,name,ativo');
+        
+        if(Carbon::now()->month > 0 && Carbon::now()->month < 7){
+            //1º SEMESTRE
+            $ranking->whereYear('created_at', Carbon::now()->year);
+        }else{
+            //2º SEMESTRE
+            $ranking->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', '>', '6');
+        }
+        
+        $ranking = $ranking->get()->groupBy('para')->sortByDesc(function ($user, $key) {
+            return count($user);
+        });
+        
+        foreach($ranking as $key => $uau){
+            if(!$uau[0]->para_nome->ativo){
+                $ranking->forget($key);
+            }
+        }
+        
+        if($ranking->count() > 10){
+            $ranking = $ranking->slice(0, 10);
+        }
+        //FIM RANKING//
         
         DB::table('users')
             ->where('id', Auth::user()->id)
@@ -616,12 +633,9 @@ class IntranetController extends Controller
         $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name,ativo')
             ->orderBy('created_at', 'Desc')
             ->paginate(10);
-
-        $ranking = Uau::with('para_nome:id,name,ativo')
-            //->orderBy('created_at', 'Desc');
-            ->orderBy('para', 'Desc');
-
-        /*
+        //RANKING UAU//
+        $ranking = Uau::with('para_nome:id,name,ativo');
+        
         if(Carbon::now()->month > 0 && Carbon::now()->month < 7){
             //1º SEMESTRE
             $ranking->whereYear('created_at', Carbon::now()->year);
@@ -630,39 +644,21 @@ class IntranetController extends Controller
             $ranking->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', '>', '6');
         }
-        */
-        $ranking = $ranking->get();
-
-        $groupedByValue = $ranking->groupBy('para');
-
         
-        dd($groupedByValue);
+        $ranking = $ranking->get()->groupBy('para')->sortByDesc(function ($user, $key) {
+            return count($user);
+        });
         
-        /*
         foreach($ranking as $key => $uau){
-            if(!$uau->para_nome->ativo){
+            if(!$uau[0]->para_nome->ativo){
                 $ranking->forget($key);
             }
         }
-
-        $ranking->groupBy('Degree')->map(function ($people) {
-            return $people->count();
-        });
-        */
-        //IF ATIVO
-        //COUNT ID USER DESC
         
-        /*
-        $ranking = DB::table('users')
-            ->select('id', 'name', 'uaus')
-            ->where([
-                ['ativo', '=',TRUE], 
-                ['uaus', '>', 0]
-             ])
-            ->orderBy('uaus', 'Desc')
-            ->limit(10)
-            ->get();
-        */
+        if($ranking->count() > 10){
+            $ranking = $ranking->slice(0, 10);
+        }
+        //FIM RANKING//
         $unread_uaus = DB::table('uaus')->where([
             ['para', Auth::user()->id],
             ['lido', '0'],

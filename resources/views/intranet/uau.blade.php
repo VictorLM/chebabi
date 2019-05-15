@@ -73,24 +73,22 @@
                         @endif
                     </h3>
                     <div class="well uau-well">
-                        @if(!$ranking->isEmpty())
-                            @php $max = $ranking[0]->uaus; @endphp
-                        @endif 
-                        @foreach($ranking as $user)
-            
-                            <span class="nome-uau-ranking"><strong>
+                        @if(!empty($ranking) && !$ranking->isEmpty())
+                            @php $max = count($ranking->first()); @endphp
+                            @foreach($ranking as $user)
                                 @if($loop->first) 🏆 @elseif($loop->index == 1) 🥈 @elseif($loop->index == 2) 🥉 @endif
-                                @if($user->id == Auth::user()->id)<i class="glyphicon glyphicon-heart heart-icon"></i>@endif 
-                                {{$user->name}}
-                            </strong></span>
-                            <div class="progress progress-uau">
-                                <div class="progress-bar progress-bar-uau progress-bar-striped active" role="progressbar" aria-valuenow="{{$user->uaus}}"
-                                aria-valuemin="0" aria-valuemax="{{$max}}" style="width:{{$user->uaus/$max*100}}%">
-                                    <span style="font-size:1.5em;"><b>{{$user->uaus}} @if($user->uaus>1) Uaus! @else Uau! @endif</b></span>
+                                @if($user[0]->para_nome->id == Auth::user()->id) <i class="glyphicon glyphicon-heart" style="color:red;"></i> @endif
+                                <span class="nome-uau-ranking">
+                                    <strong>{{$user[0]->para_nome->name}}</strong>
+                                </span>
+                                <div class="progress progress-uau">
+                                    <div class="progress-bar progress-bar-uau progress-bar-striped active" role="progressbar" aria-valuenow="{{count($user)}}"
+                                    aria-valuemin="0" aria-valuemax="{{$max}}" style="width:{{count($user)/$max*100}}%">
+                                        <span style="font-size:1.5em;"><b>{{count($user)}} @if(count($user)>1) Uaus! @else Uau! @endif</b></span>
+                                    </div>
                                 </div>
-                            </div>
-                        
-                        @endforeach
+                            @endforeach
+                        @endif 
                     </div>
                 </div>
             

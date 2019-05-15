@@ -15,10 +15,9 @@
         @endif
     @endforeach
 
-    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 cols-index">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 cols-index">
 
         <div class="panel panel-default">
-            <div class="panel-heading">Menu</div>
 
             <div class="panel-body">
                 @if (session('status'))
@@ -99,7 +98,7 @@
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/relatorio')}}">
                             <i class="glyphicon glyphicon-file"></i>
-                            <i class="glyphicon glyphicon-road"></i><br/>RELATÓRIO DE VIAGEM</a>
+                            <i class="glyphicon glyphicon-road"></i><br/>RELAT. DE VIAGENS</a>
                         </div>
                     </div>
                     
@@ -172,31 +171,32 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 cols-index">
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 cols-index">
         <div class="panel panel-default">
-            <div class="panel-heading text-center">
-                <h2 class="uau-ranking-index">
-                    <a class="uau-ranking-index" href="{{url('intranet/uau')}}">UAU! - Ranking</a>
+            <div class="panel-heading text-center header-padding-0">
+                <h2 class="text-center header-padding-0">
+                    <a class="uau-ranking-index" href="/intranet/uau">
+                        @if(Carbon\Carbon::now()->month > 0 && Carbon\Carbon::now()->month < 7)
+                            <b>UAU - 1º Semestre {{Carbon\Carbon::now()->year}}</b>
+                        @else
+                            <b>UAU - 2º Semestre {{Carbon\Carbon::now()->year}}</b>
+                        @endif
+                    </a>
                 </h2>
             </div>
             <div class="panel-body">
-                @if(!empty($ranking))
-                    @php
-                        $max = $ranking[0]->uaus;
-                    @endphp
+                @if(!empty($ranking) && !$ranking->isEmpty())
+                    @php $max = count($ranking->first()); @endphp
                     @foreach($ranking as $user)
-                        <small>
-                            <strong>
-                                @if($user->id == Auth::user()->id) 
-                                    <i class="glyphicon glyphicon-heart" style="color:red;"></i>
-                                @endif 
-                                {{$user->name}}
-                            </strong>
-                        </small>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="{{$user->uaus}}"
-                            aria-valuemin="0" aria-valuemax="{{$max}}" style="width:{{$user->uaus/$max*100}}%">
-                                {{$user->uaus}} @if($user->uaus>1) Uaus! @else Uau! @endif 
+                        @if($loop->first) 🏆 @elseif($loop->index == 1) 🥈 @elseif($loop->index == 2) 🥉 @endif
+                        @if($user[0]->para_nome->id == Auth::user()->id) <i class="glyphicon glyphicon-heart" style="color:red;"></i> @endif
+                        <span class="nome-uau-ranking">
+                            <strong>{{$user[0]->para_nome->name}}</strong>
+                        </span>
+                        <div class="progress progress-uau">
+                            <div class="progress-bar progress-bar-uau progress-bar-striped active" role="progressbar" aria-valuenow="{{count($user)}}"
+                            aria-valuemin="0" aria-valuemax="{{$max}}" style="width:{{count($user)/$max*100}}%">
+                                <span style="font-size:1.5em;"><b>{{count($user)}} @if(count($user)>1) Uaus! @else Uau! @endif</b></span>
                             </div>
                         </div>
                     @endforeach

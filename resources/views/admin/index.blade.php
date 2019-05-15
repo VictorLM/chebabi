@@ -16,9 +16,6 @@
             @endforeach
             
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Painel do Administrador
-                </div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -258,10 +255,10 @@
 
                                     <div class="col-md-6">
                                         <div class="intra-atalhos well well-lg">
-                                            <a href="{{url('intranet')}}">
-                                            <i class="glyphicon glyphicon-arrow-left"></i>
-                                            <i class="glyphicon glyphicon-globe"></i>
-                                            <i class="glyphicon glyphicon-cloud"></i><br/>INTRANET</a>
+                                            <a href="{{url('/phpmyadmin')}}">
+                                            <i class="glyphicon glyphicon-hdd"></i>
+                                            <i class="glyphicon glyphicon-wrench"></i>
+                                            <i class="glyphicon glyphicon-cog"></i><br/>PHP MY ADMIN</a>
                                         </div>
                                     </div>
 
@@ -269,6 +266,26 @@
                             </div>
                         </div>
                             
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">OUTROS</div>
+                                <div class="panel-body">
+                                    
+                                    <div class="col-md-6">
+                                        <div class="intra-atalhos well well-lg">
+                                            <a href="{{url('intranet')}}">
+                                            <i class="glyphicon glyphicon-arrow-left"></i>
+                                            <i class="glyphicon glyphicon-globe"></i>
+                                            <i class="glyphicon glyphicon-cloud"></i><br/>INTRANET</a>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
                         
                 </div>
