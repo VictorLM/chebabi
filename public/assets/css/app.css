@@ -262,6 +262,37 @@ textarea.novo-uau-input{
     width: 20%;
 }
 
+.heart-icon{
+    color:red;
+}
+
+.nome-uau-ranking{
+    font-size: 1.3em;
+}
+
+.progress-uau{
+    margin-bottom:10px!important;
+    height:25px!important;
+    background-color: rgba(0,0,0,.060)!important;
+}
+
+.progress-bar-uau{
+    line-height: 2.2em!important;
+}
+
+.uau-index{
+    background-image: url(../imagens/novo-uau-bg.png);
+    background-repeat: repeat;
+}
+
+.uau-table{
+    background-color: rgba(255, 255, 255, 0.70);
+}
+
+.uau-well{
+    background-color: rgba(245, 245, 245, 0.5)!important;
+}
+
 @media (min-width: 1200px){
     .container-index {
         max-width: 1400px;

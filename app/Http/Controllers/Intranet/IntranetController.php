@@ -617,6 +617,42 @@ class IntranetController extends Controller
             ->orderBy('created_at', 'Desc')
             ->paginate(10);
 
+        $ranking = Uau::with('para_nome:id,name,ativo')
+            //->orderBy('created_at', 'Desc');
+            ->orderBy('para', 'Desc');
+
+        /*
+        if(Carbon::now()->month > 0 && Carbon::now()->month < 7){
+            //1º SEMESTRE
+            $ranking->whereYear('created_at', Carbon::now()->year);
+        }else{
+            //2º SEMESTRE
+            $ranking->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', '>', '6');
+        }
+        */
+        $ranking = $ranking->get();
+
+        $groupedByValue = $ranking->groupBy('para');
+
+        
+        dd($groupedByValue);
+        
+        /*
+        foreach($ranking as $key => $uau){
+            if(!$uau->para_nome->ativo){
+                $ranking->forget($key);
+            }
+        }
+
+        $ranking->groupBy('Degree')->map(function ($people) {
+            return $people->count();
+        });
+        */
+        //IF ATIVO
+        //COUNT ID USER DESC
+        
+        /*
         $ranking = DB::table('users')
             ->select('id', 'name', 'uaus')
             ->where([
@@ -626,7 +662,7 @@ class IntranetController extends Controller
             ->orderBy('uaus', 'Desc')
             ->limit(10)
             ->get();
-        
+        */
         $unread_uaus = DB::table('uaus')->where([
             ['para', Auth::user()->id],
             ['lido', '0'],

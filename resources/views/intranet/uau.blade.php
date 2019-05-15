@@ -32,13 +32,13 @@
             </div>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body uau-index">
             
             <div class="row">
 
                 <div class="col-md-8">
                     <h3 class="text-center"><b>Todos os Uaus</b> ({{$count_uaus}})</h3>
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover uau-table">
                         <thead>
                             <tr>
                             <th>De</th>
@@ -63,31 +63,30 @@
             
                     {!! $uaus->links() !!}
                 </div>
-            
+                
                 <div class="col-md-4">
-                    <h3 class="text-center"><b>Ranking - Top 10</b></h3>
-                    <div class="well">
+                    <h3 class="text-center">
+                        @if(Carbon\Carbon::now()->month > 0 && Carbon\Carbon::now()->month < 7)
+                            <b>Ranking - 1º Semestre {{Carbon\Carbon::now()->year}}</b>
+                        @else
+                            <b>Ranking - 2º Semestre {{Carbon\Carbon::now()->year}}</b>
+                        @endif
+                    </h3>
+                    <div class="well uau-well">
                         @if(!$ranking->isEmpty())
-                            @php
-                                $max = $ranking[0]->uaus;
-                            @endphp
+                            @php $max = $ranking[0]->uaus; @endphp
                         @endif 
-                        
                         @foreach($ranking as $user)
             
-                            <span>
-                                <strong>
-                                    @if($user->id == Auth::user()->id) 
-                                        <i class="glyphicon glyphicon-heart" style="color:red;"></i>
-                                    @endif 
-                                    {{$user->name}}
-                                </strong>
-                                    - {{$user->uaus}} @if($user->uaus>1) Uaus! @else Uau! @endif
-                            </span>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{$user->uaus}}"
+                            <span class="nome-uau-ranking"><strong>
+                                @if($loop->first) 🏆 @elseif($loop->index == 1) 🥈 @elseif($loop->index == 2) 🥉 @endif
+                                @if($user->id == Auth::user()->id)<i class="glyphicon glyphicon-heart heart-icon"></i>@endif 
+                                {{$user->name}}
+                            </strong></span>
+                            <div class="progress progress-uau">
+                                <div class="progress-bar progress-bar-uau progress-bar-striped active" role="progressbar" aria-valuenow="{{$user->uaus}}"
                                 aria-valuemin="0" aria-valuemax="{{$max}}" style="width:{{$user->uaus/$max*100}}%">
-                                    {{$user->uaus}} @if($user->uaus>1) Uaus! @else Uau! @endif 
+                                    <span style="font-size:1.5em;"><b>{{$user->uaus}} @if($user->uaus>1) Uaus! @else Uau! @endif</b></span>
                                 </div>
                             </div>
                         
