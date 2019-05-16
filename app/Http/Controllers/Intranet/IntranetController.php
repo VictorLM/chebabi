@@ -60,32 +60,7 @@ class IntranetController extends Controller
             
         $aniversariantes = count($aniversariantes);
         
-        //RANKING UAU//
-        $ranking = Uau::with('para_nome:id,name,ativo');
-        
-        if(Carbon::now()->month > 0 && Carbon::now()->month < 7){
-            //1º SEMESTRE
-            $ranking->whereYear('created_at', Carbon::now()->year);
-        }else{
-            //2º SEMESTRE
-            $ranking->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', '>', '6');
-        }
-        
-        $ranking = $ranking->get()->groupBy('para')->sortByDesc(function ($user, $key) {
-            return count($user);
-        });
-        
-        foreach($ranking as $key => $uau){
-            if(!$uau[0]->para_nome->ativo){
-                $ranking->forget($key);
-            }
-        }
-        
-        if($ranking->count() > 10){
-            $ranking = $ranking->slice(0, 10);
-        }
-        //FIM RANKING//
+        $ranking_sorted = $this->ranking_uau();
         
         DB::table('users')
             ->where('id', Auth::user()->id)
@@ -93,7 +68,7 @@ class IntranetController extends Controller
         
         $title = 'Intranet | Izique Chebabi Advogados Associados';
         
-        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking'));
+        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking_sorted'));
     }
 
     public function sugestao(){
@@ -629,17 +604,13 @@ class IntranetController extends Controller
         }
     }
 
-    public function uau(){
-        $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name,ativo')
-            ->orderBy('created_at', 'Desc')
-            ->paginate(10);
-
+    public function ranking_uau(){
         //RANKING UAU//
         $ranking = DB::table('uaus')
-            ->join('users', 'uaus.para', '=', 'users.id')
-            ->select('uaus.*', 'users.name', 'users.ativo')
-            ->where('users.ativo', TRUE)
-            ->orderBy('users.name', 'Asc');
+        ->join('users', 'uaus.para', '=', 'users.id')
+        ->select('uaus.*', 'users.name', 'users.ativo')
+        ->where('users.ativo', TRUE)
+        ->orderBy('users.name', 'Asc');
 
         if(Carbon::now()->month > 0 && Carbon::now()->month < 7){
             //1º SEMESTRE
@@ -662,10 +633,21 @@ class IntranetController extends Controller
         krsort($ranking_sorted);
         //DROPA ATÉ DEIXAR SÓ O TOP 10
         while($count > 10){
-            array_pop($ranking_sorted[array_key_last($ranking_sorted)]);
+            end($ranking_sorted);
+            $key = key($ranking_sorted);
+            //array_key_last REQUER PHP 7.3
+            array_pop($ranking_sorted[$key]);
             $count--;
         }
-        //FIM RANKING//
+        return($ranking_sorted);
+    }
+
+    public function uau(){
+        $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name,ativo')
+            ->orderBy('created_at', 'Desc')
+            ->paginate(10);
+
+        $ranking_sorted = $this->ranking_uau();
 
         $unread_uaus = DB::table('uaus')->where([
             ['para', Auth::user()->id],

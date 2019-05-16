@@ -185,21 +185,43 @@
                 </h2>
             </div>
             <div class="panel-body">
-                @if(!empty($ranking) && !$ranking->isEmpty())
-                    @php $max = count($ranking->first()); @endphp
-                    @foreach($ranking as $user)
-                        @if($loop->first) 🏆 @elseif($loop->index == 1) 🥈 @elseif($loop->index == 2) 🥉 @endif
-                        @if($user[0]->para_nome->id == Auth::user()->id) <i class="glyphicon glyphicon-heart" style="color:red;"></i> @endif
-                        <span class="nome-uau-ranking">
-                            <strong>{{$user[0]->para_nome->name}}</strong>
-                        </span>
-                        <div class="progress progress-uau">
-                            <div class="progress-bar progress-bar-uau progress-bar-striped active" role="progressbar" aria-valuenow="{{count($user)}}"
-                            aria-valuemin="0" aria-valuemax="{{$max}}" style="width:{{count($user)/$max*100}}%">
-                                <span style="font-size:1.5em;"><b>{{count($user)}} @if(count($user)>1) Uaus! @else Uau! @endif</b></span>
+                @if(!empty($ranking_sorted))
+                    @php
+                        $key1 = 0;
+                        $key2 = 0;
+                        $key3 = 0;
+                        if(!empty($ranking_sorted)){
+                            $max = array_key_first($ranking_sorted);
+                            $key1 = $max;
+                            if(count($ranking_sorted) >= 3){
+                                $key2 = array_keys($ranking_sorted)[1];
+                                $key3 = array_keys($ranking_sorted)[2];
+                            }else if(count($ranking_sorted) == 2){
+                                $key2 = array_keys($ranking_sorted)[1];
+                            }
+                        }
+                    @endphp
+                    @foreach($ranking_sorted as $uaus => $users)
+                        @foreach($users as $user)
+                        {{--@php dd($key3); @endphp--}}
+
+                            @if($uaus == $key1) 🏆 @elseif($uaus == $key2) 🥈 @elseif($uaus == $key3) 🥉 @endif
+
+                            @if($user['name'] == Auth::user()->name) <i class="glyphicon glyphicon-heart" style="color:red;"></i> @endif
+                            <span class="nome-uau-ranking">
+                                <strong>{{$user['name']}}</strong>
+                            </span>
+                            <div class="progress progress-uau">
+                                <div class="progress-bar progress-bar-uau progress-bar-striped active" role="progressbar" aria-valuenow="{{$uaus}}"
+                                aria-valuemin="0" aria-valuemax="{{$max}}" style="width:{{$uaus/$max*100}}%">
+                                    <span style="font-size:1.5em;"><b>{{$uaus}} @if($uaus>1) Uaus! @else Uau! @endif</b></span>
+                                </div>
                             </div>
-                        </div>
+                        @endforeach
                     @endforeach
+                @else
+                    <h4 class="text-center">Ainda não há UAUs nesse semestre. =(</h4>
+                    <p class="text-center"><a href="{{url('/intranet/novo-uau')}}">Envie um agora mesmo!</a></p>
                 @endif 
             </div>
         </div>
