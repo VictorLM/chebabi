@@ -633,32 +633,40 @@ class IntranetController extends Controller
         $uaus = Uau::with('de_nome:id,name', 'para_nome:id,name,ativo')
             ->orderBy('created_at', 'Desc')
             ->paginate(10);
+
         //RANKING UAU//
-        $ranking = Uau::with('para_nome:id,name,ativo');
-        
+        $ranking = DB::table('uaus')
+            ->join('users', 'uaus.para', '=', 'users.id')
+            ->select('uaus.*', 'users.name', 'users.ativo')
+            ->where('users.ativo', TRUE)
+            ->orderBy('users.name', 'Asc');
+
         if(Carbon::now()->month > 0 && Carbon::now()->month < 7){
             //1º SEMESTRE
-            $ranking->whereYear('created_at', Carbon::now()->year);
+            $ranking->whereYear('uaus.created_at', Carbon::now()->year);
         }else{
             //2º SEMESTRE
-            $ranking->whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', '>', '6');
+            $ranking->whereYear('uaus.created_at', Carbon::now()->year)
+                ->whereMonth('uaus.created_at', '>', '6');
         }
-        
-        $ranking = $ranking->get()->groupBy('para')->sortByDesc(function ($user, $key) {
-            return count($user);
-        });
-        
-        foreach($ranking as $key => $uau){
-            if(!$uau[0]->para_nome->ativo){
-                $ranking->forget($key);
-            }
+
+        $ranking = $ranking->get()->groupBy('name');
+        //ORDEM ALFABÉTICA DEPOIS DE ORDENAR PELO COUNT DO GROUP BY
+        $ranking_sorted = [];
+        $count = 0;
+        foreach($ranking as $key => $user){
+            $ranking_sorted[$user->count()][]['name'] = $key;
+            $count++;
         }
-        
-        if($ranking->count() > 10){
-            $ranking = $ranking->slice(0, 10);
+        //SORT BY MAIOR NUMERO UAUS
+        krsort($ranking_sorted);
+        //DROPA ATÉ DEIXAR SÓ O TOP 10
+        while($count > 10){
+            array_pop($ranking_sorted[array_key_last($ranking_sorted)]);
+            $count--;
         }
         //FIM RANKING//
+
         $unread_uaus = DB::table('uaus')->where([
             ['para', Auth::user()->id],
             ['lido', '0'],
@@ -667,7 +675,7 @@ class IntranetController extends Controller
         $count_uaus = DB::table('uaus')->count();
 
         $title = 'Uau | Intranet Izique Chebabi Advogados Associados';
-        return view('intranet.uau', compact('title', 'uaus', 'ranking', 'unread_uaus', 'count_uaus'));
+        return view('intranet.uau', compact('title', 'uaus', 'ranking_sorted', 'unread_uaus', 'count_uaus'));
     }
     
     public function meus_uaus(){
