@@ -190,14 +190,16 @@
                         $key1 = 0;
                         $key2 = 0;
                         $key3 = 0;
+                        $keys = array_keys($ranking_sorted);
                         if(!empty($ranking_sorted)){
-                            $max = array_key_first($ranking_sorted);
+                            reset($ranking_sorted);
+                            $max = key($ranking_sorted);
                             $key1 = $max;
                             if(count($ranking_sorted) >= 3){
-                                $key2 = array_keys($ranking_sorted)[1];
-                                $key3 = array_keys($ranking_sorted)[2];
+                                $key2 = $keys[1];
+                                $key3 = $keys[2];
                             }else if(count($ranking_sorted) == 2){
-                                $key2 = array_keys($ranking_sorted)[1];
+                                $key2 = $keys[1];
                             }
                         }
                     @endphp
