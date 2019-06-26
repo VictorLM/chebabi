@@ -103,10 +103,10 @@ textarea {
     background-size: 60%;
     background-position: center; 
 }
-.modaluau p{
+.modaluau p, .modal-meus-parabens p{
     font-size: 1.5em;
 }
-.modaluau h1{
+.modaluau h1, .modal-meus-parabens h1{
     font-size: 4em;
 }
 .aniversario{
@@ -296,6 +296,20 @@ textarea.novo-uau-input{
 .header-padding-0{
     padding:5px!important;
     margin:0!important;
+}
+
+.bday-form-div{
+    background-image: url(../imagens/bday-bg.png);
+    background-repeat: repeat;
+}
+
+.bday-form-div span{
+    font-size: 2em;
+}
+
+.modal-meus-parabens{
+    background-image: url(../imagens/bday-bg.png);
+    background-repeat: repeat;
 }
 
 @media (min-width: 1200px){

@@ -255,7 +255,7 @@
 
                                     <div class="col-md-6">
                                         <div class="intra-atalhos well well-lg">
-                                            <a href="{{url('/phpmyadmin')}}">
+                                            <a href="{{url('/phpmyadmin')}}" target="_blank">
                                             <i class="glyphicon glyphicon-hdd"></i>
                                             <i class="glyphicon glyphicon-wrench"></i>
                                             <i class="glyphicon glyphicon-cog"></i><br/>PHP MY ADMIN</a>

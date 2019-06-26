@@ -17,6 +17,8 @@ use Intranet\Massagem;
 use Validator;
 use Intranet\Eventos;
 use Intranet\Cliente;
+use Intranet\Parabens;
+use Exception;
 
 class IntranetController extends Controller
 {
@@ -59,6 +61,11 @@ class IntranetController extends Controller
             ->get();
             
         $aniversariantes = count($aniversariantes);
+
+        $unread_parabens = DB::table('parabens')->where([
+            ['para', Auth::user()->id],
+            ['lido', '0'],
+        ])->count();
         
         $ranking_sorted = $this->ranking_uau();
         
@@ -68,7 +75,7 @@ class IntranetController extends Controller
         
         $title = 'Intranet | Izique Chebabi Advogados Associados';
         
-        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking_sorted'));
+        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking_sorted', 'unread_parabens'));
     }
 
     public function sugestao(){
@@ -490,9 +497,14 @@ class IntranetController extends Controller
             ->whereMonth('nascimento', '=', $mes)
             ->orderByRaw(DB::raw("DAY(nascimento) ASC"))
             ->paginate(30);
+        
+        $unread_parabens = DB::table('parabens')->where([
+            ['para', Auth::user()->id],
+            ['lido', '0'],
+        ])->count();
 
         $title = 'Aniversariantes | Intranet Izique Chebabi Advogados Associados';
-        return view('intranet.aniversariantes', compact('title', 'users', 'mes'));
+        return view('intranet.aniversariantes', compact('title', 'users', 'mes', 'unread_parabens'));
     }
 
     public function aniversariantes_filtrados(Request $request){
@@ -510,9 +522,14 @@ class IntranetController extends Controller
                 ->whereMonth('nascimento', '=', $mes)
                 ->orderByRaw(DB::raw("DAY(nascimento) ASC"))
                 ->paginate(30);
+            
+            $unread_parabens = DB::table('parabens')->where([
+                    ['para', Auth::user()->id],
+                    ['lido', '0'],
+                ])->count();
         
         $title = 'Aniversariantes | Intranet Izique Chebabi Advogados Associados';
-        return view('intranet.aniversariantes_filtrados', compact('title', 'users', 'mes'));
+        return view('intranet.aniversariantes_filtrados', compact('title', 'users', 'mes', 'unread_parabens'));
 
         }else{
             return redirect()->back()->withErrors($validatedData)->withInput();
@@ -720,9 +737,9 @@ class IntranetController extends Controller
         
         $users = DB::table('users')->select('name', 'id')
             ->where([
-                        ['ativo', '=',TRUE], 
-                        ['id', '!=', Auth::id()]
-                    ])
+                ['ativo', '=',TRUE], 
+                ['id', '!=', Auth::id()]
+            ])
             ->orderBy('name')
             ->get();
         
@@ -802,5 +819,64 @@ class IntranetController extends Controller
     public function tutorial_relatorio_viagem(){
         return view('intranet.tutorial_relatorio_viagem');
     }
-        
+
+    public function parabens(){
+        $meus_parabens = Parabens::with('de_user:id,name')
+            ->where('para', Auth::user()->id)
+            ->orderBy('created_at', 'Desc')
+            ->paginate(20);
+        $title = 'Meus Parabéns | Intranet Izique Chebabi Advogados Associados';
+        return view('intranet.meus_parabens', compact('title', 'meus_parabens'));
+    }
+
+    public function parabens_lido(Request $request){
+        $parabens_id = key($request->all());
+        Parabens::where('id', $parabens_id)
+            ->update(
+                ['lido' => 1]
+            );
+    }
+
+    public function parabens_novo($id){
+        $user = User::find($id);
+        if(!empty($user) && Auth::user()->id != $user->id && $user->is_bday()){
+            $title = 'Parabenizar | Intranet Izique Chebabi Advogados Associados';
+            return view('intranet.novo_parabens', compact('title', 'user'));
+        }else{
+            return null;
+        }
+    }
+
+    public function parabens_enviar(Request $request){
+        $parabens = new Parabens;
+        $validator = Validator::make($request->all(),$parabens->rules);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }else{
+            $para_user = User::find($request->para);
+            if(!empty($para_user) && Auth::user()->id != $para_user->id && $para_user->is_congratulable()){
+                $parabens->de = Auth::user()->id;
+                $parabens->para = $request->para;
+                $parabens->mensagem = $request->mensagem;
+                $parabens->lido = 0;
+                try{
+                    //throw new \Symfony\Component\HttpKernel\Exception\HttpException(500);
+                    if($parabens->save()){
+                        $parabens->notificacao($para_user);                    
+                        $request->session()->flash('alert-success', 'Parabéns enviado com sucesso!');
+                        return redirect()->action('Intranet\IntranetController@index');
+                    }else{
+                        //REPORTAR $e
+                        return redirect()->back()->withErrors('Erro ao salvar no banco de dados. Tente novamente mais tarde.')->withInput();
+                    }
+                }catch(Exception $e){
+                    //REPORTAR $e
+                    return redirect()->back()->withErrors('Erro ao salvar no banco de dados. Tente novamente mais tarde.')->withInput();
+                }
+            }else{
+                return redirect()->back()->withErrors('Algo saiu errado. Tente novamente.')->withInput();
+            }
+        }
+    }
+    
 }

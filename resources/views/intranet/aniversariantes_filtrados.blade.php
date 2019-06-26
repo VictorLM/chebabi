@@ -30,6 +30,14 @@
                   <a href="{{url('/intranet/aniversariantes')}}">
                     <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
                   </a>
+                  
+                  <a href="{{url('/intranet/aniversariantes/parabens')}}" class="float-right">
+                    <button type="button" class="btn btn-primary">
+                      <i class="glyphicon glyphicon-heart"></i>
+                      Minha felicitações
+                      @if($unread_parabens>0)<span class="badge"> {{$unread_parabens}}</span>@endif 
+                    </button>
+                  </a>
           </form>
         </h2>
 

@@ -30,6 +30,14 @@
                   <a href="{{url('/intranet/aniversariantes')}}">
                     <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-erase"></i> Limpar</button>
                   </a>
+                  
+                  <a href="{{url('/intranet/aniversariantes/parabens')}}" class="float-right">
+                    <button type="button" class="btn btn-primary">
+                      <i class="glyphicon glyphicon-heart"></i>
+                      Minha felicitações
+                      @if($unread_parabens>0)<span class="badge"> {{$unread_parabens}}</span>@endif 
+                    </button>
+                  </a>
           </form>
         </h2>
 
@@ -53,9 +61,14 @@
                         <td>{{$user->name}}</td>
                         <td>
                           {{Carbon\Carbon::parse($user->nascimento)->format('d/m')}} 
-                          @if(Carbon\Carbon::parse($user->nascimento)->format('d/m') 
-                          == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) 
-                          <i class="glyphicon glyphicon-gift"></i> Hoje!
+
+                          @if(Carbon\Carbon::parse($user->nascimento)->format('d/m')  == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) 
+                            Hoje! 
+                            @if(Auth::user()->id != $user->id)
+                              <a href="aniversariantes/parabens/{{$user->id}}">
+                                <button type="button" class="btn btn-info btn-sm"> <i class="glyphicon glyphicon-gift"></i> Parabenizar</button>
+                              </a>
+                            @endif
                           @endif
                         </td>
                     </tr>

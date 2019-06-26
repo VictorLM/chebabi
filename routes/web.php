@@ -72,6 +72,10 @@ Route::group(['prefix'=>'intranet'],function(){
     //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR
     Route::get('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');
     Route::post('/aniversariantes/filtrar', 'Intranet\IntranetController@aniversariantes_filtrados');
+    Route::get('/aniversariantes/parabens', 'Intranet\IntranetController@parabens');
+    Route::get('/aniversariantes/parabens/{user}', 'Intranet\IntranetController@parabens_novo');
+    Route::post('/aniversariantes/parabens/enviar', 'Intranet\IntranetController@parabens_enviar');
+    Route::post('/aniversariantes/parabens_lido', 'Intranet\IntranetController@parabens_lido');//AJAX
     Route::get('/clientes', 'Intranet\IntranetController@clientes');
     Route::get('/contatos', 'Intranet\IntranetController@contatos');
     Route::get('/procedimentos', 'Intranet\IntranetController@procedimentos');

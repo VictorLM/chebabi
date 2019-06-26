@@ -271,7 +271,7 @@
                         <h1 class="modal-title text-center uau-title">UAU!</h1>
                     </div>
                     <div class="modal-body">
-                        <h2 class="modal-title" id="memberModalLabel">Parabéns {{Auth::user()->name}}, você recebeu um novo Uau!</h2>
+                        <h2 class="modal-title" id="memberModalLabel">Parabéns <b>{{Auth::user()->name}}</b>, você recebeu um novo Uau!</h2>
                         <h3>Clique <a href="{{url("/intranet/meus-uaus")}}">aqui</a> para visualizar.</h3>
                     </div>
                     <div class="modal-footer">
@@ -287,8 +287,35 @@
         @endpush
     @endif
 
+    @if ($unread_parabens>0)
+        <!-- Modal -->
+        <div class="modal fade" id="unreadParabensModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content modal-meus-parabens">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title text-center uau-title">Parabéns!</h1>
+                    </div>
+                    <div class="modal-body">
+                        <h2 class="modal-title" id="memberModalLabel">Parabéns <b>{{Auth::user()->name}}</b>, você recebeu uma felicitação pelo seu aniversário!</h2>
+                        <h3>Clique <a href="{{url("/intranet/aniversariantes/parabens")}}">aqui</a> para visualizar.</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @push ('scripts')
+            <script type="text/javascript">
+                $('#unreadParabensModal').modal('show');
+            </script>
+        @endpush
+    @endif
+
 </div>
 @push ('scripts')
     <script src="{{ asset('assets/js/app.js') }}"></script>
 @endpush
+
 @endsection

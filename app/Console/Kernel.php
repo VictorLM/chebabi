@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         '\Intranet\Console\Commands\AtualizaNoticiasAASP',
         '\Intranet\Console\Commands\EmailAniversario',
         '\Intranet\Console\Commands\BackupDB',
+        '\Intranet\Console\Commands\EmailAniversarioTodos',
     ];
 
     /**
@@ -66,6 +67,9 @@ class Kernel extends ConsoleKernel
                 ->appendOutputTo(storage_path('logs/schedule.log'));
         $schedule->command('db:backup')
                 ->dailyAt('22:00')
+                ->appendOutputTo(storage_path('logs/schedule.log'));
+        $schedule->command('EmailAniversarioTodos:enviar')
+                ->dailyAt('09:00')
                 ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 
