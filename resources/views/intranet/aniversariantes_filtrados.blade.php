@@ -55,19 +55,29 @@
 
                 @if(isset($users) && count($users)>0)
 
-                  @foreach($users as $user)
-                    <tr @if(Carbon\Carbon::parse($user->nascimento)->format('d/m') 
+                @foreach($users as $user)
+                  <tr @if(Carbon\Carbon::parse($user->nascimento)->format('d/m') 
                       == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) style="font-weight:bold" @endif>
                       <td>{{$user->name}}</td>
                       <td>
                         {{Carbon\Carbon::parse($user->nascimento)->format('d/m')}} 
-                        @if(Carbon\Carbon::parse($user->nascimento)->format('d/m') 
-                        == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) 
-                        <i class="glyphicon glyphicon-gift"></i> Hoje!
+                        @if($user->is_bday()) 
+                          Hoje! 
+                          @if(Auth::user()->id != $user->id)
+                            <a href="aniversariantes/parabens/{{$user->id}}">
+                              <button type="button" class="btn btn-info btn-sm"> <i class="glyphicon glyphicon-gift"></i> Parabenizar</button>
+                            </a>
+                          @endif
+                        @elseif($user->is_congratulable())
+                          @if(Auth::user()->id != $user->id)
+                            <a href="aniversariantes/parabens/{{$user->id}}">
+                              <button type="button" class="btn btn-info btn-sm"> <i class="glyphicon glyphicon-gift"></i> Parabenizar</button>
+                            </a>
+                          @endif
                         @endif
                       </td>
-                    </tr>
-                  @endforeach
+                  </tr>
+                @endforeach
 
                 @else
                     <small>* Nenhum aniversariante encontrado nesse mês.</small>

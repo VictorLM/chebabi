@@ -38,6 +38,7 @@
                             <input type="hidden" name="para" value="{{$user->id}}">
                             <textarea class="novo-uau-input" name="mensagem" id="mensagem" maxlength="1000" 
                             @if($errors->has('mensagem')) style="border-color:red;" @endif>{{old('mensagem')}}</textarea>
+                            <small>* Somente o usuário destinatário terá acesso a essa mensagem.</small>
                             <br/><br/>
                             <button type="submit" class="btn btn-primary btn-lg" style="float:right;"><i class="glyphicon glyphicon-send"></i> Enviar</button>
                             <br/><br/>

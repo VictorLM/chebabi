@@ -492,8 +492,7 @@ class IntranetController extends Controller
     public function aniversariantes(){
         $mes = Carbon::today()->month;
         
-        $users = DB::table('users')
-            ->where('ativo', TRUE)
+        $users = User::where('ativo', TRUE)
             ->whereMonth('nascimento', '=', $mes)
             ->orderByRaw(DB::raw("DAY(nascimento) ASC"))
             ->paginate(30);
@@ -517,8 +516,7 @@ class IntranetController extends Controller
 
             $mes = $request->mes;
         
-            $users = DB::table('users')
-                ->where('ativo', TRUE)
+            $users = User::where('ativo', TRUE)
                 ->whereMonth('nascimento', '=', $mes)
                 ->orderByRaw(DB::raw("DAY(nascimento) ASC"))
                 ->paginate(30);
@@ -839,7 +837,7 @@ class IntranetController extends Controller
 
     public function parabens_novo($id){
         $user = User::find($id);
-        if(!empty($user) && Auth::user()->id != $user->id && $user->is_bday()){
+        if(!empty($user) && Auth::user()->id != $user->id && $user->is_congratulable()){
             $title = 'Parabenizar | Intranet Izique Chebabi Advogados Associados';
             return view('intranet.novo_parabens', compact('title', 'user'));
         }else{

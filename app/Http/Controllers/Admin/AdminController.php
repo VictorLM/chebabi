@@ -315,6 +315,41 @@ class AdminController extends Controller
         $request->session()->flash('alert-success', 'Cliente escluído com sucesso!');
         return redirect()->action('Admin\AdminController@index');
     }
+
+    //ARRUMAR OS PARAMETROS DE MES E ANO
+    public function print_rank_uau(){
+        $ranking = DB::table('uaus')
+        ->join('users', 'uaus.para', '=', 'users.id')
+        ->select('uaus.*', 'users.name', 'users.ativo')
+        ->where('users.ativo', TRUE)
+        ->orderBy('users.name', 'Asc');
+
+        $semestre = 1;
+
+        //1º SEMESTRE
+        $ranking->whereYear('uaus.created_at', Carbon::now()->year);
+
+        //2º SEMESTRE
+        //$ranking->whereYear('uaus.created_at', Carbon::now()->year)
+        //    ->whereMonth('uaus.created_at', '>', '6');
+
+        $ranking = $ranking->get()->groupBy('name');
+        
+        //ORDEM ALFABÉTICA DEPOIS DE ORDENAR PELO COUNT DO GROUP BY
+        $ranking_sorted = [];
+        $count = 0;
+        foreach($ranking as $key => $user){
+            $ranking_sorted[$user->count()][]['name'] = $key;
+            $count++;
+        }
+
+        //SORT BY MAIOR NUMERO UAUS
+        krsort($ranking_sorted);
+
+        //dd($ranking_sorted);
+        $title = 'Uau | Intranet Izique Chebabi Advogados Associados';
+        return view('admin.uaus', compact('title', 'ranking_sorted', 'semestre'));
+    }
     
     /*
     * FUNÇÃO PARA MIGRAÇÃO *

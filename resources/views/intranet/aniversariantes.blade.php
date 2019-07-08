@@ -61,9 +61,14 @@
                         <td>{{$user->name}}</td>
                         <td>
                           {{Carbon\Carbon::parse($user->nascimento)->format('d/m')}} 
-
-                          @if(Carbon\Carbon::parse($user->nascimento)->format('d/m')  == Carbon\Carbon::parse(Carbon\Carbon::today())->format('d/m')) 
+                          @if($user->is_bday()) 
                             Hoje! 
+                            @if(Auth::user()->id != $user->id)
+                              <a href="aniversariantes/parabens/{{$user->id}}">
+                                <button type="button" class="btn btn-info btn-sm"> <i class="glyphicon glyphicon-gift"></i> Parabenizar</button>
+                              </a>
+                            @endif
+                          @elseif($user->is_congratulable())
                             @if(Auth::user()->id != $user->id)
                               <a href="aniversariantes/parabens/{{$user->id}}">
                                 <button type="button" class="btn btn-info btn-sm"> <i class="glyphicon glyphicon-gift"></i> Parabenizar</button>

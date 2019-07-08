@@ -38,18 +38,20 @@ class User extends Authenticatable
     }
 
     public function is_congratulable(){
-        $user_bday = Carbon::parse($this->nascimento);
+        $user_bday = Carbon::parse($this->nascimento)->format('d/m');
         $today = Carbon::today();
-        if(Carbon::parse($user_bday)->format('d/m') == Carbon::parse($today)->format('d/m')){
+        if($user_bday == $today->format('d/m')){
             return true;
-        }else if($today->isMonday() && Carbon::parse($today->subDay())->format('d/m') == Carbon::parse($user_bday)->format('d/m')){
-            //IF BDAY = SÁBADO
-            return true;
-        }else if($today->isMonday() && Carbon::parse($today->subDays(2))->format('d/m') == Carbon::parse($user_bday)->format('d/m')){
-            //IF BDAY = DOMINGO
-            return true;
-        }else{
-            return false;
         }
+        if($today->isMonday()){
+            $saturday = $today->subDay()->format('d/m');
+            $sunday = $today->subDay()->format('d/m');
+            if($saturday == $user_bday){
+                return true;
+            }else if($sunday == $user_bday){
+                return true;
+            }
+        }
+        return false;
     }
 }

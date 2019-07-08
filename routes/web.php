@@ -158,6 +158,8 @@ Route::group(['prefix'=>'intranet/admin'],function(){
     //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR
     Route::get('/relatorios/filtrar', 'Relatorio\RelatorioController@relatorios_user');    
     Route::post('/relatorios/filtrar', 'Relatorio\RelatorioController@relatorios_user');    
+    //RELATÓRIO UAU
+    Route::get('/uaus', 'Admin\AdminController@print_rank_uau');  
     //ROTA PRA SEEDAR O NOVO BD - APAGAR
     //Route::get('/seed', 'Admin\AdminController@seed');
 });
