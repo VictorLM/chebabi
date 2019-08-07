@@ -44,7 +44,7 @@
                                                 <li><span class="badge badge-pill badge-primary">{{mb_strtoupper($adv->tipo_adv, 'UTF-8')}}</span></li>
                                                 <li><i class="fa fa-address-card"></i> OAB {{mb_strtoupper($adv->oab, 'UTF-8')}}</li>
                                                 <li><i class="fa fa-envelope"></i> <a href="mailto:{{$adv->nome_usuario->email}}">{{$adv->nome_usuario->email}}</a></li>
-                                                <li><i class="fa fa-phone-square"></i> (19) 3237-3747 Ramal {{$adv->nome_usuario->ramal}}</li>
+                                                <li><i class="fa fa-phone-square"></i> (19) 3203-4744 Ramal {{$adv->nome_usuario->ramal}}</li>
                                             </ul>
                                         </div>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

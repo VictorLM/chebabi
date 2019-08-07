@@ -54,6 +54,7 @@
                                     <option value="adm" @if((isset($user) && $user->tipo=='adm') || old('tipo') == "adm") selected @endif>Administrativo</option>
                                     <option value="fin" @if((isset($user) && $user->tipo=='fin') || old('tipo') == "fin") selected @endif>Financeiro</option>
                                     <option value="admjur" @if((isset($user) && $user->tipo=='admjur') || old('tipo') == "admjur") selected @endif>Adm. Jurídico</option>
+                                    <option value="geral" @if((isset($user) && $user->tipo=='geral') || old('tipo') == "geral") selected @endif>Geral</option>
                                 </select>
 
                                 @if ($errors->has('tipo'))

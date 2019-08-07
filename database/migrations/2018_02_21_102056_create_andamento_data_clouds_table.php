@@ -23,7 +23,7 @@ class CreateAndamentoDataCloudsTable extends Migration
             $table->string('posicao')->nullable();
             $table->string('contrario')->nullable();
             $table->string('area')->nullable();
-            $table->string('descricao', 2000)->nullable();
+            $table->string('descricao', 4000)->nullable();
             $table->dateTime('last_sync');
             $table->timestamps();
         });
