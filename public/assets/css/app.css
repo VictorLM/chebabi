@@ -116,7 +116,16 @@ textarea {
     background-position: top;
 }
 .userelogout{
-    margin-top: 1em!important;
+    margin-top: 0.5em!important;
+}
+.userelogout li>a{
+    padding: 0.5em!important;
+    display: inline-block!important;
+    color: #337ab7!important;
+}
+.userelogout li>a:hover{
+    color: #1E90FF!important;
+    text-decoration: underline!important;
 }
 .uau-title{
     font-family: 'Lobster', cursive;
@@ -310,6 +319,16 @@ textarea.novo-uau-input{
 .modal-meus-parabens{
     background-image: url(../imagens/bday-bg.png);
     background-repeat: repeat;
+}
+
+.terapias-link a{
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+
+.terapias-link h1{
+    font-size: 1.8em;
+    margin: 0;
 }
 
 @media (min-width: 1200px){

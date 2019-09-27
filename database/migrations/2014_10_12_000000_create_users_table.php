@@ -17,6 +17,9 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->enum('tipo', ['admin', 'adv', 'adm', 'fin', 'admjur']);
+            //$table->enum('tipo', ['admin', 'adv', 'estag', 'adm', 'fin', 'admjur'])->nullable();
+            //$table->enum('sub_tipo', ['civel', 'trabalhista', 'adm', 'controladoria', 'socios'])->nullable();
+            //$table->enum('escritorio', ['Campinas', 'São Paulo', 'Rio de Janeiro', 'Florianópolis'])->nullable();
             $table->boolean('ativo');
             $table->integer('ramal')->nullable();
             $table->string('telefone')->nullable();

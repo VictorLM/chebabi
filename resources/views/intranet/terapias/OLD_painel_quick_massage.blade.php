@@ -8,7 +8,7 @@
 
         <div class="panel-heading">
             <h2>
-                <a href="{{url('/intranet/agendamento-massagem')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> 
+                <a href="{{url('/intranet/terapias')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> 
                 Agendamentos massagens
                 <a href="{{url('/intranet/agendamento-massagem/incluir-dia-sem-massagem')}}">
                     <button type="button" class="btn btn-sm btn-info">

@@ -20,23 +20,6 @@
                 <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-3.jpg')}}" alt="advogados">
             </div>
 
-            <!--
-            <div class="carousel-item active">
-
-                @if($agent->isMobile())
-                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-mobile-etica.jpg')}}" alt="advogados">
-                @else
-                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-web-etica.jpg')}}" alt="advogados">
-                @endif
-            </div>
-            <div class="carousel-item">
-                @if($agent->isMobile())
-                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-mobile-transparencia.jpg')}}" alt="advogados">
-                @else
-                    <img class="d-block img-fluid" src="{{url('assets/imagens/slides/banner-web-transparencia.jpg')}}" alt="advogados">
-                @endif
-            </div>
-            -->
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -215,10 +198,18 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-jutify">
                     <h2>MISSÃO</h2>
-                    <p><i> - Encantar o cliente com atendimento personalizado, oferecendo soluções eficientes para a defesa dos seus interesses.</i></p>
+                    <ul>
+                        <li>
+                            <i>Encantar o cliente com atendimento personalizado, oferecendo soluções eficientes para a defesa dos seus interesses.</i>
+                        </li>
+                    </ul>
                     <br/>
                     <h2>VISÃO</h2>
-                    <p><i> - Ser a principal referência na prestação de serviços jurídicos na área de direito empresarial.</i></p>
+                    <ul>
+                        <li>
+                            <i>Ser a principal referência na prestação de serviços jurídicos na área de direito empresarial.</i>
+                        </li>
+                    </ul>
                     <br/>
                     <h2>VALORES</h2>
                     <ul>

@@ -419,7 +419,7 @@ a[x-apple-data-detectors=true] {
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
 	<div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
-		<div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 11px; line-height: 13px;">Intranet - Izique Chebabi Advogados Associados.</span></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 11px; line-height: 13px;">&#160;</span></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 11px; line-height: 13px;">Esta mensagem é enviada automaticamente. Favor não responde-la.</span></p></div>	
+		<div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 11px; line-height: 13px;">Intranet - Izique Chebabi Advogados Associados.</span></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 11px; line-height: 13px;">&#160;</span></p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="font-size: 11px; line-height: 13px;">Esta mensagem foi enviada automaticamente. Favor não responde-la.</span></p></div>	
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>

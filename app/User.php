@@ -54,4 +54,21 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function is_admin(){
+        if($this->tipo == 'admin'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function is_admin_recepcao(){
+        if($this->tipo == 'admin' || $this->email == 'recepcao@chebabi.com'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

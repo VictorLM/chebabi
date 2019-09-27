@@ -55,7 +55,7 @@
                                     {{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor: {{$artigo->autor}} | 
                                 </small>
                                 <span class="badge badge-primary">{{$artigo->categoria}}</span></i>
-
+                                <hr/>
                                 @if(!empty($artigo->imagem))
                                     <br/>
                                     <img class="img-fluid img-thumbnail rounded img-margin-top-bottom" src="{{url($artigo->imagem)}}" alt="advogados">

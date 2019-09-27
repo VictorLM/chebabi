@@ -49,13 +49,30 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/agenda/novo-evento', 'Intranet\IntranetController@novo_evento');
     Route::post('/agenda/novo-evento', 'APIs\MicrosoftController@criar_evento');
     Route::post('/agenda/editar-evento', 'APIs\MicrosoftController@update_evento');
+    /////////////////////////////////
+    //ROTAS TERAPIAS
+    Route::get('/terapias', 'Terapias\TerapiasController@index');
+    //ROTAS TERAPIAS - QUICK MASSAGE
+    Route::get('/terapias/quick-massage', 'Terapias\TerapiasController@quick_massage_index');
+    Route::post('/terapias/quick-massage/agendar', 'Terapias\TerapiasController@agendar_quick_massage');
+    Route::post('/terapias/quick-massage/cancelar', 'Terapias\TerapiasController@cancelar_quick_massage');
+    //ROTAS TERAPIAS - AURICULOTERAPIA
+    Route::get('/terapias/auriculoterapia', 'Terapias\TerapiasController@auriculoterapia_index');
+    Route::post('/terapias/auriculoterapia/agendar', 'Terapias\TerapiasController@agendar_auriculoterapia');
+    Route::post('/terapias/auriculoterapia/cancelar', 'Terapias\TerapiasController@cancelar_auriculoterapia');
+    //ROTAS TERAPIAS - MASSAGEM NOS PÉS
+    Route::get('/terapias/massagem-pes', 'Terapias\TerapiasController@massagem_pes_index');
+    Route::post('/terapias/massagem-pes/agendar', 'Terapias\TerapiasController@agendar_massagem_pes');
+    Route::post('/terapias/massagem-pes/cancelar', 'Terapias\TerapiasController@cancelar_massagem_pes');
+
+
     //ROTAS AGENDAMENTO MASSAGEM
-    Route::get('/agendamento-massagem', 'Intranet\IntranetController@agendamento_massagem');
     Route::get('/agendamento-massagem/todos-agendamentos', 'Intranet\IntranetController@todos_agendamentos_massagem');
     Route::get('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@form_dia_sem_massagem');
     Route::post('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@incluir_dia_sem_massagem');
-    Route::post('/agendamento-massagem/agendar-massagem', 'APIs\MicrosoftController@criar_evento_massagem');
-    Route::post('/agendamento-massagem/cancelar-massagem', 'APIs\MicrosoftController@cancelar_evento_massagem');
+
+    /////////////////////////////////
+
     //ROTAS LEGAL ONE
     Route::get('/andamentos-datacloud', 'APIs\LegalOneController@andamentos_datacloud');
     //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR

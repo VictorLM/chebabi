@@ -11,7 +11,6 @@ use Intranet\Eventos;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-use Intranet\Massagem;
 
 class MicrosoftController extends Controller
 {
@@ -21,7 +20,7 @@ class MicrosoftController extends Controller
         $this->middleware('auth');
     }
     //cURL
-    private function curl($url, $evento_json, $request_type){
+    public static function curl($url, $evento_json, $request_type){
         $token = DB::table('apikeys')
             ->where('name', 'Microsoft Graph')
             ->value('token');
@@ -61,7 +60,7 @@ class MicrosoftController extends Controller
             }else{
                 $mensagem = 'NULL';
             }
-            $erro["error"] = 'Erro! informe ao dpto. responsável a seguinte mensagem: Response code: ' .$response_code. '. Erro: ' .$mensagem;
+            $erro["error"] = 'Erro! Response code: ' .$response_code. '. Erro: ' .$mensagem;
             return $erro;
         }
     }
@@ -540,145 +539,6 @@ class MicrosoftController extends Controller
         }else{
             return abort(403, 'Evento inválido ou seu usuário não está autorizado.');
         }
-    }
-
-    ////////// FUNÇÕES EVENTOS MASSAGEM@CHEBABI.COM //////////
-
-    public function criar_evento_massagem(Request $request){
-
-        $validatedData = Validator::make($request->all(), [
-            'data' => 'required|date_format:Y-m-d|after_or_equal:today',
-            'hora' => 'required|date_format:H:i:s',
-        ]);
-        
-        if (!$validatedData->fails()){
-
-            //VALIDAÇÃO COM MASSAGENS JÁ AGENDADAS E LIMITE DO USUÁRIO
-            $dias_sem_massagem = DB::table('dias_sem_massagens')
-                ->whereDate('data', $request->data)
-                ->count();
-
-            $massagens_usuario_mes = Massagem::where('cancelado', false)
-                ->where('usuario', Auth::user()->id)
-                ->whereMonth('inicio_data', Carbon::now()->month)
-                ->whereYear('inicio_data', Carbon::now()->year)
-                ->count();
-
-            $massagens_usuario_dia = Massagem::where('cancelado', false)
-                ->where('usuario', Auth::user()->id)
-                ->whereDate('inicio_data', $request->data)
-                ->count();
-
-            $massagem_livre = Massagem::where('cancelado', false)
-                ->whereDate('inicio_data', $request->data)
-                ->whereTime('inicio_hora', '=', $request->hora)
-                ->count();
-
-            if(!$dias_sem_massagem && $massagens_usuario_mes < 4 && !$massagens_usuario_dia && !$massagem_livre){
-                
-                require_once __DIR__ . '/../../../../app/Http/Controllers/APIs/massagem.json.php';
-                
-                $evento = json_encode($evento);
-                
-                $url = 'https://graph.microsoft.com/v1.0/users/massagem@chebabi.com/events';
-
-                //cURL
-                $result = $this->curl($url, $evento, "POST");
-
-                if(empty($result["error"])){
-
-                    Massagem::insert([
-                        'evento_id' => $result['id'],
-                        'usuario' => Auth::user()->id,
-                        'inicio_data' => Carbon::parse($result['start']['dateTime'])->format('Y-m-d'),
-                        'inicio_hora' => Carbon::parse($result['start']['dateTime'])->format('H:i:s'),
-                        'fim_data' => Carbon::parse($result['end']['dateTime'])->format('Y-m-d'),
-                        'fim_hora' => Carbon::parse($result['end']['dateTime'])->format('H:i:s'),
-                        'cancelado' => false,
-                        'created_at' => Carbon::now(),
-                    ]);
-                    
-                    $request->session()->flash('alert-success', 'Massagem agendada com sucesso!');
-                    return redirect('/intranet/agendamento-massagem');
-                }else{
-                    return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
-                }
-            }else{
-                return redirect()->back()
-                        ->withInput()
-                        ->withErrors(array('message' => 'Erro ao agendar! Conflito com o dia e/ou horário selecionado. Tente novamente.'));
-            }
-        }else{
-            return redirect()->back()->withErrors($validatedData)->withInput();
-        }
-    }
-
-    public function cancelar_evento_massagem(Request $request){
-
-        $validatedData = Validator::make($request->all(), [
-            'data' => 'required|date_format:Y-m-d|after_or_equal:today',
-            'hora' => 'required|date_format:H:i:s',
-        ]);
-        
-        if (!$validatedData->fails()){
-
-            $data_horario_futuro = false;
-
-            if($request->data == Carbon::parse(Carbon::today())->format('Y-m-d') && $request->hora > Carbon::parse(Carbon::now())->format('H:i:s')){
-                $data_horario_futuro = true;
-            }elseif($request->data > Carbon::parse(Carbon::today())->format('Y-m-d')){
-                $data_horario_futuro = true;
-            }
-
-            if($data_horario_futuro){
-                $massagem = Massagem::where('cancelado', false)
-                    ->where('usuario', Auth::user()->id)
-                    ->whereDate('inicio_data', $request->data)
-                    ->whereTime('inicio_hora', '=', $request->hora)
-                    ->first();
-
-                if($massagem->count() > 0){
-                    
-                    $evento_cancelado = array (
-                        'Comment' => 'Sessão de massagem cancelada.'
-                    );
-                    
-                    $evento_cancelado = json_encode($evento_cancelado);
-
-                    $url = 'https://graph.microsoft.com/beta/users/massagem@chebabi.com/events/'.$massagem->evento_id.'/cancel';
-
-                    //cURL
-                    $result = $this->curl($url, $evento_cancelado, "POST");
-
-                    if(empty($result["error"])){
-                        $massagem->cancelado = TRUE;
-
-                        if(!$massagem->save()){
-                            return abort(403, 'Erro ao salvar no banco de dados.');
-                        }else{
-                            $request->session()->flash('alert-success', 'Agendamento cancelado com sucesso!');
-                            return redirect('/intranet/agendamento-massagem');
-                        }
-                        
-                    }else{
-                        return redirect()->back()->withInput()->withErrors(array('message' => $result['error']));
-                    }
-
-                }else{
-                    return redirect()->back()
-                            ->withInput()
-                            ->withErrors(array('message' => 'Erro ao cancelar! Agendamento não encontrado. Tente novamente mais tarde ou informe este erro ao departamento responsável.'));
-                }
-            }else{
-                return redirect()->back()
-                ->withInput()
-                ->withErrors(array('message' => 'Erro ao cancelar! Agendamento com data e/ou horário passados. Tente novamente mais tarde ou informe este erro ao departamento responsável.'));
-            }
-
-        }else{
-            return redirect()->back()->withErrors($validatedData)->withInput();
-        }
-
     }
 
 }

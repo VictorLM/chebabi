@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Mail;
 use Intranet\Uau;
-use Intranet\Massagem;
 use Validator;
 use Intranet\Eventos;
 use Intranet\Cliente;
@@ -79,6 +78,7 @@ class IntranetController extends Controller
     }
 
     public function sugestao(){
+        $title = 'Enviar uma sugestão | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.sugestao', compact('title'));
     }
     
@@ -221,7 +221,6 @@ class IntranetController extends Controller
 
                 if($evento->tipo == "Reunião"){
                     return view('intranet.editar_evento_reuniao', compact('title', 'evento', 'users', 'envolvidos', 'titulo'));
-                    dd("TESTEEE");
                 }else{
                     return view('intranet.editar_evento', compact('title', 'evento', 'users', 'envolvidos', 'titulo'));
                 }
@@ -231,243 +230,6 @@ class IntranetController extends Controller
             }
         }else{
             return null;
-        }
-    }
-
-    public function agendamento_massagem(){
-
-        $terca = array();
-        $quarta = array();
-
-        $segunda = Carbon::today()->startOfWeek();
-        $terca['dia'] = $segunda->copy()->addDay();
-        $quarta['dia'] = $terca['dia']->copy()->addDay();
-
-        $terca['disponivel'] = $quarta['disponivel'] = true;
-
-        $terca['horarios']['14:00'] = $quarta['horarios']['14:00'] = false;
-        $terca['horarios']['14:10'] = $quarta['horarios']['14:10'] = false;
-        $terca['horarios']['14:20'] = $quarta['horarios']['14:20'] = false;
-        $terca['horarios']['14:30'] = $quarta['horarios']['14:30'] = false;
-        $terca['horarios']['14:40'] = $quarta['horarios']['14:40'] = false;
-        $terca['horarios']['14:50'] = $quarta['horarios']['14:50'] = false;
-        $terca['horarios']['15:00'] = $quarta['horarios']['15:00'] = false;
-        $terca['horarios']['15:10'] = $quarta['horarios']['15:10'] = false;
-        $terca['horarios']['15:20'] = $quarta['horarios']['15:20'] = false;
-        //15H30 ÀS 15H40 É A PAUSA DA MASSAGISTA
-        $terca['horarios']['15:40'] = $quarta['horarios']['15:40'] = false;
-        $terca['horarios']['15:50'] = $quarta['horarios']['15:50'] = false;
-        $terca['horarios']['16:00'] = $quarta['horarios']['16:00'] = false;
-        $terca['horarios']['16:10'] = $quarta['horarios']['16:10'] = false;
-        $terca['horarios']['16:20'] = $quarta['horarios']['16:20'] = false;
-        $terca['horarios']['16:30'] = $quarta['horarios']['16:30'] = false;
-        $terca['horarios']['16:40'] = $quarta['horarios']['16:40'] = false;
-        $terca['horarios']['16:50'] = $quarta['horarios']['16:50'] = false;
-        $terca['horarios']['17:00'] = $quarta['horarios']['17:00'] = false;
-
-        $terca['limite_usuario'] = $quarta['limite_usuario'] = false;
-
-        $dias_sem_massagem = DB::table('dias_sem_massagens')->whereDate('data', '>=', $segunda)->get();
-        
-        foreach($dias_sem_massagem as $dia){
-            if($dia->data == Carbon::parse($terca['dia'])->format('Y-m-d')){
-                $terca['disponivel'] = false;
-            }else if($dia->data == Carbon::parse($quarta['dia'])->format('Y-m-d')){
-                $quarta['disponivel'] = false;
-            }
-        }
-
-        $massagens_agendadas = Massagem::with('user:id,name')
-            ->where('cancelado', false)
-            ->whereDate('inicio_data', '>=' ,Carbon::parse($terca['dia'])->format('Y-m-d'))
-            ->get();
-        
-        foreach($massagens_agendadas as $massagem){
-            if($massagem->inicio_data == Carbon::parse($terca['dia'])->format('Y-m-d')){
-                if($massagem->inicio_hora == '14:00:00'){
-                    $terca['horarios']['14:00'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:10:00'){
-                    $terca['horarios']['14:10'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:20:00'){
-                    $terca['horarios']['14:20'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:30:00'){
-                    $terca['horarios']['14:30'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:40:00'){
-                    $terca['horarios']['14:40'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:50:00'){
-                    $terca['horarios']['14:50'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:00:00'){
-                    $terca['horarios']['15:00'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:10:00'){
-                    $terca['horarios']['15:10'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:20:00'){
-                    $terca['horarios']['15:20'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:40:00'){
-                    $terca['horarios']['15:40'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:50:00'){
-                    $terca['horarios']['15:50'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:00:00'){
-                    $terca['horarios']['16:00'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:10:00'){
-                    $terca['horarios']['16:10'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:20:00'){
-                    $terca['horarios']['16:20'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:30:00'){
-                    $terca['horarios']['16:30'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:40:00'){
-                    $terca['horarios']['16:40'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:50:00'){
-                    $terca['horarios']['16:50'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '17:00:00'){
-                    $terca['horarios']['17:00'] = $massagem->user->name;
-                }
-            }else if($massagem->inicio_data == Carbon::parse($quarta['dia'])->format('Y-m-d')){
-                if($massagem->inicio_hora == '14:00:00'){
-                    $quarta['horarios']['14:00'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:10:00'){
-                    $quarta['horarios']['14:10'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:20:00'){
-                    $quarta['horarios']['14:20'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:30:00'){
-                    $quarta['horarios']['14:30'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:40:00'){
-                    $quarta['horarios']['14:40'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '14:50:00'){
-                    $quarta['horarios']['14:50'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:00:00'){
-                    $quarta['horarios']['15:00'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:10:00'){
-                    $quarta['horarios']['15:10'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:20:00'){
-                    $quarta['horarios']['15:20'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:40:00'){
-                    $quarta['horarios']['15:40'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '15:50:00'){
-                    $quarta['horarios']['15:50'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:00:00'){
-                    $quarta['horarios']['16:00'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:10:00'){
-                    $quarta['horarios']['16:10'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:20:00'){
-                    $quarta['horarios']['16:20'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:30:00'){
-                    $quarta['horarios']['16:30'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:40:00'){
-                    $quarta['horarios']['16:40'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '16:50:00'){
-                    $quarta['horarios']['16:50'] = $massagem->user->name;
-                }else if($massagem->inicio_hora == '17:00:00'){
-                    $quarta['horarios']['17:00'] = $massagem->user->name;
-                }
-            }
-        }
-
-        //CHECAR SE HÁ MAIS DE 4 AGENDAMENTOS PARA O MÊS CORRENTE
-        $massagens_usuario_mes = Massagem::where('cancelado', false)
-            ->where('usuario', Auth::user()->id)
-            ->whereMonth('inicio_data', Carbon::now()->month)
-            ->whereYear('inicio_data', Carbon::now()->year)
-            ->count();
-
-        if($massagens_usuario_mes >= 4){
-            $terca['limite_usuario'] = $quarta['limite_usuario'] = true;
-        }
-
-        //CHECAR SE HÁ AGENDAMENTO PARA O DIA - TERÇA
-        $massagens_usuario_terca = Massagem::where('cancelado', false)
-            ->where('usuario', Auth::user()->id)
-            ->whereDate('inicio_data', Carbon::parse($terca['dia'])->format('Y-m-d'))
-            ->count();
-
-        if($massagens_usuario_terca >= 1){
-            $terca['limite_usuario'] = true;
-        }
-
-        //CHECAR SE HÁ AGENDAMENTO PARA O DIA - QUARTA
-        $massagens_usuario_quarta = Massagem::where('cancelado', false)
-            ->where('usuario', Auth::user()->id)
-            ->whereDate('inicio_data', Carbon::parse($quarta['dia'])->format('Y-m-d'))
-            ->count();
-
-        if($massagens_usuario_quarta >= 1){
-            $quarta['limite_usuario'] = true;
-        }
-
-        //CHECA PERFIL PARA EXIBIR LINK DA VIEW C/ TODOS OS AGENDAMENTOS
-        if(Auth::user()->tipo == 'admin' || Auth::user()->email == 'recepcao@chebabi.com'){
-            $link_todos_agendamentos = true;
-        }else{
-            $link_todos_agendamentos = false;
-        }
-        $title = 'Agendamento Massagem | Intranet Izique Chebabi Advogados Associados';
-        return view('intranet.agendamento_massagem', compact('title','terca','quarta','link_todos_agendamentos'));
-    }
-
-    public function todos_agendamentos_massagem(){
-        //CHECA PERFIL PARA EXIBIR LINK DA VIEW C/ TODOS OS AGENDAMENTOS
-        if(Auth::user()->tipo == 'admin' || Auth::user()->email == 'recepcao@chebabi.com'){
-
-            $dias_sem_massagem = DB::table('dias_sem_massagens')
-                ->whereMonth('data', '>=', Carbon::now()->month)
-                ->whereYear('data', '>=', Carbon::now()->year)
-                ->orderBy('data', 'asc')
-                ->get();
-
-            $massagens_agendadas = Massagem::with('user:id,name')
-                ->where('cancelado', false)
-                ->whereDate('inicio_data', '>=', Carbon::today())
-                ->orderBy('inicio_data', 'asc')
-                ->orderBy('inicio_hora', 'asc')
-                ->get();
-
-            $title = 'Todos Agendamentos Massagem | Intranet Izique Chebabi Advogados Associados';
-            return view('intranet.todos_agendamentos_massagem', compact('title','dias_sem_massagem','massagens_agendadas'));
-
-        }else{
-            return abort(403, 'Não autorizado.');
-        }
-    }
-
-    public function form_dia_sem_massagem(Request $request){
-        //CHECA PERFIL PARA EXIBIR LINK DA VIEW C/ TODOS OS AGENDAMENTOS
-        if(Auth::user()->tipo == 'admin' || Auth::user()->email == 'recepcao@chebabi.com'){
-
-            $dias_sem_massagem = DB::table('dias_sem_massagens')
-                ->whereMonth('data', '>=', Carbon::now()->month)
-                ->whereYear('data', '>=', Carbon::now()->year)
-                ->orderBy('data', 'asc')
-                ->get();
-            
-            $title = 'Incluir dia sem Massagem | Intranet Izique Chebabi Advogados Associados';
-            return view('intranet.form_dia_sem_massagem', compact('title','dias_sem_massagem'));
-
-        }else{
-            return abort(403, 'Não autorizado.');
-        }
-    }
-
-    public function incluir_dia_sem_massagem(Request $request){
-
-        if(Auth::user()->tipo == 'admin' || Auth::user()->email == 'recepcao@chebabi.com'){
-
-            $validatedData = Validator::make($request->all(), [
-                'data' => 'required|date_format:Y-m-d|after_or_equal:today|unique:dias_sem_massagens',
-            ]);
-            if (!$validatedData->fails()){
-    
-                DB::table('dias_sem_massagens')->insert([
-                    'data' => $request->data,
-                    'usuario' => Auth::user()->id,
-                    'created_at' => Carbon::now(),
-                ]);
-    
-                $request->session()->flash('alert-success', 'Data inclusa com sucesso!');
-                return redirect()->action('Intranet\IntranetController@form_dia_sem_massagem');
-            }else{
-                return redirect()->back()->withErrors($validatedData)->withInput();
-            }
-        }else{
-            return abort(403, 'Não autorizado.');
         }
     }
 

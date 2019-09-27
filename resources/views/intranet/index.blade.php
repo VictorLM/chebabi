@@ -1,7 +1,13 @@
 @extends('intranet.templates.template')
+
+@push('meta')
+    <meta http-equiv="refresh" content="600"/>
+@endpush
+
 @push('styles')
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 @endpush
+
 @section('content')
 
 <div class="container-index">
@@ -29,7 +35,7 @@
                     
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
-                            <a href="#" id="agenda" data-toggle="popover" data-trigger="focus" data-content="#">
+                                <a href="{{url('intranet/agenda')}}">
                                 <i class="glyphicon glyphicon-calendar"></i>
                                 <i class="glyphicon glyphicon-time"></i><br/>AGENDA</a>
                         </div>
@@ -116,6 +122,14 @@
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
+                            <a href="{{url('intranet/terapias')}}">
+                            <i class="glyphicon glyphicon-leaf"></i>
+                            <i class="glyphicon glyphicon-time"></i><br/>TERAPIAS</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/tutoriais')}}">
                             <i class="glyphicon glyphicon-question-sign"></i>
                             <i class="glyphicon glyphicon-book"></i><br/>TUTORIAIS</a>
@@ -132,7 +146,11 @@
                             <i class="glyphicon glyphicon-star"></i><br/>UAU!</a>
                         </div>
                     </div>
-                    
+
+                </div>
+
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="https://outlook.office365.com/" target="_blank">
@@ -140,10 +158,6 @@
                             <i class="glyphicon glyphicon-globe"></i><br/>WEBMAIL</a>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="row">
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
