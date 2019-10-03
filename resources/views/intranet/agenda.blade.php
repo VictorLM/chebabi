@@ -33,7 +33,6 @@
                                     <td class="td-cores-agenda" style="background-color:#00e600;"><small><b>Carro</b></small></td>
                                     <td class="td-cores-agenda" style="background-color:#80bfff;"><small><b>Reunião</b></small></td>
                                     <td class="td-cores-agenda" style="background-color:#3a87ad;"><small><b>Outro</b></small></td>
-                                    <td class="td-cores-agenda" style="background-color:red;"><small><b>Cancelado</b></small></td>
                                 </tr>
                             </tbody>
                         </table>

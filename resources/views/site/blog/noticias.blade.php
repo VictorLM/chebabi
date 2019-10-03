@@ -94,7 +94,7 @@
                                             <a class="advs-link" href="{{$artigo->url}}">{{$artigo->titulo}}</a>
                                         </h4>
                                         <small class="text-muted">
-                                            <i>{{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor: {{$artigo->autor}}</i>
+                                            <i>{{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor(a): {{$artigo->autor}}</i>
                                         </small>
         
                                         <div class="row">

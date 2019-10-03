@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{url('/blog')}}" class="btn btn-primary btn-sm">Ver tudo</a>
+                            <a href="{{url('/blog')}}" class="btn btn-primary btn-sm">Veja mais</a>
                         </div>
 
                     </div>
@@ -93,7 +93,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{url('/blog/noticias')}}" class="btn btn-primary btn-sm">Ver tudo</a>
+                            <a href="{{url('/blog/noticias')}}" class="btn btn-primary btn-sm">Veja mais</a>
                         </div>
 
                     </div>
@@ -132,7 +132,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{url('/blog/historias')}}" class="btn btn-primary btn-sm">Ver tudo</a>
+                            <a href="{{url('/blog/historias')}}" class="btn btn-primary btn-sm">Veja mais</a>
                         </div>
 
                     </div>

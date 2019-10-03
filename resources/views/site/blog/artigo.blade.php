@@ -52,7 +52,7 @@
                             <div class="card-body">
                                 <h2 class="card-title">{{$artigo->titulo}}</h2>
                                 <small class="text-muted"><i>
-                                    {{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor: {{$artigo->autor}} | 
+                                    {{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor(a): {{$artigo->autor}} | 
                                 </small>
                                 <span class="badge badge-primary">{{$artigo->categoria}}</span></i>
                                 <hr/>
@@ -64,8 +64,9 @@
                                 
                                 <p>&emsp;{!!$artigo->descricao!!}</p>
                                 <small class="text-muted"><i>Tags: </small><small>{{$artigo->tags}}</i></small>
-
+                                <hr/>
                                 <div class="text-right">
+                                    <h2 class="inline">Compartilhe:</h2>
                                     <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A//www.chebabi.com{{$artigo->url}}&title={{$artigo->titulo}}&summary=&source=" target="_blank" class="fa fa-linkedin fa-2x social"></a>
                                     <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//www.chebabi.com{{$artigo->url}}/" target="_blank" class="fa fa-facebook fa-2x social"></a>
                                 </div>

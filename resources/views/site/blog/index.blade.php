@@ -29,10 +29,10 @@
                                     <a class="advs-link" href="{{$artigo->url}}">{{$artigo->titulo}}</a>
                                 </h3>
                                 <small class="text-muted"><i>
-                                    {{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor: {{$artigo->autor}} | 
+                                    {{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor(a): {{$artigo->autor}} | 
                                 </small>
                                 <span class="badge badge-primary">{{$artigo->categoria}}</span></i>
-    
+                                <hr/>
                                 <div class="row">
     
                                     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -48,7 +48,7 @@
                                         <small class="text-muted"><i>Tags: </small><small>{{$artigo->tags}}</i></small>
                                     </div>
                                 </div>
-    
+                                <hr/>
                                 <a href="{{$artigo->url}}" class="btn btn-primary float-right">Ler mais</a>
                             </div>
                         </div>

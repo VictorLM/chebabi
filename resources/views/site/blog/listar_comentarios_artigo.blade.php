@@ -15,7 +15,7 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Autor</th>
+                            <th>Autor(a)</th>
                             <th>E-mail</th>
                             <th>Data</th>
                             <th>Comentário</th>

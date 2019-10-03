@@ -19,40 +19,39 @@
 
                     <h1 class="text-center"><i class="fa fa-youtube-play"></i> HISTÓRIAS</h1>
 
-                    <div class="card">
+                    @if(count($historias)>0)
+                        @foreach ($historias as $historia)
 
-                        <div class="card-body">
-                            @if(count($historias)>0)
-                                @foreach ($historias as $historia)
-
-                                <div>
-                                    <h3>
-                                        <a class="advs-link" href="{{$historia->url}}">{{$historia->titulo}}</a>
-                                    </h3>
-                                    <small class="text-muted">
-                                        <i>{{Carbon\Carbon::parse($historia->created_at)->format('d/m/Y H:i')}}</i>
-                                    </small>
-                                    @if(!empty($historia->link))
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
-                                        </div>
-                                    @endif
-                                    <br/>
-                                    <p>&emsp;{{strip_tags(str_limit($historia->descricao, 330, ' [...]'))}} </p>
-                                    <small class="text-muted"><i>Tags: </small><small>{{$historia->tags}}</i></small>
-                                    <br/>
-                                    <a href="{{$historia->url}}" class="btn btn-primary btn-sm">Ler mais</a>
-                                    <br/>
-                                </div>
-
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>
+                                    <a class="advs-link" href="{{$historia->url}}">{{$historia->titulo}}</a>
+                                </h3>
+                                <small class="text-muted">
+                                    <i>{{Carbon\Carbon::parse($historia->created_at)->format('d/m/Y H:i')}}</i>
+                                </small>
                                 <hr/>
-                                    
-                                @endforeach
-                            @else
-                                <p class="card-text">Nenhuma história encontrado.</p>
-                            @endif
+                                @if(!empty($historia->link))
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item rounded" src="{{$historia->link}}" allowfullscreen></iframe>
+                                    </div>
+                                @endif
+                                <br/>
+                                <p>&emsp;{{strip_tags(str_limit($historia->descricao, 330, ' [...]'))}} </p>
+                                <small class="text-muted"><i>Tags: </small><small>{{$historia->tags}}</i></small>
+                                <br/>
+                                <hr/>
+                                <a href="{{$historia->url}}" class="btn btn-primary float-right">Ler mais</a>
+                                <br/>
+                            </div>
                         </div>
-                    </div>
+
+                        <hr/>
+                            
+                        @endforeach
+                    @else
+                        <p class="card-text">Nenhuma história encontrado.</p>
+                    @endif
                     <br/>
                     {{ $historias->links() }}
 
@@ -112,7 +111,7 @@
                                             <a class="advs-link" href="{{$artigo->url}}">{{$artigo->titulo}}</a>
                                         </h4>
                                         <small class="text-muted">
-                                            <i>{{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor: {{$artigo->autor}}</i>
+                                            <i>{{Carbon\Carbon::parse($artigo->created_at)->format('d/m/Y H:i')}} | Autor(a): {{$artigo->autor}}</i>
                                         </small>
         
                                         <div class="row">

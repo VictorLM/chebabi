@@ -20,7 +20,7 @@ use Exception;
 
 /* 
 Limite de uma terapia por dia, por usuário. Exceto Mat Pilates
-Se houver sessão livre 15 min. antes do início da mesma, liberar também para os usuários com limites já atingidos
+Se houver sessão livre 30 min. antes do início da mesma, liberar também para os usuários com limites já atingidos
 */
 
 class TerapiasController extends Controller{
@@ -363,6 +363,12 @@ class TerapiasController extends Controller{
             return redirect()->back()->withErrors($validacao);
         }
     }
+
+    ////////////////////////////////////////////////
+    public function enviar_lista_agendamentos(){
+        
+    }
+    ////////////////////////////////////////////////
 
         /*
     public function todos_agendamentos_massagem(){

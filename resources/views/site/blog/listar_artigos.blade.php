@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>Título</th>
-                            <th>Autor</th>
+                            <th>Autor(a)</th>
                             <th>Categoria</th>
                             <th>Descrição</th>
                             <th>Data inclusão</th>

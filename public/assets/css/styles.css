@@ -138,6 +138,9 @@ body{
     border: 1px solid #ced4da;
     border-radius: .25rem;
 }
+.inline{
+    display: inline;
+}
 
 @media (min-width: 1200px){
     .container {

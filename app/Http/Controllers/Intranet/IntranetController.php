@@ -21,13 +21,11 @@ use Exception;
 
 class IntranetController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth');
     }
 
-    public function index()
-    {
+    public function index(){
 
         $unread_uaus = DB::table('uaus')->where([
             ['para', Auth::user()->id],
@@ -122,7 +120,9 @@ class IntranetController extends Controller
 
     public function eventos(){
         //PARA O AJAX DO FULL CALENDAR
-        $eventos = Eventos::whereDate('start', '>=', Carbon::today()->subMonth())->get();
+        $eventos = Eventos::whereDate('start', '>=', Carbon::today()->subMonth())
+            ->where('cancelado', false)
+            ->get();
         //SÓ RETORNA OS EVENTOS DO ATÉ UM MÊS NO PASSADO
         for($i=0;$i<count($eventos);$i++){
             $eventos[$i]->dow = unserialize($eventos[$i]->dow);

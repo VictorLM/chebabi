@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6{{ $errors->has('autor') ? ' has-error' : '' }}">
-                        <label>* Autor</label>
+                        <label>* Autor(a)</label>
                         <input type="text" class="form-control" name="autor" maxlength="100" value="{{old('autor', $artigo->autor)}}" required>
                         @if ($errors->has('autor'))
                             <span class="help-block">
