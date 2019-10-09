@@ -100,7 +100,9 @@
 
                                                                         @if($dia['limite_intervalo_agendamento']) {{-- se limite min. $terapia['limite_intervalo_agendamento'] dias --}}
                                                                             <i><small>Só é possível agendar uma sessão desta terapia a cada {{$terapia['intervalo_agendamento']}} dias.</small></i>
-                                                                        @elseif($dia['limite_mensal'] || $dia['limite_diario']) {{-- se já bateu limite mensal, diário (outras terapias incluso) ou intervalo agendamento --}}
+                                                                        @elseif($dia['limite_diario']) {{-- se já bateu limite diário (incluso outras terapias) --}}
+                                                                            <i><small>Você já tem uma sessão de <b>{{$dia['limite_diario']}}</b> agendada nesse dia.</small></i> 
+                                                                        @elseif($dia['limite_mensal']) {{-- se já bateu limite mensal --}}
 
                                                                             @if(Carbon\Carbon::now()->between(Carbon\Carbon::parse($dia['dia']." ".$key)->subMinutes($limite_livre_bonus), Carbon\Carbon::parse($dia['dia']." ".$key))) {{-- se ainda livre 30 min antes do início --}}
                                                                                 <form class="form-horizontal" method="POST" action="{{action('Terapias\TerapiasController@agendar_auriculoterapia')}}">
@@ -114,8 +116,6 @@
                                                                             @else
                                                                                 @if($dia['limite_mensal'])
                                                                                     <i><small>Você já atingiu o limite mensal de agendamentos p/ essa terapia.</small></i>
-                                                                                @elseif($dia['limite_diario'])
-                                                                                    <i><small>Você já tem uma sessão de <b>{{$dia['limite_diario']}}</b> agendada nesse dia.</small></i> 
                                                                                 @endif
                                                                             @endif
 

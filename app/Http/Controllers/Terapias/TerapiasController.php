@@ -29,9 +29,9 @@ class TerapiasController extends Controller{
     {
         $this->middleware('auth');
     }
-    ////////////////////////////////
-    //ADD MIDLEWARE ADMIN_RECEPCAO//
-    ////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //ADD MIDDLEWARE ADMIN_RECEPCAO PARA LISTAR TODOS AGENDAMENTO/ENVIAR E-MAIL E PARA INCLUIR DIAS SEM TERAPIAS//
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function index(){
         $title = 'Agendamento Terapias | Intranet Izique Chebabi Advogados Associados';
         return view('intranet.terapias.index', compact('title'));
@@ -102,7 +102,9 @@ class TerapiasController extends Controller{
                     $terapias_usuario_dia = Terapia::terapias_usuario_dia($request->data); // retorna string/boolean
                     $sessoes_usuario_mes = Terapia::terapias_usuario_mes($tipo, $request->data); // retorna int/boolean
                     $limite_intervalo_agendamento = Terapia::limite_intervalo_agendamento($tipo,$intervalo_agendamento,$request->data); // retorna int/boolean
-                        if(!$terapias_usuario_dia && $sessoes_usuario_mes < $limite_mensal && !$limite_intervalo_agendamento){
+                        if($terapias_usuario_dia){
+                            return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite diário de agendamentos atingido.'));
+                        }elseif($sessoes_usuario_mes < $limite_mensal && !$limite_intervalo_agendamento){
                             $resultado = Terapia::agendar_sessao($tipo, $request->data, $request->hora, $tempo_sessao, false, $lembrete_minutos_antes_inicio); /* retorna boolean/error */
                             if(empty($resultado["error"]) && $resultado = "agendado"){
                                 $request->session()->flash('alert-success', 'Sessão de Quick Massage agendada com sucesso!');
@@ -121,7 +123,7 @@ class TerapiasController extends Controller{
                                     return redirect()->back()->withErrors(array('message' => $resultado["error"]));
                                 }
                             }else{
-                                return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite diário, semanal ou mensal de agendamentos atingido.'));
+                                return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite semanal ou mensal de agendamentos atingido.'));
                             }
                         }
                 }else{
@@ -215,7 +217,9 @@ class TerapiasController extends Controller{
                     $terapias_usuario_dia = Terapia::terapias_usuario_dia($request->data); // retorna string/boolean
                     $sessoes_usuario_mes = Terapia::terapias_usuario_mes($tipo, $request->data); // retorna int/boolean
                     $limite_intervalo_agendamento = Terapia::limite_intervalo_agendamento($tipo,$intervalo_agendamento,$request->data); // retorna int/boolean
-                        if(!$terapias_usuario_dia && $sessoes_usuario_mes < $limite_mensal && !$limite_intervalo_agendamento){
+                        if($terapias_usuario_dia){
+                            return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite diário de agendamentos atingido.'));
+                        }elseif($sessoes_usuario_mes < $limite_mensal && !$limite_intervalo_agendamento){
                             $resultado = Terapia::agendar_sessao($tipo, $request->data, $request->hora, $tempo_sessao, false, $lembrete_minutos_antes_inicio); /* retorna boolean/error */
                             if(empty($resultado["error"]) && $resultado = "agendado"){
                                 $request->session()->flash('alert-success', 'Sessão de Auriculoterapia agendada com sucesso!');
@@ -234,7 +238,7 @@ class TerapiasController extends Controller{
                                     return redirect()->back()->withErrors(array('message' => $resultado["error"]));
                                 }
                             }else{
-                                return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite diário, semanal ou mensal de agendamentos atingido.'));
+                                return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite semanal ou mensal de agendamentos atingido.'));
                             }
                         }
                 }else{
@@ -311,7 +315,9 @@ class TerapiasController extends Controller{
                 if($sessao_livre){
                     $terapias_usuario_dia = Terapia::terapias_usuario_dia($request->data); // retorna string/boolean
                     $sessoes_usuario_mes = Terapia::terapias_usuario_mes($tipo, $request->data); // retorna int/boolean
-                        if(!$terapias_usuario_dia && $sessoes_usuario_mes < $limite_mensal){
+                        if($terapias_usuario_dia){
+                            return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite diário de agendamentos atingido.'));
+                        }elseif($sessoes_usuario_mes < $limite_mensal){
                             $resultado = Terapia::agendar_sessao($tipo, $request->data, $request->hora, $tempo_sessao, false, $lembrete_minutos_antes_inicio); /* retorna boolean/error */
                             if(empty($resultado["error"]) && $resultado = "agendado"){
                                 $request->session()->flash('alert-success', 'Sessão de Massagem nos Pés agendada com sucesso!');
@@ -330,7 +336,7 @@ class TerapiasController extends Controller{
                                     return redirect()->back()->withErrors(array('message' => $resultado["error"]));
                                 }
                             }else{
-                                return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite diário, semanal ou mensal de agendamentos atingido.'));
+                                return redirect()->back()->withErrors(array('message' => 'Erro ao agendar! Limite semanal ou mensal de agendamentos atingido.'));
                             }
                         }
                 }else{
@@ -364,13 +370,24 @@ class TerapiasController extends Controller{
         }
     }
 
+    public function massagem_relaxante_index(){
+        /* Quartas e sextas
+        Dias e horários definidos em $terapia['dias_horarios']
+        Uma sessão por equipe, até todos de todas as equipes terem feito (???)
+        30 minutos por sessão */
+        // puxas parâmetros do BD para modularizar ainda mais // TODO
+        
+        dd("TESTE");
+    }
+
+
     ////////////////////////////////////////////////
     public function enviar_lista_agendamentos(){
-        
+        //TODO
     }
     ////////////////////////////////////////////////
 
-        /*
+    /*
     public function todos_agendamentos_massagem(){
         //CHECA PERFIL PARA EXIBIR LINK DA VIEW C/ TODOS OS AGENDAMENTOS
         if(Auth::user()->tipo == 'admin' || Auth::user()->email == 'recepcao@chebabi.com'){
