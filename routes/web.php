@@ -23,6 +23,7 @@ Route::get('/escritorios', 'Site\SiteController@escritorios');
 Route::post('/enviar_contato', 'Site\SiteController@enviar_contato');
 Route::post('/enviar_curriculo', 'Site\SiteController@enviar_curriculo');
 Route::get('/tour-virtual', 'Site\SiteController@tour_virtual');
+Route::get('/lgpd', 'Site\SiteController@lgpd');
 //ROTAS DO BLOG
 Route::get('/blog', 'Blog\BlogController@index');
 Route::get('/blog/categorias/{categoria}', 'Blog\BlogController@categoria');
@@ -64,13 +65,15 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/terapias/massagem-pes', 'Terapias\TerapiasController@massagem_pes_index');
     Route::post('/terapias/massagem-pes/agendar', 'Terapias\TerapiasController@agendar_massagem_pes');
     Route::post('/terapias/massagem-pes/cancelar', 'Terapias\TerapiasController@cancelar_massagem_pes');
+    //ROTAS TERAPIAS - MASSAGEM RELAXANTE
+    Route::get('/terapias/massagem-relaxante', 'Terapias\TerapiasController@massagem_relaxante_index');
 
-
+    /*
     //ROTAS AGENDAMENTO MASSAGEM
     Route::get('/agendamento-massagem/todos-agendamentos', 'Intranet\IntranetController@todos_agendamentos_massagem');
     Route::get('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@form_dia_sem_massagem');
     Route::post('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@incluir_dia_sem_massagem');
-
+    */
     /////////////////////////////////
 
     //ROTAS LEGAL ONE
@@ -107,7 +110,7 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/uaus-enviados/{id}/editar', 'Intranet\IntranetController@atualiza_uau');
     Route::post('/enviar_uau', 'Intranet\IntranetController@enviar_uau');
     //ROTAS AJAX
-    Route::post('/call_legalone_api', 'APIs\LegalOneController@legalone_api');
+    Route::get('/call_legalone_api', 'APIs\LegalOneController@legalone_api'); /////////////////POST
     Route::post('/call_legalone_api_contacts', 'APIs\LegalOneController@legalone_api_contacts');
     Route::post('/call_legalone_api_contacts_individuals', 'APIs\LegalOneController@legalone_api_contacts_individuals');
     Route::post('/get-credores', 'APIs\LegalOneController@get_credores');

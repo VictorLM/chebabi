@@ -189,4 +189,9 @@ class SiteController extends Controller
         $title = 'Tour Virtual | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
         return view('site.tour_virtual', compact('title'));
     }
+
+    public function lgpd(){
+        return response()->file("../storage/app/public/lgpd_izique chebabi_2019_digital.pdf");
+    }
+    
 }
