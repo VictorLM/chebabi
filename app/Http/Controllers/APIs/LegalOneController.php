@@ -344,9 +344,9 @@ class LegalOneController extends Controller
     }
     ///////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////
-    //AS FUNÇÕES ABAIXO SÃO DAS CHAMADAS AJAX DO RELATÓRIO DE VIAGEM//
-    //////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    // AS FUNÇÕES ABAIXO SÃO DAS CHAMADAS AJAX DO RELATÓRIO DE VIAGEM //
+    ////////////////////////////////////////////////////////////////////
 
     public function legalone_api(Request $request){
 
@@ -362,7 +362,7 @@ class LegalOneController extends Controller
         $filter .= "'Customer' or type eq 'OtherParty')";
 
         $ch_pasta = curl_init();
-        curl_setopt($ch_pasta, CURLOPT_URL, 'https://api.thomsonreuters.com/legalone/v1/api/rest/Lawsuits'.$filter.'');
+        curl_setopt($ch_pasta, CURLOPT_URL, 'https://api.thomsonreuters.com/legalone/v1/api/rest/litigations'.$filter.'');
         $headers = array('Authorization: Bearer ' . $token);
         curl_setopt($ch_pasta, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch_pasta, CURLOPT_RETURNTRANSFER, true);

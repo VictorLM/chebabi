@@ -110,7 +110,7 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/uaus-enviados/{id}/editar', 'Intranet\IntranetController@atualiza_uau');
     Route::post('/enviar_uau', 'Intranet\IntranetController@enviar_uau');
     //ROTAS AJAX
-    Route::get('/call_legalone_api', 'APIs\LegalOneController@legalone_api'); /////////////////POST
+    Route::post('/call_legalone_api', 'APIs\LegalOneController@legalone_api');
     Route::post('/call_legalone_api_contacts', 'APIs\LegalOneController@legalone_api_contacts');
     Route::post('/call_legalone_api_contacts_individuals', 'APIs\LegalOneController@legalone_api_contacts_individuals');
     Route::post('/get-credores', 'APIs\LegalOneController@get_credores');
