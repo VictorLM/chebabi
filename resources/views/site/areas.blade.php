@@ -289,6 +289,29 @@
                     </div>
                 </div>
 
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 text-justify display-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="{{url('/lgpd')}}" target="_blank" class="advs-link">
+                                <h3 class="text-center">
+                                    <i class="fa fa-lock"></i> LEI GERAL DE PROTEÇÃO DE DADOS (LGPD)
+                                </h3>
+                            </a>
+                        </div>
+        
+                        <div class="card-body">
+                            <p class="card-text">
+                                &emsp; Assessoramos empresas acerca dos procedimentos relacionados à nova Lei Geral de Proteção de Dados (LGPD), 
+                                mapeando dados pessoais, revisando políticas internas, orientando-as sobre a coleta, uso, compartilhamento, 
+                                armazenamento e eliminação de dados pessoais com o objetivo de garantir o cumprimento da legislação. Nossas atividades incluem, 
+                                ainda, a ministração de palestras e treinamentos sobre variados temas envolvendo a Lei Geral de Proteção de Dados.
+                                
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>
