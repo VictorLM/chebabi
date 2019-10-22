@@ -39,7 +39,7 @@
                                         <h3 class="text-center tipo-adv-modal-cliente text-jusitfy"><b>Adv(s) Cível(is)</b></h3>
                                         <hr class="hr-advs-clientes">
                                         @for ($i=1; $i<=3; $i++)
-                                            @if(!empty($cliente->{"adv_civel_".$i}))
+                                            @if(!empty($cliente->{"advogado_civel_".$i}) && $cliente->{"advogado_civel_".$i}->ativo)
                                                 <ul class="li-adv-cliente">
                                                     <li><b>{{$cliente->{"advogado_civel_".$i}->name}}</b></li>
                                                     <li><i class="glyphicon glyphicon-envelope"></i> <a href="mailto:{{$cliente->{"advogado_civel_".$i}->email}}">{{$cliente->{"advogado_civel_".$i}->email}}</a></li>
@@ -55,7 +55,7 @@
                                         <h3 class="text-center tipo-adv-modal-cliente text-jusitfy"><b>Adv(s) Trabalhista(s)</b></h3>
                                         <hr class="hr-advs-clientes">
                                         @for ($i=1; $i<=3; $i++)
-                                            @if(!empty($cliente->{"adv_trab_".$i}))
+                                            @if(!empty($cliente->{"advogado_trab_".$i}) && $cliente->{"advogado_trab_".$i}->ativo)
                                                 <ul class="li-adv-cliente">
                                                     <li><b>{{$cliente->{"advogado_trab_".$i}->name}}</b></li>
                                                     <li><i class="glyphicon glyphicon-envelope"></i> <a href="mailto:{{$cliente->{"advogado_trab_".$i}->email}}">{{$cliente->{"advogado_trab_".$i}->email}}</a></li>
