@@ -116,7 +116,7 @@ textarea {
     background-position: top;
 }
 .userelogout{
-    margin-top: 0.5em!important;
+    margin: 0.5em!important;
 }
 .userelogout li>a{
     padding: 0.5em!important;
@@ -329,6 +329,18 @@ textarea.novo-uau-input{
 .terapias-link h1{
     font-size: 1.8em;
     margin: 0;
+}
+
+@media (min-width: 768px) {
+    .navbar .navbar-nav {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+
+    .navbar .navbar-collapse {
+        text-align: center;
+    }
 }
 
 @media (min-width: 1200px){

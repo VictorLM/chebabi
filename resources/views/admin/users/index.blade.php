@@ -18,7 +18,6 @@
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Tipo</th>
-                        <th>Uaus</th>
                         <th>Último acesso</th>
                         <th>Ações</th>
                         </tr>
@@ -45,14 +44,10 @@
                                     @case('admjur')
                                         Adm. Jurídico
                                         @break
-                                    @case('geral')
-                                        Geral
-                                        @break
                                     @default
                                         Não definido
                                 @endswitch
                             </td>
-                            <td>{{$user->uaus}}</td>
                             <td>{{Carbon\Carbon::parse($user->last_login)->format('d/m/Y H:i')}}</td>
                             <td>
                                 @if(!$user->ativo)
