@@ -38,7 +38,7 @@ class TerapiasController extends Controller{
     }
     
     public function quick_massage_index(){
-        /* De segunda a sexta
+        /* De segunda, terça, quinta e sexta-feira
         Dias e horários definidos em $terapia['dias_horarios']
         Limite por usuário de 4 por mês
         15 minutos por sessão */
@@ -51,30 +51,24 @@ class TerapiasController extends Controller{
         $terapia['intervalo_agendamento'] = "semanal";
         $terapia['dias_horarios'] = array(
             '2' => array(
-                'inicio' => '14:00',
+                'inicio' => '11:00',
                 'fim' => '15:45',
-                'intervalo' => false,
+                'intervalo' => array('inicio' => '12:00','fim' => '12:30',),
             ),
             '3' => array(
-                'inicio' => '14:00',
-                'fim' => '14:45',
+                'inicio' => '09:00',
+                'fim' => '12:15',
                 'intervalo' => false,
-            ),
-            '4' => array(
-                'inicio' => '15:45',
-                'fim' => '17:15',
-                'intervalo' => false,
-                //'intervalo' => array('inicio' => '16:00','fim' => '16:15',),
             ),
             '5' => array(
-                'inicio' => '10:00',
-                'fim' => '10:45',
+                'inicio' => '11:00',
+                'fim' => '11:45',
                 'intervalo' => false,
             ),
             '6' => array(
-                'inicio' => '14:50',
-                'fim' => '17:20',
-                'intervalo' => false,
+                'inicio' => '14:00',
+                'fim' => '17:15',
+                'intervalo' => array('inicio' => '15:00','fim' => '15:15',),
             ),
         );
         $quick_massage = new Terapia($terapia);
@@ -172,23 +166,28 @@ class TerapiasController extends Controller{
         $terapia['dias_horarios'] = array(
             '2' => array(
                 'inicio' => '09:00',
-                'fim' => '12:40',
+                'fim' => '10:40',
                 'intervalo' => false,
             ),
             '3' => array(
-                'inicio' => '09:00',
-                'fim' => '11:40',
+                'inicio' => '13:00',
+                'fim' => '14:40',
                 'intervalo' => false,
                 //'intervalo' => array('inicio' => '16:00','fim' => '16:15',),
             ),
+            '4' => array(
+                'inicio' => '13:00',
+                'fim' => '14:40',
+                'intervalo' => false,
+            ),
             '5' => array(
-                'inicio' => '08:00',
+                'inicio' => '09:00',
                 'fim' => '09:40',
                 'intervalo' => false,
             ),
             '6' => array(
                 'inicio' => '12:00',
-                'fim' => '14:20',
+                'fim' => '13:40',
                 'intervalo' => false,
             ),
         );
@@ -286,8 +285,8 @@ class TerapiasController extends Controller{
         $terapia['intervalo_agendamento'] = false; //uma sessão por mês apenas
         $terapia['dias_horarios'] = array(
             '4' => array(
-                'inicio' => '13:00',
-                'fim' => '15:15',
+                'inicio' => '15:15',
+                'fim' => '17:15',
                 'intervalo' => false,
                 //'intervalo' => array('inicio' => '16:00','fim' => '16:15',),
             ),

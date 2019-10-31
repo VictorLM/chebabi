@@ -338,8 +338,6 @@ class Terapia{
             $terapias_agendadas = Terapias_MassagemPes::with('user:id,name');
         }else if($tipo == "massagens_relaxantes"){
             $terapias_agendadas = Terapias_MassagemRelaxante::with('user:id,name');
-        }else if($tipo == "mat_pilates"){
-            $terapias_agendadas = Terapias_MatPilates::with('user:id,name');
         }
         $terapias_agendadas->where('cancelado', false)
             ->whereDate('inicio_data', $dia);
@@ -440,7 +438,7 @@ class Terapia{
             $url = 'https://graph.microsoft.com/beta/users/terapias@chebabi.com/events/'.$sessao->evento_id.'/cancel';
             $resultado = MicrosoftController::curl($url, $comentario_evento, "POST"); // cURL
             if(empty($resultado["error"])){
-                DB::table('terapias_'.$tipo)->where('id', $sessao->id)->update(['cancelado' => true]);
+                DB::table('terapias_'.$tipo)->where('id', $sessao->id)->update(['cancelado' => true, 'updated_at' => Carbon::now()]);
                 return "cancelado";
                 /* TODO
                 if(condição para checar se o registro foi alterado (só encontrei com instância de objeto ->save())){
