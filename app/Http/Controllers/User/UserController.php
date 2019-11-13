@@ -19,7 +19,7 @@ class UserController extends Controller
     }
     //RETORNA TABELA COM USUÁRIOS E BOTÕES COM OS LINKS DAS AÇÕES
     public function index(){
-        $users = User::select('id', 'name', 'email', 'tipo', 'uaus' ,'last_login', 'ativo')->orderBy('name')->paginate(20);
+        $users = User::select('id', 'name', 'email', 'tipo', 'last_login', 'ativo')->orderBy('name')->paginate(20);
         $title = 'Editar Usuários | Intranet Izique Chebabi Advogados Associados';
         return view('admin.users.index', compact('title', 'users'));
     }

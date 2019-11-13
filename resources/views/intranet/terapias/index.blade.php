@@ -55,7 +55,7 @@
                     
                     <div class="col-md-4">
                         <div class="terapias-link intra-atalhos well well-lg">
-                            <h1><a href="{{url('intranet/terapias/quick-relaxante')}}">MASSAGEM<br/>RELAXANTE</a></h1>
+                            <h1><a href="{{url('intranet/terapias/massagem-relaxante')}}">MASSAGEM<br/>RELAXANTE</a></h1>
                         </div>
                     </div>
                     
@@ -67,27 +67,28 @@
 
                     <div class="col-md-4">
                         <div class="terapias-link intra-atalhos well well-lg">
+                            x de cada, x bonus, x canceladas, gráfico
                             <h1><a href="{{url('intranet/terapias/minhas-sessoes')}}">MINHAS<br/>SESSÕES</a></h1>
                         </div>
                     </div>
 
                 </div>
                 
-                <div class="row">
+                --}}
 
-                    @if(Auth::user()->is_admin_recepcao())
+                @if(Auth::user()->is_admin_recepcao())
+                    <div class="row">
+
                         <div class="col-md-4">
                             <div class="terapias-link intra-atalhos well well-lg">
-                                Gráficos? Lista agendamentos?
                                 <span class="glyphicon glyphicon-bookmark float-right" style="color:#337ab7;"></span>
-                                <h1><a href="{{url('intranet/terapias/painel-admin')}}">DIAS SEM<br/>TERAPIAS</a></h1>
+                                <h1><a href="{{url('intranet/terapias/painel-admin')}}">PAINEL<br/>ADMIN</a></h1>
                             </div>
                         </div>
-                    @endif
+                        
+                    </div>
+                @endif
 
-                </div>
-                --}}
-                
             </div>
         </div>
     </div>

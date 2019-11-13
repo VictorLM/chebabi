@@ -67,7 +67,13 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::post('/terapias/massagem-pes/cancelar', 'Terapias\TerapiasController@cancelar_massagem_pes');
     //ROTAS TERAPIAS - MASSAGEM RELAXANTE
     Route::get('/terapias/massagem-relaxante', 'Terapias\TerapiasController@massagem_relaxante_index');
-
+    //ROTAS TERAPIAS - PAINEL ADMIN
+    Route::get('/terapias/painel-admin', 'Terapias\TerapiasController@painel_admin');
+    Route::post('/terapias/painel-admin/enviar-lista', 'Terapias\TerapiasController@enviar_lista_sessoes_dia_email');
+    Route::post('/terapias/painel-admin/dia-sem-terapia', 'Terapias\TerapiasController@incluir_dia_sem_terapia');
+    Route::get('/terapias/painel-admin/terapias-charts', 'Terapias\TerapiasController@painel_admin_terapias_charts'); //AJAX
+    
+    
     /*
     //ROTAS AGENDAMENTO MASSAGEM
     Route::get('/agendamento-massagem/todos-agendamentos', 'Intranet\IntranetController@todos_agendamentos_massagem');

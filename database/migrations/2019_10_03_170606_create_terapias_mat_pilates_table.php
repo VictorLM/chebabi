@@ -15,11 +15,10 @@ class CreateTerapiasMatPilatesTable extends Migration
     {
         Schema::create('terapias_mat_pilates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('evento_id', 255)->nullable()->default(null);
-            $table->string('alunos', 1000);
-            $table->string('dia');
-            $table->time('inicio_hora')->nullable()->default(null);
-            $table->time('fim_hora')->nullable()->default(null);
+            $table->integer('turma')->unsigned();
+            $table->foreign('turma')->references('id')->on('terapias_mat_pilates_turmas');
+            $table->integer('usuario')->unsigned();
+            $table->foreign('usuario')->references('id')->on('users');
             $table->boolean('cancelado')->nullable()->default(0);
             $table->timestamps();
         });

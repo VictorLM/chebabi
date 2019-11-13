@@ -18,6 +18,8 @@ class CreateTerapiasMassagensRelaxantesTable extends Migration
             $table->string('evento_id', 255)->nullable()->default(null);
             $table->integer('usuario')->unsigned();
             $table->foreign('usuario')->references('id')->on('users');
+            $table->integer('usuario_sorteio')->unsigned();
+            $table->foreign('usuario_sorteio')->references('id')->on('users');
             $table->date('inicio_data')->nullable()->default(null);
             $table->time('inicio_hora')->nullable()->default(null);
             $table->date('fim_data')->nullable()->default(null);

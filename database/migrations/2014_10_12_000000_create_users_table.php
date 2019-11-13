@@ -16,17 +16,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->enum('tipo', ['admin', 'adv', 'adm', 'fin', 'admjur']);
-            //$table->enum('tipo', ['admin', 'adv', 'estag', 'adm', 'fin', 'admjur'])->nullable();
-            //$table->enum('sub_tipo', ['civel', 'trabalhista', 'adm', 'controladoria', 'socios'])->nullable();
-            //$table->enum('escritorio', ['Campinas', 'São Paulo', 'Rio de Janeiro', 'Florianópolis'])->nullable();
+            $table->enum('tipo', ['admin', 'adv', 'estag', 'adm', 'fin', 'admjur'])->nullable()->default(null);
+            $table->enum('sub_tipo', ['civel', 'trabalhista', 'adm', 'controladoria', 'socios'])->nullable()->default(null);
+            $table->enum('localidade', ['Campinas', 'São Paulo', 'Rio de Janeiro', 'Florianópolis', 'Home Office', 'Outra'])->nullable()->default(null);
             $table->boolean('ativo');
             $table->integer('ramal')->nullable();
             $table->string('telefone')->nullable();
             $table->date('nascimento')->nullable();
             $table->string('foto')->nullable();
             $table->string('email')->unique();
-            $table->integer('uaus')->nullable();
             $table->dateTime('last_login')->nullable();
             $table->string('password');
             $table->rememberToken();

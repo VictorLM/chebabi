@@ -45,11 +45,7 @@ class IntranetController extends Controller
             $aniversario = FALSE;
         }
         
-        if(Auth::user()->tipo == 'admin'){
-            $admin = TRUE;
-        }else{
-            $admin = FALSE;
-        }
+        $admin = Auth::user()->is_admin();
 
         $aniversariantes = DB::table('users')
             ->where('ativo', TRUE)
@@ -408,13 +404,17 @@ class IntranetController extends Controller
         }
         //SORT BY MAIOR NUMERO UAUS
         krsort($ranking_sorted);
-        //DROPA ATÉ DEIXAR SÓ O TOP 10
-        while($count > 10){
+        //DROPA ATÉ DEIXAR SÓ O TOP 12
+        while($count > 12){
             end($ranking_sorted);
             $key = key($ranking_sorted);
-            //array_key_last REQUER PHP 7.3
-            array_pop($ranking_sorted[$key]);
-            $count--;
+            if(count($ranking_sorted[$key]) < 1){
+                array_pop($ranking_sorted);
+            }else{
+                //array_key_last REQUER PHP 7.3
+                array_pop($ranking_sorted[$key]);
+                $count--;
+            }
         }
         return($ranking_sorted);
     }

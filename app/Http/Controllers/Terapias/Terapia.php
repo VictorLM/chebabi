@@ -455,4 +455,35 @@ class Terapia{
         }
     }
 
+    public static function cancelar_sessao_by_id($tipo,$id){
+        /**
+         * Cancela uma sessão de terapia do $tipo com $id;
+         *
+         * @param string $tipo
+         * @param integer $id
+         * @return boolean
+         */
+
+        $sessao = DB::table('terapias_'.$tipo)->find($id);
+
+        if(!is_null($sessao)){
+            $comentario_evento = json_encode(array('Comment' => 'Sessão cancelada. Nesse dia não haverá sessões deste tipo de terapia.'));
+            $url = 'https://graph.microsoft.com/beta/users/terapias@chebabi.com/events/'.$sessao->evento_id.'/cancel';
+            $resultado = MicrosoftController::curl($url, $comentario_evento, "POST"); // cURL
+            if(empty($resultado["error"])){
+                DB::table('terapias_'.$tipo)->where('id', $sessao->id)->update(['cancelado' => true, 'updated_at' => Carbon::now()]);
+                return true;
+                /* TODO
+                if(condição para checar se o registro foi alterado (só encontrei com instância de objeto ->save())){
+                    return "cancelado";
+                }else{
+                    return array("error" => "Erro ao salvar no Banco de Dados!");
+                }
+                */
+            }
+        }
+        
+        return false;
+    }
+
 }
