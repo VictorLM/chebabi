@@ -77,26 +77,26 @@
                                                             <td width="40%">{{$key}} às {{Carbon\Carbon::parse($key)->addMinutes($terapia['tempo_sessao'])->format('H:i')}}</td>
                                                             <td width="60%" style="padding:0;padding-top:3px;">
 
-                                                                @if($horario) {{-- se horário ocupado --}}
+                                                                @if(Carbon\Carbon::parse($dia['dia']." ".$key)->isPast()) {{-- se passado --}}
+                                                                    <i><small>Essa sessão já passou.</small></i>  
+                                                                @else {{-- senão passado --}}
 
-                                                                    @if($horario == Auth::user()->name)
-                                                                        <form class="form-horizontal" method="POST" action="{{action('Terapias\TerapiasController@cancelar_auriculoterapia')}}">
-                                                                            {{csrf_field()}}
-                                                                            <input name="data" type="hidden" value="{{Carbon\Carbon::parse($dia['dia'])->format('Y-m-d')}}">
-                                                                            <input name="hora" type="hidden" value="{{$key}}:00">
-                                                                            <a class="cancelar-btn" data-link="{{Carbon\Carbon::parse($dia['dia'])->format('d/m/Y')}} às {{$key}}">
-                                                                                <button type="submit" class="btn btn-sm btn-danger" style="width:100%;">Agendado por você. Cancelar</button>
-                                                                            </a>
-                                                                        </form>
-                                                                    @else
-                                                                        <i><small>Agendado por <b>{{$horario}}</b></small></i>
-                                                                    @endif
+                                                                    @if($horario) {{-- se horário ocupado --}}
 
-                                                                @else {{-- se horário livre --}}
-                                                                    
-                                                                    @if(Carbon\Carbon::parse($dia['dia']." ".$key)->isPast()) {{-- se passado --}}
-                                                                        <i><small>Essa sessão já passou.</small></i>  
-                                                                    @else {{-- senão passado --}}
+                                                                        @if($horario == Auth::user()->name)
+                                                                            <form class="form-horizontal" method="POST" action="{{action('Terapias\TerapiasController@cancelar_auriculoterapia')}}">
+                                                                                {{csrf_field()}}
+                                                                                <input name="data" type="hidden" value="{{Carbon\Carbon::parse($dia['dia'])->format('Y-m-d')}}">
+                                                                                <input name="hora" type="hidden" value="{{$key}}:00">
+                                                                                <a class="cancelar-btn" data-link="{{Carbon\Carbon::parse($dia['dia'])->format('d/m/Y')}} às {{$key}}">
+                                                                                    <button type="submit" class="btn btn-sm btn-danger" style="width:100%;">Agendado por você. Cancelar</button>
+                                                                                </a>
+                                                                            </form>
+                                                                        @else
+                                                                            <i><small>Agendado por <b>{{$horario}}</b></small></i>
+                                                                        @endif
+
+                                                                    @else {{-- se horário livre --}}
 
                                                                         @if($dia['limite_intervalo_agendamento']) {{-- se limite min. $terapia['limite_intervalo_agendamento'] dias --}}
                                                                             <i><small>Só é possível agendar uma sessão desta terapia a cada {{$terapia['intervalo_agendamento']}} dias.</small></i>
@@ -135,7 +135,7 @@
                                                                     @endif
 
                                                                 @endif
-                                                                
+
                                                             </td>
                                                         </tr>
 
