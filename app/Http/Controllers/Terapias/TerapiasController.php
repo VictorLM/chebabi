@@ -438,7 +438,8 @@ class TerapiasController extends Controller{
             $massagem_pes_array['tempo_sessao'] = $terapia_mp['tempo_sessao'];
 
             $dias_sem_terapias = DB::table('terapias_dias_sem_terapias')
-                ->whereDate('data', '>=', Carbon::today())
+                ->whereMonth('data', '=', Carbon::now()->month)
+                ->whereYear('data', '=', Carbon::now()->year)
                 ->join('users', 'terapias_dias_sem_terapias.usuario', '=', 'users.id')
                 ->select('terapias_dias_sem_terapias.*', 'users.name')
                 ->orderBy('data', 'asc')

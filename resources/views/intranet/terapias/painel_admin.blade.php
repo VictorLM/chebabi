@@ -281,7 +281,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="text-center font-dosis header-padding-0">
-                        <b>DAS SEM TERAPIAS</b>
+                        <b>DIAS SEM TERAPIAS</b>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </h1>
                 </div>
