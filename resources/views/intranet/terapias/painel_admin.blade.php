@@ -1,7 +1,7 @@
 @extends('intranet.templates.template')
 
 @push('meta')
-    {{--<meta http-equiv="refresh" content="120"/>--}}
+    <meta http-equiv="refresh" content="120"/>
 @endpush
 
 @section('content')

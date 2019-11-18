@@ -13,7 +13,7 @@ $(document).ready(function(){
     });
 
     ajax_terapias_charts();
-    $("#graficosModal").modal("show");
+    //$("#graficosModal").modal("show");
 
 });
 
