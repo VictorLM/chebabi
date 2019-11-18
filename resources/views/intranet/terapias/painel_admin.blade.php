@@ -1,7 +1,7 @@
 @extends('intranet.templates.template')
 
 @push('meta')
-    <meta http-equiv="refresh" content="60"/>
+    {{--<meta http-equiv="refresh" content="120"/>--}}
 @endpush
 
 @section('content')
@@ -281,7 +281,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="text-center font-dosis header-padding-0">
-                        <b>DIAS SEM TERAPIAS</b>
+                        <b>DIAS SEM TERAPIAS - {{Carbon\Carbon::today()->format("m/Y")}}</b>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </h1>
                 </div>
@@ -367,8 +367,17 @@
                         </div>
 
                         <div class="col-md-6">
-                            <h3 class="text-center margin-0">Agendamentos por usuário</h3>
+                            <h3 class="text-center margin-0">Sessões por usuário - Top 10</h3>
                             <div id="chart_div_agendamentos_por_usuario"></div>
+                        </div>
+
+                    </div>
+                    <hr/>
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <h3 class="text-center margin-0">Sessões por usuário e por tipo terapia - Top 15</h3>
+                            <div id="chart_div_sessoes_por_usuario_e_por_tipo_terapia"></div>
                         </div>
 
                     </div>

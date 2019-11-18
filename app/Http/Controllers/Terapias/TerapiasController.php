@@ -515,7 +515,7 @@ class TerapiasController extends Controller{
             $users = User::select('id', 'name')->where('ativo', TRUE)->orderBy('name')->get();
 
             foreach($users as $user){
-                $array['agendamentos_por_usuario'][substr($user->name, 0, strpos($user->name, " ") + 2)."."] = 0;
+                $array['agendamentos_por_usuario'][$user->name] = 0;
             }
 
             $qm_users = Terapias_QuickMassage::with('user:id,name')
@@ -528,8 +528,8 @@ class TerapiasController extends Controller{
                 ->get();
 
             foreach($qm_users as $user){
-                if(array_key_exists(substr($user->user->name, 0, strpos($user->user->name, " ") + 2).".", $array['agendamentos_por_usuario'])){
-                    $array['agendamentos_por_usuario'][substr($user->user->name, 0, strpos($user->user->name, " ") + 2)."."] += $user->sessoes;
+                if(array_key_exists($user->user->name, $array['agendamentos_por_usuario'])){
+                    $array['agendamentos_por_usuario'][$user->user->name] += $user->sessoes;
                 }
             }
 
@@ -542,8 +542,8 @@ class TerapiasController extends Controller{
                 ->get();
             
             foreach($at_users as $user){
-                if(array_key_exists(substr($user->user->name, 0, strpos($user->user->name, " ") + 2).".", $array['agendamentos_por_usuario'])){
-                    $array['agendamentos_por_usuario'][substr($user->user->name, 0, strpos($user->user->name, " ") + 2)."."] += $user->sessoes;
+                if(array_key_exists($user->user->name, $array['agendamentos_por_usuario'])){
+                    $array['agendamentos_por_usuario'][$user->user->name] += $user->sessoes;
                 }
             }
 
@@ -556,14 +556,66 @@ class TerapiasController extends Controller{
                 ->get();
 
             foreach($mp_users as $user){
-                if(array_key_exists(substr($user->user->name, 0, strpos($user->user->name, " ") + 2).".", $array['agendamentos_por_usuario'])){
-                    $array['agendamentos_por_usuario'][substr($user->user->name, 0, strpos($user->user->name, " ") + 2)."."] += $user->sessoes;
+                if(array_key_exists($user->user->name, $array['agendamentos_por_usuario'])){
+                    $array['agendamentos_por_usuario'][$user->user->name] += $user->sessoes;
                 }
             }
+
             //ORDER BY NAME E SESSOES DESC
             array_multisort(array_values($array['agendamentos_por_usuario']), SORT_DESC, array_keys($array['agendamentos_por_usuario']), SORT_ASC, $array['agendamentos_por_usuario']);
+            //sessoes_por_usuario_e_por_tipo_terapia
+            $array['sessoes_por_usuario_e_por_tipo_terapia']['temp'] = array_slice($array['agendamentos_por_usuario'], 0, 15);
             //LIMITE TOP 10
             $array['agendamentos_por_usuario'] = array_slice($array['agendamentos_por_usuario'], 0, 10);
+            //ABREVIANDO NOMES
+            foreach($array['agendamentos_por_usuario'] as $user => $sessoes){
+                $array['agendamentos_por_usuario'][substr($user, 0, strpos($user, " ") + 2)."."] = $sessoes;
+                unset($array['agendamentos_por_usuario'][$user]);
+            }
+            
+            //sessoes_por_usuario_e_por_tipo_terapia
+
+            $users = User::select('id', 'name')->where('ativo', TRUE)->orderBy('name')->get();
+
+            foreach($array['sessoes_por_usuario_e_por_tipo_terapia']['temp'] as $nome => $sessoes){
+                foreach($users as $user){
+                    if($user->name == $nome){
+                        $array['sessoes_por_usuario_e_por_tipo_terapia']['ids'][$nome] = $user->id;
+                    }
+                }
+                $array['sessoes_por_usuario_e_por_tipo_terapia']['users'][] = $nome;
+            }
+
+            unset($array['sessoes_por_usuario_e_por_tipo_terapia']['temp']);
+
+            foreach($array['sessoes_por_usuario_e_por_tipo_terapia']['ids'] as $id){
+
+                $array['sessoes_por_usuario_e_por_tipo_terapia']['terapias']['Quick Massage'][] = Terapias_QuickMassage::where('cancelado', false)
+                    ->where('usuario', $id)
+                    ->whereMonth('inicio_data', '=', Carbon::now()->month)
+                    ->whereYear('inicio_data', '=', Carbon::now()->year)
+                    ->count();
+
+                $array['sessoes_por_usuario_e_por_tipo_terapia']['terapias']['Auriculoterapia'][] = Terapias_Auriculoterapia::where('cancelado', false)
+                    ->where('usuario', $id)
+                    ->whereMonth('inicio_data', '=', Carbon::now()->month)
+                    ->whereYear('inicio_data', '=', Carbon::now()->year)
+                    ->count();
+
+                $array['sessoes_por_usuario_e_por_tipo_terapia']['terapias']['Massagem nos Pés'][] = Terapias_MassagemPes::where('cancelado', false)
+                    ->where('usuario', $id)
+                    ->whereMonth('inicio_data', '=', Carbon::now()->month)
+                    ->whereYear('inicio_data', '=', Carbon::now()->year)
+                    ->count();
+
+            }
+
+            unset($array['sessoes_por_usuario_e_por_tipo_terapia']['ids']);
+
+            foreach($array['sessoes_por_usuario_e_por_tipo_terapia']['users'] as $key => $user){
+                $array['sessoes_por_usuario_e_por_tipo_terapia']['users'][] = substr($user, 0, strpos($user, " ") + 2).".";
+                unset($array['sessoes_por_usuario_e_por_tipo_terapia']['users'][$key]);
+            }
             
             //dd($array);
 

@@ -13,6 +13,7 @@ $(document).ready(function(){
     });
 
     ajax_terapias_charts();
+    $("#graficosModal").modal("show");
 
 });
 
@@ -34,34 +35,63 @@ function foreach_render(response) {
             terapias_column_chart_render(value, index, "Resumo agendamentos");
         }else if(index == "agendamentos_por_usuario"){
             terapias_column_rotated_labels_chart_render(value, index, "Agendamentos por usuário - Top 10");
-        }else{
-            terapias_pie_chart_render(value, index);
+        }else if(index == "sessoes_por_usuario_e_por_tipo_terapia"){
+            terapias_stacked_bar_chart_render(value, index);
         }
         
     });
 
 };
 
-function terapias_pie_chart_render(data, tipo) {
+function terapias_column_chart_render(data, tipo, titulo) {
+
+    var colors = ['#008FFB', '#FF4560', '#FEB019'];
 
     var options = {
         chart: {
-            width: 400,
-            type: 'pie',
+            height: 220,
+            type: 'bar',
         },
-        labels: Object.keys(data),
-        series: Object.values(data),
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 199
-                },
-                legend: {
-                    position: 'bottom'
-                },
+        colors: colors,
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '80%',
+                endingShape: 'rounded'	
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        series: [
+            {
+                name: Object.keys(data.sessoes)[0],
+                data: Object.values(data.sessoes)[0]
+            }, {
+                name: Object.keys(data.sessoes)[1],
+                data: Object.values(data.sessoes)[1]
+            }, {
+                name: Object.keys(data.sessoes)[2],
+                data: Object.values(data.sessoes)[2]
             }
-        }]
+        ],
+        xaxis: {
+            categories: data.terapias,
+        },
+        yaxis: {
+            title: {
+                text: titulo
+            }
+        },
+        fill: {
+            opacity: 1
+
+        }
     }
 
     var chart = new ApexCharts(
@@ -135,54 +165,54 @@ function terapias_column_rotated_labels_chart_render(data, tipo, titulo) {
     chart.render();
 }
 
-function terapias_column_chart_render(data, tipo, titulo) {
-
-    var colors = ['#008FFB', '#FF4560', '#FEB019'];
+function terapias_stacked_bar_chart_render(data, tipo) {
 
     var options = {
         chart: {
-            height: 220,
+            height: 380,
             type: 'bar',
+            stacked: true,
         },
-        colors: colors,
         plotOptions: {
             bar: {
-                horizontal: false,
-                columnWidth: '80%',
-                endingShape: 'rounded'	
+                horizontal: true,
             },
-        },
-        dataLabels: {
-            enabled: false
+            
         },
         stroke: {
-            show: true,
-            width: 2,
-            colors: ['transparent']
+            width: 1,
+            colors: ['#fff']
         },
         series: [
             {
-                name: Object.keys(data.sessoes)[0],
-                data: Object.values(data.sessoes)[0]
-            }, {
-                name: Object.keys(data.sessoes)[1],
-                data: Object.values(data.sessoes)[1]
-            }, {
-                name: Object.keys(data.sessoes)[2],
-                data: Object.values(data.sessoes)[2]
-            }
+                name: Object.keys(data.terapias)[0],
+                data: Object.values(data.terapias)[0]
+            },
+            {
+                name: Object.keys(data.terapias)[1],
+                data: Object.values(data.terapias)[1]
+            },
+            {
+                name: Object.keys(data.terapias)[2],
+                data: Object.values(data.terapias)[2]
+            },
         ],
         xaxis: {
-            categories: data.terapias,
+            categories: Object.values(data.users),
         },
         yaxis: {
             title: {
-                text: titulo
-            }
+                text: undefined
+            },
         },
         fill: {
             opacity: 1
-
+            
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 40
         }
     }
 
@@ -190,6 +220,6 @@ function terapias_column_chart_render(data, tipo, titulo) {
         document.querySelector("#chart_div_"+tipo),
         options
     );
-
+    
     chart.render();
 }
