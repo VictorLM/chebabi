@@ -244,7 +244,7 @@ class Terapia{
             $terapias_usuario_dia = DB::table('terapias_'.$tipo)
             ->where('cancelado', false)
             ->where('usuario', Auth::user()->id)
-            ->where('livre_bonus', false)
+            //->where('livre_bonus', false) //Se houver uma sessão já agendada como bonus, o sistema deixava agendar outra. Limite de 1 por dia.
             ->whereDate('inicio_data', $dia)
             ->count();
             if($terapias_usuario_dia > 0){
