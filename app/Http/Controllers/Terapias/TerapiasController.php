@@ -453,7 +453,25 @@ class TerapiasController extends Controller{
         }
     }
 
-    public function painel_admin_terapias_charts(){
+    public function painel_admin_terapias_charts(Request $request){
+
+        if($request->has('mes') && $request->has('ano')){
+
+            $validatedData = Validator::make($request->all(), [
+                'mes' => 'in:1,2,3,4,5,6,7,8,9,10,11,12',
+                'ano' => 'digits:4|integer|min:2019',
+            ]);
+            
+            if(!$validatedData->fails()){
+                $mes = $request->mes;
+                $ano = $request->ano;
+            }else{
+                return redirect()->back()->withErrors($validatedData)->withInput();
+            }
+        }else{
+            $mes = Carbon::now()->month;
+            $ano = Carbon::now()->year;
+        }
 
         if(Auth::user()->is_admin_recepcao()){
 
@@ -469,45 +487,45 @@ class TerapiasController extends Controller{
             $array['resumo_terapias']['terapias'][] = 'Massagem nos Pés';
             
             $array['resumo_terapias']['sessoes']['Agendadas'][] = Terapias_QuickMassage::where('cancelado', false)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             $array['resumo_terapias']['sessoes']['Canceladas'][] = Terapias_QuickMassage::where('cancelado', true)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             $array['resumo_terapias']['sessoes']['Bônus'][] = Terapias_QuickMassage::where('cancelado', false)
                 ->where('livre_bonus', true)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             
             $array['resumo_terapias']['sessoes']['Agendadas'][] = Terapias_Auriculoterapia::where('cancelado', false)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             $array['resumo_terapias']['sessoes']['Canceladas'][] = Terapias_Auriculoterapia::where('cancelado', true)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             $array['resumo_terapias']['sessoes']['Bônus'][] = Terapias_Auriculoterapia::where('cancelado', false)
                 ->where('livre_bonus', true)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             
             $array['resumo_terapias']['sessoes']['Agendadas'][]  = Terapias_MassagemPes::where('cancelado', false)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             $array['resumo_terapias']['sessoes']['Canceladas'][] = Terapias_MassagemPes::where('cancelado', true)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             $array['resumo_terapias']['sessoes']['Bônus'][] = Terapias_MassagemPes::where('cancelado', false)
                 ->where('livre_bonus', true)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->count();
             
             //agendamentos_por_usuario
@@ -520,8 +538,8 @@ class TerapiasController extends Controller{
 
             $qm_users = Terapias_QuickMassage::with('user:id,name')
                 ->where('cancelado', false)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->select('usuario', DB::raw('count(*) as sessoes'))
                 ->groupBy('usuario')
                 //->orderBy('sessoes', 'DESC')
@@ -535,8 +553,8 @@ class TerapiasController extends Controller{
 
             $at_users = Terapias_Auriculoterapia::with('user:id,name')
                 ->where('cancelado', false)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->select('usuario', DB::raw('count(*) as sessoes'))
                 ->groupBy('usuario')
                 ->get();
@@ -549,8 +567,8 @@ class TerapiasController extends Controller{
 
             $mp_users = Terapias_MassagemPes::with('user:id,name')
                 ->where('cancelado', false)
-                ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                ->whereYear('inicio_data', '=', Carbon::now()->year)
+                ->whereMonth('inicio_data', '=', $mes)
+                ->whereYear('inicio_data', '=', $ano)
                 ->select('usuario', DB::raw('count(*) as sessoes'))
                 ->groupBy('usuario')
                 ->get();
@@ -592,20 +610,20 @@ class TerapiasController extends Controller{
 
                 $array['sessoes_por_usuario_e_por_tipo_terapia']['terapias']['Quick Massage'][] = Terapias_QuickMassage::where('cancelado', false)
                     ->where('usuario', $id)
-                    ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                    ->whereYear('inicio_data', '=', Carbon::now()->year)
+                    ->whereMonth('inicio_data', '=', $mes)
+                    ->whereYear('inicio_data', '=', $ano)
                     ->count();
 
                 $array['sessoes_por_usuario_e_por_tipo_terapia']['terapias']['Auriculoterapia'][] = Terapias_Auriculoterapia::where('cancelado', false)
                     ->where('usuario', $id)
-                    ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                    ->whereYear('inicio_data', '=', Carbon::now()->year)
+                    ->whereMonth('inicio_data', '=', $mes)
+                    ->whereYear('inicio_data', '=', $ano)
                     ->count();
 
                 $array['sessoes_por_usuario_e_por_tipo_terapia']['terapias']['Massagem nos Pés'][] = Terapias_MassagemPes::where('cancelado', false)
                     ->where('usuario', $id)
-                    ->whereMonth('inicio_data', '=', Carbon::now()->month)
-                    ->whereYear('inicio_data', '=', Carbon::now()->year)
+                    ->whereMonth('inicio_data', '=', $mes)
+                    ->whereYear('inicio_data', '=', $ano)
                     ->count();
 
             }

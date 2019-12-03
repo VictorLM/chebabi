@@ -27,7 +27,7 @@ class Relatorios extends Migration
             $table->float('totalkm', 20, 2)->nullable();
             $table->text('despesas')->nullable();   //SERIALIZE ARRAY - CLIENTES, PASTAS, DESCRIÇÕES E VALORES
             $table->float('caucao', 10, 2)->nullable();
-            $table->string('observacoes')->nullable();
+            $table->string('observacoes', 200)->nullable();
             $table->boolean('comprovantes')->nullable();
             $table->string('identificador');
             $table->timestamps();

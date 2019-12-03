@@ -71,17 +71,7 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/terapias/painel-admin', 'Terapias\TerapiasController@painel_admin');
     Route::post('/terapias/painel-admin/enviar-lista', 'Terapias\TerapiasController@enviar_lista_sessoes_dia_email');
     Route::post('/terapias/painel-admin/dia-sem-terapia', 'Terapias\TerapiasController@incluir_dia_sem_terapia');
-    Route::get('/terapias/painel-admin/terapias-charts', 'Terapias\TerapiasController@painel_admin_terapias_charts'); //AJAX
-    
-    
-    /*
-    //ROTAS AGENDAMENTO MASSAGEM
-    Route::get('/agendamento-massagem/todos-agendamentos', 'Intranet\IntranetController@todos_agendamentos_massagem');
-    Route::get('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@form_dia_sem_massagem');
-    Route::post('/agendamento-massagem/incluir-dia-sem-massagem', 'Intranet\IntranetController@incluir_dia_sem_massagem');
-    */
-    /////////////////////////////////
-
+    Route::get('/terapias/painel-admin/terapias-charts/{id?}', 'Terapias\TerapiasController@painel_admin_terapias_charts'); //AJAX
     //ROTAS LEGAL ONE
     Route::get('/andamentos-datacloud', 'APIs\LegalOneController@andamentos_datacloud');
     //ESSA ROTA ABAIXO GET É PARA O PAGINATION FUNCIONAR

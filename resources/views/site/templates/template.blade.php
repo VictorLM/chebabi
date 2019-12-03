@@ -52,7 +52,7 @@
                             <a class="nav-link" href="{{url('/areas')}}">ÁREAS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('/advogados')}}">EQUIPE</a>
+                            <a class="nav-link" href="{{url('/advogados')}}">ADVOGADOS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{url('/escritorios')}}">ESCRITÓRIOS</a>

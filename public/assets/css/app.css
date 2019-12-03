@@ -340,6 +340,10 @@ textarea.novo-uau-input{
     padding: 10px;
 }
 
+.inline-header{
+    display: inline;
+}
+
 @media (min-width: 768px) {
     .navbar .navbar-nav {
         display: inline-block;

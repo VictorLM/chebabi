@@ -352,10 +352,34 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="text-center font-dosis header-padding-0">
-                        <b>GRÁFICOS TERAPIAS - {{Carbon\Carbon::today()->format("m/Y")}}</b>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </h1>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                        
+                    <form class="form-inline text-center" id="form">
+                        {{ csrf_field() }}
+                        <h1 class="inline-header font-dosis header-padding-0"><label class="header-padding-0"><b> GRÁFICOS TERAPIAS - </b></label></h1>
+                        <div class="form-group" style="margin-bottom:1em;">
+                            <select class="form-control" id="mes">
+                                <option value="1" @if(Carbon\Carbon::today()->format("m") == 1) selected @endif>Janeiro</option>
+                                <option value="2" @if(Carbon\Carbon::today()->format("m") == 2) selected @endif>Fevereiro</option>
+                                <option value="3" @if(Carbon\Carbon::today()->format("m") == 3) selected @endif>Março</option>
+                                <option value="4" @if(Carbon\Carbon::today()->format("m") == 4) selected @endif>Abril</option>
+                                <option value="5" @if(Carbon\Carbon::today()->format("m") == 5) selected @endif>Maio</option>
+                                <option value="6" @if(Carbon\Carbon::today()->format("m") == 6) selected @endif>Junho</option>
+                                <option value="7" @if(Carbon\Carbon::today()->format("m") == 7) selected @endif>Julho</option>
+                                <option value="8" @if(Carbon\Carbon::today()->format("m") == 8) selected @endif>Agosto</option>
+                                <option value="9" @if(Carbon\Carbon::today()->format("m") == 9) selected @endif>Setembro</option>
+                                <option value="10" @if(Carbon\Carbon::today()->format("m") == 10) selected @endif>Outubro</option>
+                                <option value="11" @if(Carbon\Carbon::today()->format("m") == 11) selected @endif>Novembro</option>
+                                <option value="12" @if(Carbon\Carbon::today()->format("m") == 12) selected @endif>Dezembro</option>
+                            </select>
+                        </div>
+                        <h1 class="inline-header font-dosis header-padding-0">/</h1>
+                        <div class="form-group" style="margin-bottom:1em;">
+                            <input type="number" class="form-control" id="ano" value="{{$request->mes ?? Carbon\Carbon::today()->format("Y")}}">
+                        </div>
+                        <button type="button" id="filtrar-terapias-charts" class="btn btn-success" style="margin-bottom:1em;"><i class="glyphicon glyphicon-filter"></i> Filtrar</button>                           
+                    </form>
+
                 </div>
                 <div class="modal-body text-justify modal-body-padding-10">
 

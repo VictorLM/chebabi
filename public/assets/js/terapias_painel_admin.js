@@ -12,15 +12,21 @@ $(document).ready(function(){
         template: '<div class="popover container"><div class="arrow"></div><a href="#" class="list-group-item" data-toggle="modal" data-target="#quickModal">QUICK MASSAGE</a><a href="#" class="list-group-item" data-toggle="modal" data-target="#auriculoModal">AURICULOTERAPIA</a><a href="#" class="list-group-item" data-toggle="modal" data-target="#pesModal">MASSAGEM NOS PÉS</a></div>'
     });
 
-    ajax_terapias_charts();
+    ajax_terapias_charts("","");
     //$("#graficosModal").modal("show");
 
 });
 
-function ajax_terapias_charts() {
+function ajax_terapias_charts(mes,ano) {
+    var url;
+    if(mes && ano){
+        url = '/intranet/terapias/painel-admin/terapias-charts?mes='+mes+'&ano='+ano;
+    }else{
+        url = '/intranet/terapias/painel-admin/terapias-charts';
+    }
     $.ajax({
         type: "GET",
-        url: '/intranet/terapias/painel-admin/terapias-charts',
+        url: url,
         success: function(response){
             foreach_render(response);
         }
@@ -28,9 +34,7 @@ function ajax_terapias_charts() {
 };
 
 function foreach_render(response) {
-
     $.each(response,function(index, value){
-
         if(index == "resumo_terapias"){
             terapias_column_chart_render(value, index, "Resumo agendamentos");
         }else if(index == "agendamentos_por_usuario"){
@@ -38,12 +42,18 @@ function foreach_render(response) {
         }else if(index == "sessoes_por_usuario_e_por_tipo_terapia"){
             terapias_stacked_bar_chart_render(value, index);
         }
-        
     });
-
 };
 
+$("#filtrar-terapias-charts").click(function(){
+    var mes = $("#mes").val();
+    var ano = $("#ano").val();
+    ajax_terapias_charts(mes,ano);
+});
+
 function terapias_column_chart_render(data, tipo, titulo) {
+
+    $("#chart_div_"+tipo).empty();
 
     var colors = ['#008FFB', '#FF4560', '#FEB019'];
 
@@ -103,6 +113,8 @@ function terapias_column_chart_render(data, tipo, titulo) {
 }
 
 function terapias_column_rotated_labels_chart_render(data, tipo, titulo) {
+
+    $("#chart_div_"+tipo).empty();
 
     var options = {
         chart: {
@@ -166,6 +178,8 @@ function terapias_column_rotated_labels_chart_render(data, tipo, titulo) {
 }
 
 function terapias_stacked_bar_chart_render(data, tipo) {
+
+    $("#chart_div_"+tipo).empty();
 
     var options = {
         chart: {
