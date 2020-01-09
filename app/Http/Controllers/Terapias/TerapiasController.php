@@ -102,7 +102,7 @@ class TerapiasController extends Controller{
                 'intervalo' => false,
             ),
             '6' => array(
-                'inicio' => '12:00',
+                'inicio' => '12:40',
                 'fim' => '13:40',
                 'intervalo' => false,
             ),
