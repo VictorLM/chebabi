@@ -65,10 +65,12 @@ class IntranetController extends Controller
         DB::table('users')
             ->where('id', Auth::user()->id)
             ->update(['last_login' => Carbon::now()]);
+
+        $wifi_pass = DB::table('wifi_senhas')->latest('created_at')->first(); // TODO - CRUD
         
         $title = 'Intranet | Izique Chebabi Advogados Associados';
         
-        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking_sorted', 'unread_parabens'));
+        return view('intranet.index', compact('title', 'unread_uaus', 'aniversario', 'aniversariantes','admin', 'ranking_sorted', 'unread_parabens', 'wifi_pass'));
     }
 
     public function sugestao(){

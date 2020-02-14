@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BlogNoticias extends Migration
+class WifiSenhas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class BlogNoticias extends Migration
      */
     public function up()
     {
-        Schema::create('blog_noticias', function (Blueprint $table) {
+        Schema::create('wifi_senhas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('guid')->unique();
-            $table->string('titulo');
-            $table->string('link', 300);
-            $table->dateTime('publicacao');
+            $table->string('senha');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class BlogNoticias extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_noticias');
+        Schema::dropIfExists('wifi_senhas');
     }
 }

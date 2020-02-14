@@ -34,12 +34,16 @@
                     </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse userelogout">
-                    <ul class="nav navbar-nav text-center" style="margin-top:1.2em;">
-                        <li>
-                            <img class="img-fluid" src="{{url('assets/imagens/wi-fi.png')}}"/> <b>Rede</b>: IC_Adv<br/>
-                            <span><b>Senha</b>: fo5p8m33</span>{{-- //TODO Adicionar CRUD e puxar do DB pelo Controller --}}
-                        </li>
-                    </ul>
+
+                    @if(isset($wifi_pass))
+                        <ul class="nav navbar-nav text-center" style="margin-top:1.2em;">
+                            <li>
+                                <img class="img-fluid" src="{{url('assets/imagens/wi-fi.png')}}"/> <b>Rede</b>: IC_Adv<br/>
+                                <span><b>Senha</b>: {{$wifi_pass->senha}}</span>{{-- //TODO Adicionar CRUD e puxar do DB pelo Controller --}}
+                            </li>
+                        </ul>
+                    @endif
+
                     <ul class="nav navbar-nav navbar-right text-left userelogout">
                         <li>
                             @guest

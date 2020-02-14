@@ -34,7 +34,7 @@
                 Agendamento <b>Quick Massage</b>
             </h2>
             <small>
-                São {{$terapia['tempo_sessao']}} minutos por sessão. Saiba mais sobre Quick Massage <a href="https://pt.wikipedia.org/wiki/Anma" target="_blank">aqui</a>. Sessões todos os dias, de segunda a sexta-feira.<br/>
+                São {{$terapia['tempo_sessao']}} minutos por sessão. Saiba mais sobre Quick Massage <a href="https://pt.wikipedia.org/wiki/Anma" target="_blank">aqui</a>. Sessões as segundas, terças, quintas e sextas-feira.<br/>
                 <b>O limite de agendamentos por usuário é de 1 sessão por semana e até {{$terapia['limite_mensal']}} por mês.</b>
             </small>
         </div>
