@@ -23,7 +23,8 @@ Route::get('/escritorios', 'Site\SiteController@escritorios');
 Route::post('/enviar_contato', 'Site\SiteController@enviar_contato');
 Route::post('/enviar_curriculo', 'Site\SiteController@enviar_curriculo');
 Route::get('/tour-virtual', 'Site\SiteController@tour_virtual');
-Route::get('/lgpd', 'Site\SiteController@lgpd');
+Route::get('/lgpd', 'Site\SiteController@lgpd'); //PDF
+Route::get('/lgpd-condominio', 'Site\SiteController@lgpd_condominio'); //PDF
 //ROTAS DO BLOG
 Route::get('/blog', 'Blog\BlogController@index');
 Route::get('/blog/categorias/{categoria}', 'Blog\BlogController@categoria');

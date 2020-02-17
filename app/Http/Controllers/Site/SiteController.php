@@ -193,5 +193,9 @@ class SiteController extends Controller
     public function lgpd(){
         return response()->file("../storage/app/public/lgpd_izique chebabi_2019_digital.pdf");
     }
+
+    public function lgpd_condominio(){
+        return response()->file("../storage/app/public/lgpd_izique_2020_digital-v2.pdf");
+    }
     
 }
