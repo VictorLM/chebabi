@@ -68,8 +68,8 @@ class AndamentosDataCloudProgressCrawler extends Command
     private function getPasta($linkId)
     {
         $filter = 'https://api.thomsonreuters.com/legalone/v1/api/rest/Lawsuits/'.$linkId;
-        $filter .= '?%24expand=participants($filter=type eq ';
-        $filter .= "'Customer' or type eq 'OtherParty')";
+        $filter .= '?%24expand=participants($filter=type%20eq%20';
+        $filter .= "'Customer'%20or%20type%20eq%20'OtherParty')";
 
         $result = $this->get_cURL($filter);
 
@@ -78,8 +78,8 @@ class AndamentosDataCloudProgressCrawler extends Command
         }
 
         $filter = 'https://api.thomsonreuters.com/legalone/v1/api/rest/Appeals/'.$linkId;
-        $filter .= '?%24expand=participants($filter=type eq ';
-        $filter .= "'Customer' or type eq 'OtherParty')";
+        $filter .= '?%24expand=participants($filter=type%20eq%20';
+        $filter .= "'Customer'%20or%20type%20eq%20'OtherParty')";
 
         $result = $this->get_cURL($filter);
 
@@ -88,8 +88,8 @@ class AndamentosDataCloudProgressCrawler extends Command
         }
 
         $filter = 'https://api.thomsonreuters.com/legalone/v1/api/rest/proceduralIssues/'.$linkId;
-        $filter .= '?%24expand=participants($filter=type eq ';
-        $filter .= "'Customer' or type eq 'OtherParty')";
+        $filter .= '?%24expand=participants($filter=type%20eq%20';
+        $filter .= "'Customer'%20or%20type%20eq%20'OtherParty')";
 
         $result = $this->get_cURL($filter);
 
@@ -155,14 +155,14 @@ class AndamentosDataCloudProgressCrawler extends Command
         //$data = '2018-03-16T00:00:00Z';
 
         $parameters = 'https://api.thomsonreuters.com/legalone/v1/api/rest/Updates';
-        $parameters .= '?$filter=originType eq ';
+        $parameters .= '?$filter=originType%20eq%20';
         $parameters .= "'";
         //$parameters .= 'OfficialJournalsCrawler'; //ANDAMENTOS DE DIÁRIOS OFICIAIS
         $parameters .= 'ProgressesCrawler'; //ANDAMENTOS DE SITES DOS TRIBUNAIS
         $parameters .= "'";
         $parameters .= 'and creationDate Ge ';
         $parameters .= $data;
-        $parameters .= '&$expand=relationships($filter=linkType eq ';
+        $parameters .= '&$expand=relationships($filter=linkType%20eq%20';
         $parameters .= "'Litigation')";
         $result = $this->get_cURL($parameters);
 

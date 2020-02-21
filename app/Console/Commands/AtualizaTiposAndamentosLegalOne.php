@@ -42,7 +42,7 @@ class AtualizaTiposAndamentosLegalOne extends Command
         $token = DB::table('apikeys')->where('name', 'Legal One Corporate Brazil')->value('token');
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.thomsonreuters.com/legalone/v1/api/rest/UpdateAppointmentTaskTypes?$filter=isProgressType eq true');
+        curl_setopt($ch, CURLOPT_URL, 'https://api.thomsonreuters.com/legalone/v1/api/rest/UpdateAppointmentTaskTypes?$filter=isProgressType%20eq%20true');
         $headers = array('Authorization: Bearer ' . $token);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -358,11 +358,10 @@ class LegalOneController extends Controller
         $filter .= "'";
         $filter .= $pasta;
         $filter .= "')&";
-        $filter .= '$select=id,folder,identifierNumber,oldNumber&$expand=participants($filter=type eq ';
-        $filter .= "'Customer' or type eq 'OtherParty')";
-
+        $filter .= '$select=id,folder,identifierNumber,oldNumber&$expand=participants($filter=type%20eq%20';
+        $filter .= "'Customer'%20or%20type%20eq%20'OtherParty')";
         $ch_pasta = curl_init();
-        curl_setopt($ch_pasta, CURLOPT_URL, 'https://api.thomsonreuters.com/legalone/v1/api/rest/litigations'.$filter.'');
+        curl_setopt($ch_pasta, CURLOPT_URL, 'https://api.thomsonreuters.com/legalone/v1/api/rest/litigations'.$filter);
         $headers = array('Authorization: Bearer ' . $token);
         curl_setopt($ch_pasta, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch_pasta, CURLOPT_RETURNTRANSFER, true);
