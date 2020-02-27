@@ -116,15 +116,15 @@ class RelatorioController extends Controller
     }
     
     private function relatorio_pdf($relatorio){
-
+        
         \PDF::loadView('pdf.relatorio_viagem', compact('relatorio'))
-            ->save('../storage/app/intranet/pdf/relatorios/relatorio_'.$relatorio->identificador.'.pdf');
+            ->save(storage_path('app/intranet/pdf/relatorios/relatorio_'.$relatorio->identificador.'.pdf'));
 
         if($relatorio->reembolsavel){
             for($i=0; $i<count(unserialize($relatorio->clientes)); $i++){
                 \PDF::loadView('pdf.relatorio_viagem_cliente', compact('relatorio', 'i'))
                     ->setPaper('a4', 'landscape')
-                    ->save('../storage/app/intranet/pdf/relatorios/cliente/relatorio_cliente_'.($i+1).'_'.$relatorio->identificador.'.pdf');
+                    ->save(storage_path('app/intranet/pdf/relatorios/cliente/relatorio_cliente_'.($i+1).'_'.$relatorio->identificador.'.pdf'));
             }
             
         }
