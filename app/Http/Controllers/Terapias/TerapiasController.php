@@ -46,24 +46,29 @@ class TerapiasController extends Controller{
         $this->terapia_quick_massage['intervalo_agendamento'] = "semanal";
         $this->terapia_quick_massage['dias_horarios'] = array(
             '2' => array(
-                'inicio' => '11:00',
-                'fim' => '15:45',
-                'intervalo' => array('inicio' => '12:00','fim' => '12:30',),
+                'inicio' => '14:00',
+                'fim' => '16:00',
+                'intervalo' => false,
             ),
             '3' => array(
-                'inicio' => '09:00',
-                'fim' => '12:15',
+                'inicio' => '16:30',
+                'fim' => '18:00',
+                'intervalo' => false,
+            ),
+            '4' => array(
+                'inicio' => '14:00',
+                'fim' => '15:45',
                 'intervalo' => false,
             ),
             '5' => array(
-                'inicio' => '11:00',
-                'fim' => '11:45',
-                'intervalo' => false,
+                'inicio' => '15:45',
+                'fim' => '18:00',
+                'intervalo' => array('inicio' => '16:15','fim' => '16:30',),
             ),
             '6' => array(
                 'inicio' => '14:00',
-                'fim' => '17:15',
-                'intervalo' => array('inicio' => '15:00','fim' => '15:15',),
+                'fim' => '16:00',
+                'intervalo' => false,
             ),
         );
         ///////////////////////////////////////////////////////////////////
@@ -77,33 +82,27 @@ class TerapiasController extends Controller{
         
         $this->terapia_auriculoterapia['tipo'] = "auriculoterapias";
         $this->terapia_auriculoterapia['limite_mensal'] = 5; //uma sessão a cada 7 dias, tem mês com 5 semanas
-        $this->terapia_auriculoterapia['tempo_sessao'] = 20;
+        $this->terapia_auriculoterapia['tempo_sessao'] = 15;
         $this->terapia_auriculoterapia['intervalo_agendamento'] = 7; //uma sessão a cada 7 dias
         $this->terapia_auriculoterapia['dias_horarios'] = array(
             '2' => array(
-                'inicio' => '09:00',
-                'fim' => '10:40',
+                'inicio' => '16:30',
+                'fim' => '18:00',
                 'intervalo' => false,
             ),
             '3' => array(
-                'inicio' => '13:00',
-                'fim' => '14:40',
-                'intervalo' => false,
-                //'intervalo' => array('inicio' => '16:00','fim' => '16:15',),
-            ),
-            '4' => array(
-                'inicio' => '13:00',
-                'fim' => '14:40',
-                'intervalo' => false,
+                'inicio' => '14:00',
+                'fim' => '16:00',
+                'intervalo' => array('inicio' => '15:00','fim' => '15:30',),
             ),
             '5' => array(
-                'inicio' => '09:00',
-                'fim' => '09:40',
+                'inicio' => '14:30',
+                'fim' => '15:30',
                 'intervalo' => false,
             ),
             '6' => array(
-                'inicio' => '12:40',
-                'fim' => '13:40',
+                'inicio' => '16:30',
+                'fim' => '17:30',
                 'intervalo' => false,
             ),
         );
@@ -123,8 +122,8 @@ class TerapiasController extends Controller{
         $this->terapia_massagem_pes['intervalo_agendamento'] = false; //uma sessão por mês apenas
         $this->terapia_massagem_pes['dias_horarios'] = array(
             '4' => array(
-                'inicio' => '15:15',
-                'fim' => '17:15',
+                'inicio' => '16:15',
+                'fim' => '17:30',
                 'intervalo' => false,
                 //'intervalo' => array('inicio' => '16:00','fim' => '16:15',),
             ),
