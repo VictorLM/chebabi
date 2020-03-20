@@ -21,8 +21,9 @@ class SiteController extends Controller
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(5)->get();
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
+        $alertas_site = DB::table('alertas_site')->orderBy('created_at', 'DESC')->whereDate('ate', '>=', Carbon::now())->get();
         $title = 'Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.index', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
+        return view('site.index', compact('title', 'noticias', 'artigos', 'historias', 'alertas_site','agent'));
     }
     
     public function contato(){

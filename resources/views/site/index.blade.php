@@ -1,6 +1,17 @@
 @extends ('site.templates.template')
 
 @section('conteudo')
+    
+    @if(isset($alertas_site))
+        @foreach($alertas_site as $alerta)
+            <div class="alert alert-{{$alerta->tipo}} alert-dismissible fade show" role="alert" style="margin-top:1rem;">
+                {{$alerta->descricao}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endforeach
+    @endif
 
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">

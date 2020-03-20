@@ -21,7 +21,7 @@ class BlogArtigos extends Migration
             $table->text('descricao');
             $table->string('url');
             $table->enum('categoria', ['Cível', 'Trabalhista', 'Outros']);
-            $table->string('tags');
+            $table->string('tags', 200);
             $table->timestamps();
         });
     }
