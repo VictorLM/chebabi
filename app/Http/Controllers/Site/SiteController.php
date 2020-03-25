@@ -198,5 +198,9 @@ class SiteController extends Controller
     public function lgpd_condominio(){
         return response()->file("../storage/app/public/lgpd_izique_2020_digital-v2.pdf");
     }
+
+    public function medidastrabalhistascoronavirus(){
+        return response()->file("../storage/app/public/Izique_Chebabi_medidas_trabalhistas.pdf");
+    }
     
 }

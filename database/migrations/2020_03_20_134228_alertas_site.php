@@ -18,7 +18,7 @@ class AlertasSite extends Migration
             $table->integer('user')->unsigned();
             $table->foreign('user')->references('id')->on('users');
             $table->enum('tipo', ['primary', 'success', 'danger', 'warning']);
-            $table->string('descricao');
+            $table->string('descricao', 500);
             $table->date('ate');
             $table->timestamps();
         });

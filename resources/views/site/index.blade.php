@@ -237,4 +237,29 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalHome" tabindex="-1" role="dialog" aria-labelledby="modalHome" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">Coronavírus: Medidas Trabalhistas</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body h5">
+                    Acesse nosso material sobre as recomendações trabalhistas 
+                    <a href="/medidastrabalhistascoronavirus">clicando aqui</a>.
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+@push ('scripts')
+    <script>$('#modalHome').modal('show');</script>
+@endpush
