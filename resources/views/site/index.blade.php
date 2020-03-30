@@ -250,6 +250,13 @@
                 <div class="modal-body h5">
                     Acesse nosso material sobre as recomendações trabalhistas 
                     <a href="/medidastrabalhistascoronavirus">clicando aqui</a>.
+                    <br/><br/>
+                    <h5 class="text-center"><b>ERRATA</b></h4>
+                    <p class="h6 text-justify">
+                    MEDIDAS TRABALHISTAS PARA ENFRENTAMENTO DA EMERGÊNCIA DE SAÚDE PÚBLICA DECORRENTES DO CORONAVÍRUS, 23 de março de 2020.
+                    No tocante ao FGTS, para poder usufruir da prerrogativa de parcelamento dos recolhimentos de março, abril e maio de 2020, 
+                    o empregador precisa fazer a declaração das informações até o dia 20 de junho de 2020 e não de julho, como havíamos publicado na página 6.
+                    </p>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
