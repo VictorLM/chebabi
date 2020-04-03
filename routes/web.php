@@ -26,6 +26,8 @@ Route::get('/tour-virtual', 'Site\SiteController@tour_virtual');
 Route::get('/lgpd', 'Site\SiteController@lgpd'); //PDF
 Route::get('/lgpd-condominio', 'Site\SiteController@lgpd_condominio'); //PDF
 Route::get('/medidastrabalhistascoronavirus', 'Site\SiteController@medidastrabalhistascoronavirus'); //PDF
+Route::get('/mpdareducaosalarialedasuspensaodocontrato', 'Site\SiteController@mpdareducaosalarialedasuspensaodocontrato'); //PDF
+// ESPECIALISTAS TRABALHANDO NESSAS URLS ACIMA ^. IMPRESSIONANTE. /S
 //ROTAS DO BLOG
 Route::get('/blog', 'Blog\BlogController@index');
 Route::get('/blog/categorias/{categoria}', 'Blog\BlogController@categoria');

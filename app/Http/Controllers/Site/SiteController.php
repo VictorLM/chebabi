@@ -202,5 +202,9 @@ class SiteController extends Controller
     public function medidastrabalhistascoronavirus(){
         return response()->file("../storage/app/public/Izique_Chebabi_medidas_trabalhistas.pdf");
     }
+
+    public function mpdareducaosalarialedasuspensaodocontrato(){
+        return response()->file("../storage/app/public/MP_936_IC.pdf");
+    }
     
 }

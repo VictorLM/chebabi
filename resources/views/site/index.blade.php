@@ -265,8 +265,34 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalHome2" tabindex="-1" role="dialog" aria-labelledby="modalHome2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">MP DA REDUÇÃO SALARIAL E DA SUSPENSÃO DO CONTRATO</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body h5">
+                    Acesse nosso material sobre as recomendações  
+                    <a href="/mpdareducaosalarialedasuspensaodocontrato">clicando aqui</a>.
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push ('scripts')
-    <script>$('#modalHome').modal('show');</script>
+    <script>
+        $('#modalHome2').modal('show');
+        $('#modalHome2').on('hidden.bs.modal', function () {
+            $('#modalHome').modal('show')
+        });
+    </script>
 @endpush
