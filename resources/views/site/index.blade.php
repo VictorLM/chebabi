@@ -239,45 +239,44 @@
 
     <!-- Modal -->
     <div class="modal fade" id="modalHome" tabindex="-1" role="dialog" aria-labelledby="modalHome" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLongTitle">Coronavírus: Medidas Trabalhistas</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <h4 class="modal-title text-center" id="exampleModalLongTitle">Materiais sobre recomendações</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body h5">
-                    Acesse nosso material sobre as recomendações trabalhistas 
-                    <a href="/medidastrabalhistascoronavirus">clicando aqui</a>.
-                    <br/><br/>
-                    <h5 class="text-center"><b>ERRATA</b></h4>
-                    <p class="h6 text-justify">
-                    MEDIDAS TRABALHISTAS PARA ENFRENTAMENTO DA EMERGÊNCIA DE SAÚDE PÚBLICA DECORRENTES DO CORONAVÍRUS, 23 de março de 2020.
-                    No tocante ao FGTS, para poder usufruir da prerrogativa de parcelamento dos recolhimentos de março, abril e maio de 2020, 
-                    o empregador precisa fazer a declaração das informações até o dia 20 de junho de 2020 e não de julho, como havíamos publicado na página 6.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalHome2" tabindex="-1" role="dialog" aria-labelledby="modalHome2" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLongTitle">MP DA REDUÇÃO SALARIAL E DA SUSPENSÃO DO CONTRATO</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body h5">
-                    Acesse nosso material sobre as recomendações  
-                    <a href="/mpdareducaosalarialedasuspensaodocontrato">clicando aqui</a>.
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><b>MP da Redução Salarial e da Suspensão do Contrato</b></h5>
+                            <br/>
+                            <p class="text-justify">
+                                Acesse nosso material sobre as recomendações  
+                                <a href="/mpdareducaosalarialedasuspensaodocontrato" target="_blank">clicando aqui</a>.
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><b>Coronavírus: Medidas Trabalhistas</b></h5>
+                            <br/>
+                            <p class="text-justify">
+                                Acesse nosso material sobre as recomendações trabalhistas 
+                                <a href="/medidastrabalhistascoronavirus" target="_blank">clicando aqui</a>.
+                            </p>
+                            <h6 class="text-center"><b>ERRATA</b></h6>
+                            <p class="text-justify" style="font-size:.7em;">
+                                MEDIDAS TRABALHISTAS PARA ENFRENTAMENTO DA EMERGÊNCIA DE SAÚDE PÚBLICA DECORRENTES DO CORONAVÍRUS, 23 de março de 2020.
+                                No tocante ao FGTS, para poder usufruir da prerrogativa de parcelamento dos recolhimentos de março, abril e maio de 2020, 
+                                o empregador precisa fazer a declaração das informações até o dia 20 de junho de 2020 e não de julho, como havíamos publicado na página 6.
+                            </p>
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -289,10 +288,5 @@
 @endsection
 
 @push ('scripts')
-    <script>
-        $('#modalHome2').modal('show');
-        $('#modalHome2').on('hidden.bs.modal', function () {
-            $('#modalHome').modal('show')
-        });
-    </script>
+    <script>$('#modalHome').modal('show');</script>
 @endpush
