@@ -56,6 +56,7 @@ class Correio extends Model{
             $message->from('chebabi@chebabi.adv.br', 'Intranet - Izique Chebabi Advogados');
             $message->to('correio@chebabi.com', $name = null);
             $message->subject('Solcitação de Correio - ' . $this->id);
+            $message->attach("../storage/app/" . $this->anexo);
         });
     }
 }
