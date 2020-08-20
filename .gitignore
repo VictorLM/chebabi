@@ -18,3 +18,5 @@ INTRANET.txt
 /database/seeds/UsersTableSeeder.php
 /storage/fonts
 /storage/backups
+public/assets/imagens/advogados
+public/assets/imagens/artigos

@@ -122,6 +122,9 @@ Route::group(['prefix'=>'intranet'],function(){
     Route::get('/pdf/{nomepasta}/{nomesubpasta}/{nomepdf}', 'Intranet\IntranetController@pdf');
     //ROTAS RELATÓRIO CONTROLLER
     Route::post('/relatorio/enviar', 'Relatorio\RelatorioController@create');
+    //ROTAS CORREIOS
+    Route::get('/correios', 'Correios\CorreiosController@index');
+    Route::post('/correios', 'Correios\CorreiosController@store');
 });
 //ROTAS DO PAINEL DO ADMINISTRADOR
 Route::group(['prefix'=>'intranet/admin'],function(){

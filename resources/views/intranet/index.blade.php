@@ -79,7 +79,19 @@
                             <i class="glyphicon glyphicon-envelope"></i><br/>CONTATOS</a>
                         </div>
                     </div>
-                    
+
+                    <div class="col-md-4">
+                        <div class="intra-atalhos well well-lg">
+                            <a href="{{url('intranet/correios')}}">
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            <i class="glyphicon glyphicon-list-alt"></i><br/>CORREIOS</a>
+                        </div>
+                    </div>
+   
+                </div>
+                
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="#" id="legalone" data-toggle="popover" data-trigger="focus" data-content="#">
@@ -87,10 +99,6 @@
                             <i class="glyphicon glyphicon-globe"></i><br/>LEGAL ONE</a>
                         </div>
                     </div>
-
-                </div>
-                
-                <div class="row">
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -107,7 +115,11 @@
                             <i class="glyphicon glyphicon-road"></i><br/>RELAT. DE VIAGENS</a>
                         </div>
                     </div>
-                    
+
+                </div>
+                
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/tarifadores')}}">
@@ -115,10 +127,6 @@
                             <i class="glyphicon glyphicon-print"></i><br/>TARIFADORES</a>
                         </div>
                     </div>
-
-                </div>
-                
-                <div class="row">
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -136,6 +144,10 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             @if($unread_uaus>0)
@@ -146,10 +158,6 @@
                             <i class="glyphicon glyphicon-star"></i><br/>UAU!</a>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="row">
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -168,6 +176,10 @@
                         </div>
                     </div>
                     
+                </div>
+
+                <div class="row">
+
                     @if ($admin)
                         <div class="col-md-4">
                             <div class="intra-atalhos well well-lg">
@@ -178,9 +190,9 @@
                             </div>
                         </div>
                     @endif
-                    
+
                 </div>
-                
+
             </div>
         </div>
     </div>
