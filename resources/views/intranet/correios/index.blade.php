@@ -130,7 +130,7 @@
                         <div class="row">
 
                             <div class="col-md-12 @if($errors->has('descricao')) has-error @endif">
-                                <label>* Descrição/Título</label>
+                                <label>* Descrição/AR</label>
                                 <input type="text" class="form-control" name="descricao" maxlength="191" 
                                 placeholder="Digite a descrição aqui" value="{{ old('descricao') }}" required>
                                 @if ($errors->has('descricao'))

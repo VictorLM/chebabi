@@ -29,28 +29,30 @@ class CorreiosController extends Controller
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
-
-            $fileName = 'Correio_' . date('dmYHis') . '.pdf';
-            $request->file('anexo')->storeAs('intranet/pdf/correios/', $fileName);
-
+            
+            $identificador = Auth::user()->id . "_" . date('dmYHis');
+            
             $correio->fill($request->all());
             $correio->user = Auth::user()->id;
             $correio->data = Carbon::now();
-            $correio->anexo = 'intranet/pdf/correios/' . $fileName;
-
+            $correio->anexo = $identificador;
+            
             try {
-                //throw new \Symfony\Component\HttpKernel\Exception\HttpException(500); - TODO
-                if($correio->save()){
-                    $correio->enviarEmail();
+                // throw new \Symfony\Component\HttpKernel\Exception\HttpException(500); - TODO
+                
+                $request->file('anexo')->storeAs('intranet/pdf/correios/anexos/', 'Correio_' . $correio->anexo . '.pdf');
+
+                if($correio->save() && $correio->toPdf() && $correio->toEmail()){
+                    
                     $request->session()->flash('alert-success', 'Solicitação de correio enviada com sucesso!');
                     return redirect()->action('Intranet\IntranetController@index');
-                } else {
-                    //REPORTAR $e - TODO
-                    return redirect()->back()->withErrors('Erro ao salvar no banco de dados. Tente novamente mais tarde.')->withInput();
                 }
+                
+                return redirect()->back()->withErrors('Erro interno. Tente novamente mais tarde.')->withInput();
+
             } catch(Exception $e) {
-                //REPORTAR $e - TODO
-                return redirect()->back()->withErrors('Erro ao salvar no banco de dados. Tente novamente mais tarde.')->withInput();
+                // REPORTAR $e - TODO
+                return redirect()->back()->withErrors('Erro interno. Tente novamente mais tarde.')->withInput();
             }
 
         }

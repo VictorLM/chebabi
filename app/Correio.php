@@ -33,6 +33,9 @@ class Correio extends Model{
     public function user(){
         return $this->hasOne('Intranet\User', 'id', 'user');
     }
+
+    public $anexosPath = 'app/intranet/pdf/correios/anexos/';
+    public $relatoriosPath = 'app/intranet/pdf/correios/relatorios/';
     
     protected $fillable = [
         'reembolsavel', 
@@ -51,12 +54,45 @@ class Correio extends Model{
         'descricao',
     ];
 
-    public function enviarEmail(){
-        Mail::send('emails.correios', ['content' => $this], function ($message) {
-            $message->from('chebabi@chebabi.adv.br', 'Intranet - Izique Chebabi Advogados');
-            $message->to('correio@chebabi.com', $name = null);
-            $message->subject('Solcitação de Correio - ' . $this->id);
-            $message->attach("../storage/app/" . $this->anexo);
-        });
+    function toPdf(){
+        
+        try {
+            $correio = $this;
+            
+            \PDF::loadView('pdf.correios', compact('correio'))
+                ->setPaper('a4', 'landscape')
+                ->save(storage_path($this->relatoriosPath . $this->anexo . '.pdf'));
+
+            return true;
+        } catch(Exception $e) {
+            return false;
+        }        
     }
+
+    function toEmail(){
+        
+        try {
+
+            Mail::send('emails.correios', ['content' => $this], function ($message) {
+                $message->from('chebabi@chebabi.adv.br', 'Intranet - Izique Chebabi Advogados');
+                $message->to('correio@chebabi.com', $name = null); 
+                $message->subject('Solcitação de Correio - ' . $this->id);
+                $message->attach(storage_path($this->anexosPath) . 'Correio_' . $this->anexo . '.pdf');
+                $message->attach(storage_path($this->relatoriosPath) . $this->anexo . '.pdf');
+            });
+
+            Mail::send('emails.correios_cc', ['content' => $this], function ($message) {
+                $message->from('chebabi@chebabi.adv.br', 'Intranet - Izique Chebabi Advogados');
+                $message->to(Auth::user()->email, $name = Auth::user()->name);
+                $message->subject('Solcitação de Correio - ' . $this->id);
+            });
+
+            return true;
+        } catch(Exception $e) {
+            return false;
+        }
+
+        
+    }
+
 }
