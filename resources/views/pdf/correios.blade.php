@@ -37,7 +37,7 @@
                 </tr>
                 @if(!$correio->reembolsavel)
                     <tr>
-                        <td><strong>MOTIVO: </strong>{{ $correio->motivo }}</td>
+                        <td colspan="2"><strong>MOTIVO: </strong>{{ $correio->motivo }}</td>
                     </tr>
                 @endif
                 <tr>
