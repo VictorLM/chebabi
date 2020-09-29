@@ -32,7 +32,8 @@ class CreateCorreiosTable extends Migration
             $table->string('cidade');
             $table->string('estado', 2);
             $table->string('descricao');
-            $table->string('anexo'); // URL
+            $table->boolean('anexo')->default(false);
+            $table->string('identificador');
             $table->timestamps();
         });
     }

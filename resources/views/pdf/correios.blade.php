@@ -57,6 +57,15 @@
                         {{ $correio->rua . ', ' . $correio->numero . ', ' . ($correio->complemento == null ? '' : ($correio->complemento. ', ')) . $correio->cidade . ' - ' . $correio->estado . ', CEP: ' . $correio->cep }}
                     </td>
                 </tr>
+                @if($correio->anexo)
+                    <tr>
+                        <td colspan="2"><strong>ANEXO: </strong> Documento <i>"Correio_{{ $correio->identificador }}"</i> anexado ao e-mail de solicitação.</td>
+                    </tr>
+                @else
+                    <tr>
+                        <td colspan="2"><strong>ANEXO: </strong> Nenhum documento foi anexado ao e-mail de solicitação.</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
 

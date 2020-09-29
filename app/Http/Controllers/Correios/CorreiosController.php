@@ -30,17 +30,23 @@ class CorreiosController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
             
-            $identificador = Auth::user()->id . "_" . date('dmYHis');
-            
             $correio->fill($request->all());
             $correio->user = Auth::user()->id;
             $correio->data = Carbon::now();
-            $correio->anexo = $identificador;
+            $correio->identificador = Auth::user()->id . "_" . date('dmYHis');
+            
+            if($request->hasFile('anexo')){
+                $correio->anexo = true;
+            }else{
+                $correio->anexo = false;
+            }
             
             try {
                 // throw new \Symfony\Component\HttpKernel\Exception\HttpException(500); - TODO
-                
-                $request->file('anexo')->storeAs('intranet/pdf/correios/anexos/', 'Correio_' . $correio->anexo . '.pdf');
+
+                if($correio->anexo){
+                    $request->file('anexo')->storeAs('intranet/pdf/correios/anexos/', 'Correio_' . $correio->identificador . '.pdf');
+                }
 
                 if($correio->save() && $correio->toPdf() && $correio->toEmail()){
                     

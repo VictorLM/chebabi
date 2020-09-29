@@ -13,7 +13,7 @@
 
                     <h2><a href="{{url('/intranet')}}"><i class="glyphicon glyphicon-arrow-left"></i></a> Enviar Correios</h2>
 
-                    <small>A solicitação será enviada em seu nome, na data atual.</small>
+                    <small>A solicitação será enviada em seu nome e com a data atual.</small>
                 </div>
 
                 <div class="panel-body">
@@ -248,7 +248,7 @@
 
                             <div class="col-md-8 @if($errors->has('anexo')) has-error @endif">
                                 <label>** Anexo/Documento</label>
-                                <input type="file" class="form-control" name="anexo" required>
+                                <input type="file" class="form-control" name="anexo">
                                 <small>** PDF e tamanho máximo 10 MB.</small>
                                 @if ($errors->has('anexo'))
                                     <span class="help-block">

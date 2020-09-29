@@ -23,7 +23,7 @@ class Correio extends Model{
         'cidade' => 'required|string|max:191',
         'estado' => 'required|string|max:2',
         'descricao' => 'required|string|max:191',
-        'anexo' => 'required|mimes:pdf|max:10000',
+        'anexo' => 'nullable|mimes:pdf|max:10000',
     ];
 
     public $customMessages = [
@@ -61,7 +61,7 @@ class Correio extends Model{
             
             \PDF::loadView('pdf.correios', compact('correio'))
                 ->setPaper('a4', 'landscape')
-                ->save(storage_path($this->relatoriosPath . $this->anexo . '.pdf'));
+                ->save(storage_path($this->relatoriosPath . $this->identificador . '.pdf'));
 
             return true;
         } catch(Exception $e) {
@@ -75,10 +75,12 @@ class Correio extends Model{
 
             Mail::send('emails.correios', ['content' => $this], function ($message) {
                 $message->from('chebabi@chebabi.adv.br', 'Intranet - Izique Chebabi Advogados');
-                $message->to('correio@chebabi.com', $name = null); 
+                $message->to('correio@chebabi.com', $name = null);
                 $message->subject('Solcitação de Correio - ' . $this->id);
-                $message->attach(storage_path($this->anexosPath) . 'Correio_' . $this->anexo . '.pdf');
-                $message->attach(storage_path($this->relatoriosPath) . $this->anexo . '.pdf');
+                if($this->anexo){
+                    $message->attach(storage_path($this->anexosPath) . 'Correio_' . $this->identificador . '.pdf');
+                }
+                $message->attach(storage_path($this->relatoriosPath) . $this->identificador . '.pdf');
             });
 
             Mail::send('emails.correios_cc', ['content' => $this], function ($message) {
@@ -89,6 +91,7 @@ class Correio extends Model{
 
             return true;
         } catch(Exception $e) {
+            // TODO - LOG $e
             return false;
         }
 

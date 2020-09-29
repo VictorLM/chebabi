@@ -718,6 +718,51 @@ a[x-apple-data-detectors=true] {
       </div>
     </div>
 
+    <div style="background-color:transparent;">
+      <div style="Margin: 0 auto;min-width: 320px;max-width: 500px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;" class="block-grid mixed-two-up ">
+        <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
+          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 500px;"><tr class="layout-full-width" style="background-color:transparent;"><![endif]-->
+              <!--[if (mso)|(IE)]><td align="center" width="165" style=" width:165px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 1px solid #DEDEDE; border-left: 1px solid #DEDEDE; border-bottom: 1px solid #DEDEDE; border-right: 1px solid #DEDEDE;" valign="top"><![endif]-->
+            <div class="col num4" style="display: table-cell;vertical-align: top;max-width: 320px;min-width: 164px;">
+              <div style="background-color: transparent; width: 100% !important;">
+              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 1px solid #DEDEDE; border-left: 1px solid #DEDEDE; border-bottom: 1px solid #DEDEDE; border-right: 1px solid #DEDEDE; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
+                <div class="">
+                  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
+                  <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
+                    <div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px"><strong>Anexo:</strong></p></div>	
+                  </div>
+                  <!--[if mso]></td></tr></table><![endif]-->
+                </div>
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+              <!--[if (mso)|(IE)]></td><td align="center" width="331" style=" width:331px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 1px solid #DEDEDE; border-left: 1px solid #DEDEDE; border-bottom: 1px solid #DEDEDE; border-right: 1px solid #DEDEDE;" valign="top"><![endif]-->
+            <div class="col num8" style="display: table-cell;vertical-align: top;min-width: 320px;max-width: 328px;">
+              <div style="background-color: transparent; width: 100% !important;">
+              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 1px solid #DEDEDE; border-left: 1px solid #DEDEDE; border-bottom: 1px solid #DEDEDE; border-right: 1px solid #DEDEDE; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
+                  <div class="">
+                    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
+                    <div style="color:#555555;line-height:120%;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
+                      <div style="font-size:12px;line-height:14px;color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px">
+                      
+                        @if($content->anexo)
+                          Documento <i>"Correio_{{ $content->identificador }}"</i> anexado ao e-mail de solicitação.
+                        @else
+                          Nenhum documento foi anexado ao e-mail de solicitação.
+                        @endif
+
+                      </p></div>	
+                    </div>
+                    <!--[if mso]></td></tr></table><![endif]-->
+                  </div>
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
+      </div>
+    </div>
+
 
     <div style="background-color:transparent;">
       <div style="Margin: 0 auto;min-width: 320px;max-width: 500px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #DEDEDE;" class="block-grid ">
