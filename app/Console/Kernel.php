@@ -42,7 +42,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('AtualizaTiposAndamentosLegalOne:refresh')
                 ->hourly()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
-        //ANDAMENTOS DATA CLOUD
+        // BUGADO ABAIXO - TODO
+        /* //ANDAMENTOS DATA CLOUD
         $schedule->command('AndamentosDataCloudProgressCrawler:refresh')
                 ->dailyAt('01:00')
                 ->appendOutputTo(storage_path('logs/schedule.log'));
@@ -58,7 +59,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('AndamentosDataCloudProgressCrawler:refresh')
                 ->dailyAt('21:00')
                 ->appendOutputTo(storage_path('logs/schedule.log'));
-        //FIM ANDAMENTOS DATA CLOUD
+        */ //FIM ANDAMENTOS DATA CLOUD
         $schedule->command('AtualizaNoticiasAASP:refresh')
                 ->hourly()
                 ->appendOutputTo(storage_path('logs/schedule.log'));

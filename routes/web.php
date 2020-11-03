@@ -125,6 +125,15 @@ Route::group(['prefix'=>'intranet'],function(){
     //ROTAS CORREIOS
     Route::get('/correios', 'Correios\CorreiosController@index');
     Route::post('/correios', 'Correios\CorreiosController@store');
+    //ROTAS RESERVAS ESTAÇÕES
+    Route::get('/reservar', 'ReservasEstacoes\ReservasEstacoesController@index');
+    Route::post('/reservar', 'ReservasEstacoes\ReservasEstacoesController@reservar');
+    Route::get('/reservar/minhas-reservas', 'ReservasEstacoes\ReservasEstacoesController@minhas_reservas');
+    // Route::get('/reservar/minhas-reservas/editar/{id}', 'ReservasEstacoes\ReservasEstacoesController@editar_form');
+    // Route::post('/reservar/minhas-reservas/editar/{id}', 'ReservasEstacoes\ReservasEstacoesController@editar');
+    Route::get('/reservar/minhas-reservas/cancelar/{id}', 'ReservasEstacoes\ReservasEstacoesController@cancelar');
+    Route::get('/orientacoes-covid', 'ReservasEstacoes\ReservasEstacoesController@orientacoes_covid');
+    Route::get('/reservar/reservas', 'ReservasEstacoes\ReservasEstacoesController@todas_reservas');
 });
 //ROTAS DO PAINEL DO ADMINISTRADOR
 Route::group(['prefix'=>'intranet/admin'],function(){

@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Input;
 
 class AdvogadosController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('Intranet\Http\Middleware\Admin::class');
+    }
+    
     /**
      * Display a listing of the resource.
      *

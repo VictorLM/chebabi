@@ -1,7 +1,7 @@
 @extends('intranet.templates.template')
 
 @push('meta')
-    <meta http-equiv="refresh" content="600"/>
+    <meta http-equiv="refresh" content="3200"/>
 @endpush
 
 @push('styles')
@@ -14,9 +14,9 @@
 
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if(Session::has('alert-' . $msg))
-            <div class="alert alert-success alert-dismissable" style="margin-left:10px;margin-right:10px;">
+            <div class="alert alert-{{$msg}} alert-dismissable">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{ Session::get('alert-' . $msg) }}
+                {!! Session::get('alert-' . $msg) !!}
             </div>
         @endif
     @endforeach
@@ -122,6 +122,14 @@
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
+                            <a href="{{url('intranet/reservar')}}">
+                            <i class="glyphicon glyphicon-bookmark"></i>
+                            <i class="glyphicon glyphicon-check"></i><br/>RESERVAS</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/tarifadores')}}">
                             <i class="glyphicon glyphicon-phone-alt"></i> 
                             <i class="glyphicon glyphicon-print"></i><br/>TARIFADORES</a>
@@ -136,6 +144,10 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{url('intranet/tutoriais')}}">
@@ -143,10 +155,6 @@
                             <i class="glyphicon glyphicon-book"></i><br/>TUTORIAIS</a>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="row">
 
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
@@ -167,6 +175,10 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="row">
+
                     <div class="col-md-4">
                         <div class="intra-atalhos well well-lg">
                             <a href="{{route('logout')}}" onclick="event.preventDefault();
@@ -175,10 +187,6 @@
                             <i class="glyphicon glyphicon-globe"></i><br/>VOLTAR PARA O SITE</a>
                         </div>
                     </div>
-                    
-                </div>
-
-                <div class="row">
 
                     @if ($admin)
                         <div class="col-md-4">
