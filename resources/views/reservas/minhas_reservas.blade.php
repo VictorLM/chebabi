@@ -87,7 +87,7 @@
                   </table>
                 @else
 
-                  <h2 class="text-center">Não há reservas futuras em seu nome. <a href='/intranet/reservar'>Nova Reserva</a>.</h2>
+                  <h4 class="text-center">Não há reservas futuras em seu nome. <a href='/intranet/reservar'>Nova Reserva</a>.</h4>
 
                 @endif
 

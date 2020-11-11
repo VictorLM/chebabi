@@ -12,7 +12,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Intranet\Blog_Noticias;
 use Illuminate\Support\Facades\Input;
-use Jenssegers\Agent\Agent;
 
 class BlogController extends Controller
 {
@@ -24,16 +23,14 @@ class BlogController extends Controller
     }
     
     public function index(){
-        $agent = new Agent();
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->paginate(10);
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Artigos | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
+        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias'));
     }
 
     public function categoria($categoria){
-        $agent = new Agent();
         $artigos = DB::table('blog_artigos')
             ->where('categoria', $categoria)
             ->orderBy('created_at', 'DESC')
@@ -41,32 +38,29 @@ class BlogController extends Controller
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Artigos | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
+        return view('site.blog.index', compact('title', 'noticias', 'artigos', 'historias'));
     }
 
     public function noticias(){
-        $agent = new Agent();
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(3)->get();
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(100)->paginate(15);
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->limit(2)->get();
         $title = 'Notícias | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.noticias', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
+        return view('site.blog.noticias', compact('title', 'noticias', 'artigos', 'historias'));
     }
 
     public function historias(){
-        $agent = new Agent();
         $artigos = DB::table('blog_artigos')->orderBy('created_at', 'DESC')->limit(3)->get();
         $noticias = Blog_Noticias::orderBy('publicacao', 'DESC')->limit(5)->get();
         $historias = DB::table('blog_historias')->orderBy('created_at', 'DESC')->paginate(5);
         $title = 'Histórias | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
-        return view('site.blog.historias', compact('title', 'noticias', 'artigos', 'historias', 'agent'));
+        return view('site.blog.historias', compact('title', 'noticias', 'artigos', 'historias'));
     }
 
     public function artigo($url){
         $artigo = DB::table('blog_artigos')->where('url', '/blog/artigos/'.$url)->first();
 
         if(!empty($artigo)){
-            $agent = new Agent();
 
             $comentarios = DB::table('blog_artigos_comentarios')
                 ->where('artigo', $artigo->id)
@@ -79,7 +73,7 @@ class BlogController extends Controller
 
             $title = $artigo->titulo.' | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
 
-            return view('site.blog.artigo', compact('title', 'artigo', 'noticias', 'historias', 'comentarios', 'agent'));
+            return view('site.blog.artigo', compact('title', 'artigo', 'noticias', 'historias', 'comentarios'));
 
         }else{
             abort(404);
@@ -129,7 +123,7 @@ class BlogController extends Controller
         $historia = DB::table('blog_historias')->where('url', '/blog/historias/'.$url)->first();
 
         if(!empty($historia)){
-            $agent = new Agent();
+
             $comentarios = DB::table('blog_historias_comentarios')
                 ->where('historia', $historia->id)
                 ->orderBy('created_at', 'Desc')
@@ -141,7 +135,7 @@ class BlogController extends Controller
 
             $title = $historia->titulo.' | Izique Chebabi Advogados Associados | Advogados Campinas São Paulo Advocacia';
 
-            return view('site.blog.historia', compact('title', 'artigos', 'noticias', 'historia', 'comentarios', 'agent'));
+            return view('site.blog.historia', compact('title', 'artigos', 'noticias', 'historia', 'comentarios'));
 
         }else{
             abort(404);

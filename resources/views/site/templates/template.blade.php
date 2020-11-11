@@ -94,9 +94,9 @@
         <footer class="footer bg-light text-center">
             <div class="container">
 
-                <a href="https://www.linkedin.com/company/izique-chebabi-advogados-associados" target="_blank" class="fa fa-linkedin @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
-                <a href="https://www.facebook.com/Izique-Chebabi-Advogados-Associados-346767155816975" target="_blank" class="fa fa-facebook @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a>
-                <!-- <a href="#" class="fa fa-youtube @if($agent->isMobile()) fa-2x @else fa-3x @endif social"></a> -->
+                <a href="https://www.linkedin.com/company/izique-chebabi-advogados-associados" target="_blank" class="fa fa-linkedin fa-2x social"></a>
+                <a href="https://www.facebook.com/Izique-Chebabi-Advogados-Associados-346767155816975" target="_blank" class="fa fa-facebook fa-2x social"></a>
+                <!-- <a href="#" class="fa fa-youtube fa-2x social"></a> -->
                 <hr/>
                 <div class="row row-eq-height">
 

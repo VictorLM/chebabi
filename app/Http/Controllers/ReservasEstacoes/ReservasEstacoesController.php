@@ -127,9 +127,13 @@ class ReservasEstacoesController extends Controller {
         $reserva = ReservaEstacao::find($id);
         if($reserva){
             if($reserva->user === Auth::user()->id){
-                $reserva->cancelado = Carbon::now();
-                $reserva->save();
-                $request->session()->flash('alert-success', 'Reserva cancelada com sucesso!');
+                if(Carbon::parse($reserva->fim) <= Carbon::today()){
+                    $reserva->cancelado = Carbon::now();
+                    $reserva->save();
+                    $request->session()->flash('alert-success', 'Reserva cancelada com sucesso!');
+                }else{
+                    $request->session()->flash('alert-warning', 'Não é possível cancelar reservas já passadas.');
+                }
             }else{
                 $request->session()->flash('alert-warning', 'Você não está autorizado a cancelar esta reserva.');
             }
