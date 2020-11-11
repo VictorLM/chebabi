@@ -32,15 +32,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('AtualizaTokenLegalOne:refresh')
-                ->everyFifteenMinutes()
-                ->appendOutputTo(storage_path('logs/schedule.log'));
-        
-        $schedule->command('AtualizaTokenMSGraph:refresh')
                 ->everyThirtyMinutes()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
         
-        $schedule->command('AtualizaTiposAndamentosLegalOne:refresh')
+        $schedule->command('AtualizaTokenMSGraph:refresh')
                 ->hourly()
+                ->appendOutputTo(storage_path('logs/schedule.log'));
+        
+        $schedule->command('AtualizaTiposAndamentosLegalOne:refresh')
+                ->daily()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
         // BUGADO ABAIXO - TODO
         /* //ANDAMENTOS DATA CLOUD
@@ -63,14 +63,21 @@ class Kernel extends ConsoleKernel
         $schedule->command('AtualizaNoticiasAASP:refresh')
                 ->hourly()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
+
         $schedule->command('EmailAniversario:enviar')
                 ->dailyAt('09:00')
                 ->appendOutputTo(storage_path('logs/schedule.log'));
+
         $schedule->command('db:backup')
                 ->dailyAt('22:00')
                 ->appendOutputTo(storage_path('logs/schedule.log'));
+
         $schedule->command('EmailAniversarioTodos:enviar')
                 ->dailyAt('09:00')
+                ->appendOutputTo(storage_path('logs/schedule.log'));
+
+        $schedule->command('TempFiles:delete')
+                ->weekly()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
     }
 
