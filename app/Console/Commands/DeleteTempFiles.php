@@ -3,7 +3,7 @@
 namespace Intranet\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Storage;
 
 class DeleteTempFiles extends Command
 {
@@ -38,14 +38,23 @@ class DeleteTempFiles extends Command
      */
     public function handle()
     {
-        $file = new Filesystem;
+        $dics = [
+            'curriculos', 
+            'intranet/pdf/relatorios', 
+            'intranet/pdf/relatorios/cliente', 
+            'intranet/pdf/comprovantes', 
+            'intranet/pdf/correios/relatorios',
+            'intranet/pdf/correios/anexos',
+        ];
         // RIP TRY CATCH
-        $file->cleanDirectory(storage_path('app/curriculos'));
-        $file->cleanDirectory(storage_path('app/intranet/pdf/relatorios'));
-        $file->cleanDirectory(storage_path('app/intranet/pdf/correios/relatorios'));
-        $file->cleanDirectory(storage_path('app/intranet/pdf/correios/anexos'));
-        $file->cleanDirectory(storage_path('app/intranet/pdf/comprovantes'));
-        // Recriar dic deletado p/ relatórios de viagens dos clientes
-        $file->makeDirectory(storage_path('app/intranet/pdf/relatorios/cliente'));
+        foreach($dics as $dic){
+
+            $files = Storage::files($dic);
+            if(count($files) > 0) {
+                Storage::delete($files);
+            }
+
+        }
+        
     }
 }

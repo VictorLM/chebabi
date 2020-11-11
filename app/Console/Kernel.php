@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         '\Intranet\Console\Commands\EmailAniversario',
         '\Intranet\Console\Commands\BackupDB',
         '\Intranet\Console\Commands\EmailAniversarioTodos',
+        '\Intranet\Console\Commands\DeleteTempFiles',
     ];
 
     /**
