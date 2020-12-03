@@ -17,7 +17,7 @@ class ReservaEstacao extends Model {
         return $this->hasOne('Intranet\User', 'id', 'user');
     }
 
-    // TODO TRY CATCH - RIP TRY CATCH
+    // TODO - TRY CATCH - RIP TRY CATCH
     /*
     try {
         

@@ -67,7 +67,7 @@ class BackupDB extends Command
             function ($message)
             {
                 $message->from('intranet@chebabi.adv.br', 'Intranet Chebabi');
-                $message->to('victor@chebabi.com', null);
+                $message->to('aline@chebabi.com', null);
                 $message->subject('Backup Intranet '.$this->data);
                 $message->attach(storage_path('backups/backup_intranet_'.$this->data.'.gz'));
             });

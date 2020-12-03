@@ -236,7 +236,7 @@
 
         </div>
     </div>
-
+    {{--
     <!-- Modal -->
     <div class="modal fade" id="modalHome" tabindex="-1" role="dialog" aria-labelledby="modalHome" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -284,9 +284,10 @@
             </div>
         </div>
     </div>
-
+    --}}
 @endsection
-
+{{--
 @push ('scripts')
     <script>$('#modalHome').modal('show');</script>
 @endpush
+--}}

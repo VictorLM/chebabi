@@ -70,7 +70,7 @@ class Kernel extends ConsoleKernel
                 ->appendOutputTo(storage_path('logs/schedule.log'));
 
         $schedule->command('db:backup')
-                ->dailyAt('22:00')
+                ->weekly()
                 ->appendOutputTo(storage_path('logs/schedule.log'));
 
         $schedule->command('EmailAniversarioTodos:enviar')

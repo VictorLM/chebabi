@@ -99,7 +99,7 @@ class IntranetController extends Controller
             {
                 $message->from('postmaster@chebabi.adv.br', 'Sugestão - Izique Chebabi Advogados');
                 $message->to('coordenacao@chebabi.com', $name = null);
-                $message->cc('victor@chebabi.com', $name = null);
+                // $message->cc('victor@chebabi.com', $name = null);
                 $message->subject('Sugestão enviada pela intranet');
             });
 

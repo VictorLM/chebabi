@@ -37,15 +37,21 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <img class="img-fluid rounded advs-img-modal" src="{{$adv->foto}}" alt="advogados">
-                                        <div class="texto-adv">
-                                            <h5 class="modal-title"><b>{{mb_strtoupper($adv->nome_usuario->name, 'UTF-8')}}</b></h5>
-                                            <ul class="advs-modal">
-                                                <li><span class="badge badge-pill badge-primary">{{mb_strtoupper($adv->tipo_adv, 'UTF-8')}}</span></li>
-                                                <li><i class="fa fa-address-card"></i> OAB {{mb_strtoupper($adv->oab, 'UTF-8')}}</li>
-                                                <li><i class="fa fa-envelope"></i> <a href="mailto:{{$adv->nome_usuario->email}}">{{$adv->nome_usuario->email}}</a></li>
-                                                <li><i class="fa fa-phone-square"></i> (19) 3203-4744 Ramal {{$adv->nome_usuario->ramal}}</li>
-                                            </ul>
+                                        <div class="row">
+                                            <div class="col-md-5 text-center">
+                                                <img class="img-fluid rounded advs-img-modal" src="{{$adv->foto}}" alt="advogados">
+                                            </div>
+                                            <div class="col-md-7 mx-auto my-auto">
+                                                <div class="texto-adv">
+                                                    <h5 class="modal-title"><b>{{mb_strtoupper($adv->nome_usuario->name, 'UTF-8')}}</b></h5>
+                                                    <ul class="advs-modal">
+                                                        <li><span class="badge badge-pill badge-primary">{{mb_strtoupper($adv->tipo_adv, 'UTF-8')}}</span></li>
+                                                        <li><i class="fa fa-address-card"></i> OAB {{mb_strtoupper($adv->oab, 'UTF-8')}}</li>
+                                                        {{-- <li><i class="fa fa-envelope"></i> <a href="mailto:{{$adv->nome_usuario->email}}">{{$adv->nome_usuario->email}}</a></li> 
+                                                        <li><i class="fa fa-phone-square"></i> (19) 3203-4744 Ramal {{$adv->nome_usuario->ramal}}</li> --}}
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>

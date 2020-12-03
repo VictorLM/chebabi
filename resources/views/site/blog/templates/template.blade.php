@@ -133,7 +133,7 @@
                 <hr/>
             </div>
             
-            <p>© Copyright © {{Carbon\Carbon::now()->year}} - Izique Chebabi Advogados Associados. Todos os direitos reservados. Desenvolvido por <a href="mailto:victor.meireles.dev@gmail.com" target="_blank">Victor Meireles.</a></p>
+            <p>© Copyright © {{Carbon\Carbon::now()->year}} - Izique Chebabi Advogados Associados. Todos os direitos reservados.</p>
         </footer>
 
     </body>
